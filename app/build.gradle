@@ -24,7 +24,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
+
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
+    compile "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
+    compile "net.qiujuer.genius:kit-reflect:$rootProject.ext.geniusVersion"
+    compile "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"
+
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${rootProject.ext.dbflowVersion}"
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${rootProject.ext.dbflowVersion}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${rootProject.ext.dbflowVersion}"
+
+    compile project(path: ':common')
 }

@@ -7,6 +7,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
 
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -15,9 +17,40 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://www.jitpack.io" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def static int getVersionCode() {
+    def date = new Date()
+    def formattedDate = date.format('yyMMddHHmm')
+    return formattedDate as int
+}
+
+ext {
+    versionCode = getVersionCode()
+    versionName = '1.0.0'
+
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+    minSdkVersion = 19
+    targetSdkVersion = 25
+
+    supportVersion = '25.3.1'
+    geniusVersion = '2.0.0'
+    getuiVersion = '2.9.3.0'
+    gsonVersion = '2.8.0'
+    retrofitVersion = '2.1.0'
+    butterknifeVersion = '8.6.0'
+    glideVersion = '3.7.0'
+    circleimageviewVersion = '2.1.0'
+    ossVersion = '2.3.0'
+    dbflowVersion = "4.0.3"
+    airpanelVersion = "1.0.0"
+    ucropVersion = "2.2.0-native"
+}
+
