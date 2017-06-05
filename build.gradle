@@ -46,7 +46,7 @@ ext {
     gsonVersion = '2.8.0'
     retrofitVersion = '2.1.0'
     butterknifeVersion = '8.6.0'
-    glideVersion = '3.7.0'
+    gildeVersion = '3.8.0'
     circleimageviewVersion = '2.1.0'
     ossVersion = '2.3.0'
     dbflowVersion = "4.0.3"

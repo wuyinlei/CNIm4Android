@@ -30,7 +30,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initWindows();
 
         if (initArgs(getIntent().getExtras())) {
-            getContentLayoutId();
+            //设置界面layoutId
+            setContentView(getContentLayoutId());
 
             initView();
 

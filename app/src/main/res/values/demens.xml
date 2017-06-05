@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="portraitMinSize">@dimen/len_36</dimen>
+    <dimen name="portraitSize">@dimen/len_40</dimen>
+    <dimen name="portraitMaxSize">@dimen/len_64</dimen>
+    <dimen name="statusBarSize">25dp</dimen>
+    <dimen name="actionBarWithStatusBarSize">73dp</dimen>
+
+    <dimen name="fontNameSize">15sp</dimen>
+</resources>

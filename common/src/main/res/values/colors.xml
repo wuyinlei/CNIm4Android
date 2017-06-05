@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#31373d</color>
+    <color name="colorPrimaryDark">#31373d</color>
+    <color name="colorAccent">#1572fc</color>
+    <color name="colorLight">@color/white</color>
+    <color name="colorDark">@color/black</color>
+    <color name="colorAccentAlpha">#801572fc</color>
+
+    <!--<color name="windowsBackground">#ebedf0</color>-->
+    <color name="windowsBackground">#f7f7f7</color>
+    <color name="windowsBackgroundLight">#f8f8f8</color>
+
+    <!--<color name="textPrimary">#63707f</color>-->
+    <!--<color name="textSecond">#9babba</color>-->
+    <color name="textPrimary">#4e5864</color>
+    <color name="textSecond">#8d9ca9</color>
+    <color name="textAccent">@color/colorAccent</color>
+    <color name="textLight">@color/colorLight</color>
+    <color name="textDark">#202020</color>
+
+    <!--<color name="textPrimary">#6c7a88</color>-->
+    <!--<color name="textSecond">#a5b4c5</color>-->
+
+    <color name="alertNormal">#4ce275</color>
+    <color name="alertImportant">#f98d2c</color>
+
+    <color name="maskChatHeader">@color/black_alpha_48</color>
+    <color name="navIconTintLight">@color/white_alpha_240</color>
+</resources>

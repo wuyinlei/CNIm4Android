@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="SquareLayout">
+        <attr name="comAccordTo" format="integer">
+            <enum name="horizontal" value="1" />
+            <enum name="vertical" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>
