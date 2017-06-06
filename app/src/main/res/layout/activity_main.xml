@@ -84,6 +84,7 @@
         android:layout_marginBottom="@dimen/len_52"
         android:layout_marginEnd="@dimen/font_16"
         android:padding="@dimen/len_20"
+        android:translationY="@dimen/len_76"
         android:src="@drawable/ic_group_add"
         android:tint="@color/white"
         app:gBackgroundColor="@color/colorAccent"
@@ -105,7 +106,7 @@
         app:itemTextColor="@color/text_base"
         app:menu="@menu/navigation_items"
         tools:targetApi="lollipop"
-        tools:visibility="visible"/>
+        tools:visibility="invisible"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
