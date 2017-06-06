@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lang</string>
+
+    <string name="btn_follow">Follow</string>
+    <string name="btn_send_start">发起聊天</string>
+    <string name="btn_preview">预览</string>
+    <string name="btn_send">发送</string>
+
+</resources>

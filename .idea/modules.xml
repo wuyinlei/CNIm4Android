@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CNIm4Android.iml" filepath="$PROJECT_DIR$/CNIm4Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lang/lang.iml" filepath="$PROJECT_DIR$/lang/lang.iml" />
     </modules>
   </component>
 </project>

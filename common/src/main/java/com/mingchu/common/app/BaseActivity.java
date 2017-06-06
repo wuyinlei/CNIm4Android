@@ -2,9 +2,11 @@ package com.mingchu.common.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -71,7 +73,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initView() {
         mUnbinder = ButterKnife.bind(this);
     }
-
 
 
     /**
