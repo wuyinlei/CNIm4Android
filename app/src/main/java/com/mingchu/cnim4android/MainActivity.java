@@ -179,6 +179,7 @@ public class MainActivity extends BaseActivity implements
 
         mActionButton.animate()
                 .rotation(rotation)
+                .translationY(transY)
                 .setInterpolator(new AnticipateOvershootInterpolator(1))
                 .setDuration(480)
                 .start();

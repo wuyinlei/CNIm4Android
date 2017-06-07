@@ -4,10 +4,13 @@
              android:layout_height="match_parent"
              tools:context="com.mingchu.cnim4android.fragment.main.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:gravity="center"
+        android:textSize="@dimen/len_40"
+        android:textColor="@color/colorAccent"
+        android:text="@string/action_contact"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
