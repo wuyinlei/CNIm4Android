@@ -47,7 +47,7 @@ dependencies {
     compile "com.github.Raizlabs.DBFlow:dbflow:${rootProject.ext.dbflowVersion}"
 
     compile project(path: ':common')
-    compile project(path: ':lang')
+
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'

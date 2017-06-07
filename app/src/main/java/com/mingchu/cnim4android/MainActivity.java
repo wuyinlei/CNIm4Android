@@ -64,9 +64,6 @@ public class MainActivity extends BaseActivity implements
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
 
-    @BindView(R.id.iv_arrow)
-    ImageView mIvArRow;
-
 
     NavFraHelper mNavFraHelper;
 
@@ -103,18 +100,18 @@ public class MainActivity extends BaseActivity implements
         //要这样写  要不然找不到控件  我擦嘞
         mNavigationView.setOnNavigationItemSelectedListener(this);
 
-        Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.rotain);
-        LinearInterpolator lin = new LinearInterpolator();
-        operatingAnim.setInterpolator(lin);
-
-        mIvArRow.setAnimation(operatingAnim);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-             mIvArRow.setAnimation(null);
-            }
-        },4000);
+//        Animation operatingAnim = AnimationUtils.loadAnimation(this, R.anim.rotain);
+//        LinearInterpolator lin = new LinearInterpolator();
+//        operatingAnim.setInterpolator(lin);
+//
+//        mIvArRow.setAnimation(operatingAnim);
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//             mIvArRow.setAnimation(null);
+//            }
+//        },4000);
 
     }
 

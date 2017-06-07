@@ -80,6 +80,16 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
         return getItemViewType(position, mDataLists.get(position));
     }
 
+    @Override
+    public void update(T data, ViewHolder<T> holder) {
+        int pos = holder.getAdapterPosition();
+        if (pos >= 0) {
+            mDataLists.remove(pos);
+            mDataLists.add(pos, data);
+            notifyItemChanged(pos);
+        }
+    }
+
     /**
      * 得到布局的类型
      *
@@ -155,7 +165,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     }
 
 
-    static abstract class ViewHolder<T> extends RecyclerView.ViewHolder {
+    public static abstract class ViewHolder<T> extends RecyclerView.ViewHolder {
 
         private Unbinder mUnbinder;
 

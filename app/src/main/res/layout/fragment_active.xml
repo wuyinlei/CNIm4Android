@@ -4,12 +4,12 @@
              android:layout_height="match_parent"
              tools:context="com.mingchu.cnim4android.fragment.main.ActiveFragment">
 
-    <TextView
-        android:gravity="center"
-        android:textSize="@dimen/len_40"
-        android:textColor="@color/colorAccent"
-        android:text="@string/action_home"
+    <com.mingchu.common.widget.GalleryView
+        android:id="@+id/gallery_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:padding="1dp">
+
+    </com.mingchu.common.widget.GalleryView>
 
 </FrameLayout>
