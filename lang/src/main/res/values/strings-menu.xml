@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_home">Home</string>
+    <string name="action_group">Group</string>
+    <string name="action_contact">Contact</string>
+    <string name="action_add">添加</string>
+    <string name="action_person">用户信息</string>
+    <string name="action_follow">关注</string>
+</resources>
