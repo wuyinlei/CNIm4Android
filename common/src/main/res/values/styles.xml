@@ -29,6 +29,8 @@
         <item name="toolbarTitleSize">@dimen/font_18</item>
         <item name="toolbarTitleColor">@color/white_alpha_224</item>
         <item name="toolbarMenuIconColor">@color/white_alpha_224</item>
+
+
     </style>
 
 
@@ -39,5 +41,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SwipeBackLayout">
+        <item name="edge_size">0dp</item>
     </style>
 </resources>

@@ -1,17 +1,12 @@
 package com.mingchu.cnim4android;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.mingchu.cnim4android.activitys.AccountActivity;
 import com.mingchu.cnim4android.fragment.main.ActiveFragment;
 import com.mingchu.cnim4android.fragment.main.ContactFragment;
 import com.mingchu.cnim4android.fragment.main.GroupFragment;
@@ -116,6 +112,7 @@ public class MainActivity extends BaseActivity implements
     }
 
 
+
     @Override
     protected void initData() {
         super.initData();
@@ -136,7 +133,7 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.bt_action)
     void onActionClick() {
-        Toast.makeText(this, "浮动按钮点击了", Toast.LENGTH_SHORT).show();
+        AccountActivity.show(this);
     }
 
     @Override

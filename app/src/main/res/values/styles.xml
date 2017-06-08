@@ -34,7 +34,10 @@
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.Account" parent="AppTheme.TransStatusBar" />
+    <style name="AppTheme.Account" parent="AppTheme.TransStatusBar" >
+        <!--用于滑动返回黑屏问题 解决的方法-->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 
     <style name="AppTheme.Message" parent="AppTheme.TransStatusBar">
         <item name="android:windowBackground">@color/windowsBackgroundLight</item>
@@ -78,4 +81,6 @@
     </style>
 
     <color name="white">#ffffff</color>
+
+
 </resources>
