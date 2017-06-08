@@ -48,6 +48,9 @@ dependencies {
 
     compile project(path: ':common')
 
+
+    compile "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
+
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'

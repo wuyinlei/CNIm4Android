@@ -17,6 +17,8 @@ public class AccountActivity extends BaseSwipeBackActivity {
     @BindView(R.id.title_bar)
     Toolbar mToolbar;
 
+    private UpdateUserInfoFragment mCurrentFragment;
+
     /**
      * 账户Activity显示的入口
      * @param context  上下文
@@ -34,8 +36,10 @@ public class AccountActivity extends BaseSwipeBackActivity {
     protected void initView() {
         super.initView();
 
+        mCurrentFragment = new UpdateUserInfoFragment();
+
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.lay_container, new UpdateUserInfoFragment())
+                .add(R.id.lay_container, mCurrentFragment)
                 .commit();
 
         setSupportActionBar(mToolbar);
@@ -44,5 +48,8 @@ public class AccountActivity extends BaseSwipeBackActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mCurrentFragment.onActivityResult(requestCode,resultCode,data);
+    }
 }
