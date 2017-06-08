@@ -1,5 +1,7 @@
-package com.mingchu.cnim4android;
+package com.mingchu.cnim4android.activitys;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.AccountActivity;
 import com.mingchu.cnim4android.fragment.assist.PermissionsFragment;
 import com.mingchu.cnim4android.fragment.main.ActiveFragment;
@@ -69,6 +72,14 @@ public class MainActivity extends BaseActivity implements
         return R.layout.activity_main;
     }
 
+    /**
+     * MainActivity
+     *
+     * @param context 上下
+     */
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
 
 
     @Override
@@ -79,11 +90,11 @@ public class MainActivity extends BaseActivity implements
                 , this);
 
         mNavFraHelper.addTab(R.id.action_home,
-                new NavFraHelper.Tab(ActiveFragment.class,R.string.title_home))
+                new NavFraHelper.Tab(ActiveFragment.class, R.string.title_home))
                 .addTab(R.id.action_group,
-                        new NavFraHelper.Tab(GroupFragment.class,R.string.title_group))
+                        new NavFraHelper.Tab(GroupFragment.class, R.string.title_group))
                 .addTab(R.id.action_contact,
-                        new NavFraHelper.Tab(ContactFragment.class,R.string.title_contact));
+                        new NavFraHelper.Tab(ContactFragment.class, R.string.title_contact));
 
         Glide.with(this).load(R.mipmap.bg_src_morning)
                 .centerCrop()
@@ -110,17 +121,14 @@ public class MainActivity extends BaseActivity implements
 //            }
 //        },4000);
 
-        PermissionsFragment.haveAllPerms(this,getSupportFragmentManager());
-
     }
-
 
 
     @Override
     protected void initData() {
         super.initData();
         Menu menu = mNavigationView.getMenu();//从底部导航中拿到我们的menu  触发第一次点击
-        menu.performIdentifierAction(R.id.action_home,0);
+        menu.performIdentifierAction(R.id.action_home, 0);
     }
 
     @OnClick(R.id.iv_search)
@@ -146,8 +154,9 @@ public class MainActivity extends BaseActivity implements
 
     /**
      * NavHelper  处理后回调的方法
-     * @param newTab  新的tab
-     * @param oldTab  旧的tab
+     *
+     * @param newTab 新的tab
+     * @param oldTab 旧的tab
      */
     @Override
     public void onTabChanged(NavFraHelper.Tab<Integer> newTab, NavFraHelper.Tab<Integer> oldTab) {
@@ -157,20 +166,20 @@ public class MainActivity extends BaseActivity implements
         //对浮动按钮进行隐藏和显示的动画
         float transY = 0;
         float rotation = 0;
-        if (Objects.equals(newTab.extra,R.string.title_home)){
+        if (Objects.equals(newTab.extra, R.string.title_home)) {
             //主界面隐藏
-            transY = Ui.dipToPx(getResources(),76);
-        } else{
+            transY = Ui.dipToPx(getResources(), 76);
+        } else {
             //默认为0  则显示
-           if (Objects.equals(newTab.extra,R.string.title_group)){
-               //群
+            if (Objects.equals(newTab.extra, R.string.title_group)) {
+                //群
                 mActionButton.setImageResource(R.drawable.ic_group_add);
                 rotation = -360;
             } else {
-               //联系人
-               mActionButton.setImageResource(R.drawable.ic_contact_add);
-               rotation = 360;
-           }
+                //联系人
+                mActionButton.setImageResource(R.drawable.ic_contact_add);
+                rotation = 360;
+            }
 
         }
 

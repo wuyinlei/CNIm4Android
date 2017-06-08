@@ -49,12 +49,21 @@ public class PermissionsFragment extends BottomSheetDialogFragment
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView(getView());
+    }
+
     /**
      * 初始化布局
      *
      * @param view
      */
     private void initView(View view) {
+
+        if (view == null)
+            return;
 
         view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
