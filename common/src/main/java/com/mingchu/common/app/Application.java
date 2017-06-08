@@ -10,10 +10,8 @@ import net.qiujuer.genius.kit.handler.runable.Action;
 import java.io.File;
 
 /**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ * @function
  */
-
 public class Application extends android.app.Application {
     protected static Application instance;
     private static File cacheDir;
@@ -41,6 +39,23 @@ public class Application extends android.app.Application {
         showToast(instance.getString(msgId));
     }
 
+    /**
+     * 获取声音文件的本地缓存地址
+     * @param isTmp  是否是缓存文件
+     * @return  缓存文件地址
+     */
+    public static File getAudioFile(boolean isTmp) {
+        File dir = new File(getCacheDirFile(), "audio");
+        dir.mkdirs();
+        File[] files = dir.listFiles();
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
+        File path = new File(getCacheDirFile(), isTmp ? "tmp.mp3" : SystemClock.currentThreadTimeMillis() + ".mp3");
+        return path.getAbsoluteFile();
+    }
 
     /**
      * 获取缓存文件夹地址
@@ -63,7 +78,7 @@ public class Application extends android.app.Application {
         dir.mkdirs();
         //删除旧的一些缓存文件
         File[] files = dir.listFiles();
-        if (files != null && files.length > 0){
+        if (files != null && files.length > 0) {
             for (File file : files) {
                 file.delete();
             }

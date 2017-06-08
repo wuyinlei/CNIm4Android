@@ -16,6 +16,7 @@ import android.view.Window;
 
 import com.mingchu.cnim4android.R;
 import com.mingchu.common.app.BaseFragment;
+import com.mingchu.common.tools.UiTool;
 import com.mingchu.common.widget.GalleryView;
 
 import net.qiujuer.genius.ui.Ui;
@@ -109,13 +110,12 @@ public class GalleryFragment extends BottomSheetDialogFragment
                 return;
             }
             //得到屏幕的高度
-            int screenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
+            int screenHeight = UiTool.getScreenHeight(getOwnerActivity());
             //得到状态栏的高度
-            int statusHeight = (int) Ui.dipToPx(getContext().getResources(), 25);
-
-            int dialogHeight = screenHeight - statusHeight;
-
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight <= 0 ? ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
+            int statusBarHeight = UiTool.getStatusBarHeight(getOwnerActivity());
+            int dialogHeight = screenHeight - statusBarHeight;
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ?
+                    ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
         }
     }
 }

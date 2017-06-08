@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mingchu.common.R;
+import com.mingchu.common.app.Application;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
 
 
@@ -146,12 +147,9 @@ public class GalleryView extends RecyclerView {
             if (mSelectedImages.size() >= MAX_IMAGE_COUNT) {
                 //Cell点击操作  如果说我们的点击是允许的  那么更新对应的Cell状态
                 //然后去更新界面  如果不允许点击(已经达到我们最大的选择数量)  那么就不需要刷新数据
-                Toast.makeText(getContext(), String.format(
-                                        getResources().getText(R.string.label_gallery_select_max_size).toString(),
-                                        MAX_IMAGE_COUNT), Toast.LENGTH_SHORT).show();
-//                showToast(String.format(
-//                        getResources().getText(R.string.label_gallery_select_max_size).toString(),
-//                        MAX_IMAGE_COUNT));
+                Application.showToast(String.format(
+                        getResources().getText(R.string.label_gallery_select_max_size).toString(),
+                        MAX_IMAGE_COUNT));
                 notifyRefresh = false;
             } else {
                 mSelectedImages.add(image);
