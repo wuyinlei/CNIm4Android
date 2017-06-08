@@ -39,9 +39,9 @@
 
     <string name="label_permission_network">网络访问</string>
     <string name="label_permission_network_desc">用于即时通讯传输</string>
-    <string name="label_permission_storage">图片存储</string>
-    <string name="label_permission_storage_desc">设置头像与发送图片</string>
-    <string name="label_permission_external">外部存储</string>
+    <string name="label_permission_storage">读取文件</string>
+    <string name="label_permission_storage_desc">用于设置头像与发送图片</string>
+    <string name="label_permission_external">写入权限</string>
     <string name="label_permission_external_desc">用于文件缓存与图片缓存</string>
     <string name="label_permission_record_audio">麦克风</string>
     <string name="label_permission_record_audio_desc">用于音频聊天</string>

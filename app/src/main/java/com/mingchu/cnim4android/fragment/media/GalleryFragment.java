@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.utils.TransStatusBottomSheetDialog;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.tools.UiTool;
 import com.mingchu.common.widget.GalleryView;
@@ -87,35 +88,5 @@ public class GalleryFragment extends BottomSheetDialogFragment
         void onSelectedImage(String path);
     }
 
-    private static class TransStatusBottomSheetDialog extends BottomSheetDialog {
 
-        public TransStatusBottomSheetDialog(@NonNull Context context) {
-            super(context);
-        }
-
-        public TransStatusBottomSheetDialog(@NonNull Context context, @StyleRes int theme) {
-            super(context, theme);
-        }
-
-        protected TransStatusBottomSheetDialog(@NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
-            super(context, cancelable, cancelListener);
-        }
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            final Window window = getWindow();
-            if (window == null) {
-                return;
-            }
-            //得到屏幕的高度
-            int screenHeight = UiTool.getScreenHeight(getOwnerActivity());
-            //得到状态栏的高度
-            int statusBarHeight = UiTool.getStatusBarHeight(getOwnerActivity());
-            int dialogHeight = screenHeight - statusBarHeight;
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight == 0 ?
-                    ViewGroup.LayoutParams.MATCH_PARENT : dialogHeight);
-        }
-    }
 }

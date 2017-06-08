@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.mingchu.cnim4android.activitys.AccountActivity;
+import com.mingchu.cnim4android.fragment.assist.PermissionsFragment;
 import com.mingchu.cnim4android.fragment.main.ActiveFragment;
 import com.mingchu.cnim4android.fragment.main.ContactFragment;
 import com.mingchu.cnim4android.fragment.main.GroupFragment;
@@ -108,6 +109,8 @@ public class MainActivity extends BaseActivity implements
 //             mIvArRow.setAnimation(null);
 //            }
 //        },4000);
+
+        PermissionsFragment.haveAllPerms(this,getSupportFragmentManager());
 
     }
 
