@@ -6,6 +6,9 @@
 
 ##基于MD风格，全局采用MVP模式，包含后台服务器，纯自定义打造自己的一套消息推送机制
 
+###How to use this Project
+* https://github.com/wuyinlei/CNIm4Android/blob/master/file/how_to_use.md
+
 ###客户端效果图(持续更新ing)
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzly1fgcfacu2bhj30u01hcgrx.jpg)
