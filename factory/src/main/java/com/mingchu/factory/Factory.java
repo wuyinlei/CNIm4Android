@@ -1,7 +1,5 @@
 package com.mingchu.factory;
 
-import android.support.annotation.NonNull;
-
 import com.mingchu.common.app.Application;
 
 import java.util.concurrent.Executor;

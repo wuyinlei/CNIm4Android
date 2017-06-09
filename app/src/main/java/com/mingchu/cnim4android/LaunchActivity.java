@@ -6,6 +6,7 @@ import com.mingchu.common.app.BaseActivity;
 
 public class LaunchActivity extends BaseActivity {
 
+    private boolean isFirst = true;
 
     @Override
     protected int getContentLayoutId() {
@@ -15,11 +16,20 @@ public class LaunchActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (PermissionsFragment.haveAllPerms(this, getSupportFragmentManager())){
+        if (isFirst) {
+            isFirst = false;
+            if (PermissionsFragment.haveAllPerms(this, getSupportFragmentManager())) {
+                MainActivity.show(this);
+                finish();
+            } else {
+
+            }
+        } else if (PermissionsFragment.haveAllPerms(this, getSupportFragmentManager())) {
+//            PermissionsFragment fragment = new PermissionsFragment();
+//            fragment.dismiss();
+
             MainActivity.show(this);
             finish();
-        } else {
-
         }
     }
 }

@@ -220,4 +220,8 @@ public class PermissionsFragment extends BottomSheetDialogFragment
                     .show();
         }
     }
+
+    public void dismiss(){
+        this.getDialog().dismiss();
+    }
 }
