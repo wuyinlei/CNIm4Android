@@ -22,12 +22,17 @@
 * https://github.com/wuyinlei/CNIMStudy
 
 
+###更新内容
+* 2017-06-07 更新底部Tab栏和ToolBar
+* 2017-06-08 自定义相册选择和第三方图片裁剪
+* 2017-06-09 完成图片上传到OSS和6.0以上权限适配问题
+
 ###感谢开源(使用到的开源库)
 * [uCrop  图片裁剪开源库][1]   -->[中文介绍][2] -->[uCrop使用及源码浅析][3]  
 * [easypermissions][4]  -->[googlesamples之easypermissions使用][5]
 * [oss图片缓存存储][6]  --->[使用简介代码][7]
 * [网络请求框架Retrofit][8]
-* [图片加载框架][9]
+* [图片加载框架Glide][9]
 * [数据库框架DBFlow][10]
 * [Butterknife注解框架][11]
 

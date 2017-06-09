@@ -12,6 +12,8 @@ import com.mingchu.common.widget.swipeback.Utils;
 
 /**
  * Created by sll on 2015/9/10 0010.
+ *
+ * @function Activity继承该类可以实现滑动退出功能
  */
 public abstract class BaseSwipeBackActivity extends BaseActivity implements SwipeBackActivityBase {
 
@@ -59,12 +61,11 @@ public abstract class BaseSwipeBackActivity extends BaseActivity implements Swip
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
         // TODO: 2017/6/8   在这里可以定义滑动返回的方向
-       // int mode = SettingPrefUtil.getSwipeBackEdgeMode(this);
+        // int mode = SettingPrefUtil.getSwipeBackEdgeMode(this);
        /* SwipeBackLayout mSwipeBackLayout = mHelper.getSwipeBackLayout();
         switch (mode) {
             case 0:

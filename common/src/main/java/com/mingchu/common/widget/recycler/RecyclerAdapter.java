@@ -27,19 +27,19 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
 
     private final List<T> mDataLists;
 
-    private AdapterListener<T> mAdapterListener;
+    private AdapterItemClickListener<T> mAdapterItemClickListener;
 
     public RecyclerAdapter() {
         this(null);
     }
 
-    public RecyclerAdapter(AdapterListener listener) {
+    public RecyclerAdapter(AdapterItemClickListener listener) {
         this(new ArrayList<T>(), listener);
     }
 
-    public RecyclerAdapter(List<T> dataLists, AdapterListener<T> adapterListener) {
+    public RecyclerAdapter(List<T> dataLists, AdapterItemClickListener<T> adapterItemClickListener) {
         mDataLists = dataLists;
-        mAdapterListener = adapterListener;
+        mAdapterItemClickListener = adapterItemClickListener;
     }
 
 
@@ -55,7 +55,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         //把xml的id为viewType的转换为一个root view
         View root = inflater.inflate(viewType, parent, false);
-        //通过自雷必须实现的方法  得到一个ViewHolder
+        //必须实现的方法  得到一个ViewHolder
         ViewHolder<T> holder = onCreateViewHolder(root, viewType);
         //设置VIew的tag  进行双向绑定
         root.setTag(R.id.tag_recycler_holder, holder);
@@ -125,9 +125,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     @Override
     public boolean onLongClick(View v) {
         ViewHolder holder = (ViewHolder) v.getTag(R.id.tag_recycler_holder);
-        if (mAdapterListener != null) {
+        if (mAdapterItemClickListener != null) {
             int pos = holder.getAdapterPosition();
-            mAdapterListener.onLongItemClick(holder, mDataLists.get(pos));
+            mAdapterItemClickListener.onLongItemClick(holder, mDataLists.get(pos));
             return true;
         }
         return false;
@@ -136,9 +136,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     @Override
     public void onClick(View v) {
         ViewHolder holder = (ViewHolder) v.getTag(R.id.tag_recycler_holder);
-        if (mAdapterListener != null) {
+        if (mAdapterItemClickListener != null) {
             int pos = holder.getAdapterPosition();
-            mAdapterListener.onItemClick(holder, mDataLists.get(pos));
+            mAdapterItemClickListener.onItemClick(holder, mDataLists.get(pos));
         }
     }
 
@@ -147,7 +147,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
      *
      * @param <T> 泛型
      */
-    public interface AdapterListener<T> {
+    public interface AdapterItemClickListener<T> {
         //当cell点击的时候触发
         void onItemClick(ViewHolder holder, T data);
 
@@ -158,10 +158,10 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     /**
      * 设置点击监听器
      *
-     * @param adapterListener 自定义的适配器监听器
+     * @param adapterItemClickListener 自定义的适配器监听器
      */
-    public void setAdapterListener(AdapterListener<T> adapterListener) {
-        mAdapterListener = adapterListener;
+    public void setAdapterItemClickListener(AdapterItemClickListener<T> adapterItemClickListener) {
+        mAdapterItemClickListener = adapterItemClickListener;
     }
 
 

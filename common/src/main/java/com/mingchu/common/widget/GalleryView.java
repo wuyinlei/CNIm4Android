@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -30,17 +29,17 @@ import java.util.List;
 
 
 /**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ * 相册选择自定义View
  */
-
 public class GalleryView extends RecyclerView {
+
     private static final int LOADER_ID = 0x0100;
     private static final long MIN_IMAGE_LEN = 10 * 1024;  //最大的照片的大小  10MB
     private static final long MAX_IMAGE_COUNT = 9;  //最大选择的照片的数量
 
+    //加载的CallBack
     private LoaderCallback callback = new LoaderCallback();
-    private Adapter mAdapter = new Adapter();
+    private GalleryAdapter mAdapter = new GalleryAdapter();
     private List<Image> mSelectedImages = new LinkedList<>();
     private SelectedChangeListener mListener;
 
@@ -63,7 +62,7 @@ public class GalleryView extends RecyclerView {
         //四列图片
         setLayoutManager(new GridLayoutManager(getContext(), 4));
         setAdapter(mAdapter);
-        mAdapter.setAdapterListener(new RecyclerAdapter.AdapterListener<Image>() {
+        mAdapter.setAdapterItemClickListener(new RecyclerAdapter.AdapterItemClickListener<Image>() {
             @Override
             public void onItemClick(RecyclerAdapter.ViewHolder holder, Image image) {
                 if (onItemSelectClick(image)) {
@@ -90,9 +89,10 @@ public class GalleryView extends RecyclerView {
 
     /**
      * 初始化方法
+     *
      * @param manager  LoaderManager Loader管理器
-     * @param listener  选择改变监听
-     * @return  任何一个LOADER_ID  可以用于销毁Loader
+     * @param listener 选择改变监听
+     * @return 任何一个LOADER_ID  可以用于销毁Loader
      */
     public int setup(LoaderManager manager, SelectedChangeListener listener) {
         mListener = listener;
@@ -216,6 +216,9 @@ public class GalleryView extends RecyclerView {
         }
     }
 
+    /**
+     * 图片Image   jvabean
+     */
     private static class Image {
         int id;  //数据的id
         String path;  //图片的路径
@@ -239,7 +242,7 @@ public class GalleryView extends RecyclerView {
         }
     }
 
-    private class Adapter extends RecyclerAdapter<Image> {
+    private class GalleryAdapter extends RecyclerAdapter<Image> {
 
         @Override
         protected ViewHolder<Image> onCreateViewHolder(View root, int viewType) {
@@ -276,12 +279,19 @@ public class GalleryView extends RecyclerView {
                     .into(mPic);
             mShade.setVisibility(image.isSelect ? VISIBLE : INVISIBLE);
             mSelected.setChecked(image.isSelect);
-
             mSelected.setVisibility(image.isSelect ? VISIBLE : INVISIBLE);
         }
     }
 
+    /**
+     * 图片选择监听器
+     */
     public interface SelectedChangeListener {
+        /**
+         * 选择的个数监听器
+         *
+         * @param count 图片个数
+         */
         void onSelectedCountChanged(int count);
     }
 }
