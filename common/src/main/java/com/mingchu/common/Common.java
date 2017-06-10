@@ -2,9 +2,19 @@ package com.mingchu.common;
 
 /**
  * Created by wuyinlei on 2017/6/4.
+ *
+ * @function 公共的
  */
 
 public class Common {
+
+    /**
+     * 一些不可变的永恒的参数  通常用于以下配置
+     */
+    public interface Constance {
+        //手机号的正则 检测11位手机号
+        String REGEX_MOBILE = "[1][3,4,5,7,8][0-9]{9}$";
+    }
 
     public static class Path {
         public static String getExt(String path, String defaultExt) {
