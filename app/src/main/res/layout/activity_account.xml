@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="@dimen/actionBarWithStatusBarSize"
-        android:elevation="@dimen/len_2"
-        android:outlineProvider="bounds"
-        tools:targetApi="lollipop"
-        android:layout_width="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/title_bar"
-            android:layout_marginTop="@dimen/statusBarSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentInsetLeft="@dimen/len_20"
-            android:contentInsetStart="@dimen/len_20"
-            tools:targetApi="lollipop"/>
-
-
-    </android.support.design.widget.AppBarLayout>
 
     <ImageView
+        android:id="@+id/iv_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:foreground="@color/maskChatHeader"
+        android:scaleType="centerCrop"/>
 
     <FrameLayout
         android:id="@+id/lay_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
