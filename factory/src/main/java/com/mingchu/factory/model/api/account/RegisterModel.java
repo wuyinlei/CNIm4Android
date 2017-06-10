@@ -1,4 +1,4 @@
-package com.mingchu.factory.model.api;
+package com.mingchu.factory.model.api.account;
 
 /**
  * Created by wuyinlei on 2017/6/10.

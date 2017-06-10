@@ -84,14 +84,11 @@ public class AccountActivity extends BaseSwipeBackActivity implements AccountTri
     public void triggerView() {
         Fragment fragment = null;
         if (mCurrentFragment == mLoginFragment) {
-            if (mRegisterFragment == null) {
-                //默认情况下 为空  要新建一个fragment
+            if (mRegisterFragment == null)
                 mRegisterFragment = new RegisterFragement();
-            } else {
-                fragment = mRegisterFragment;
-            }
+            fragment = mRegisterFragment;
         } else {
-            fragment = mLoginFragment;  //不需要判空 默认情况下  已经赋值了
+            fragment = mLoginFragment;
         }
 
         mCurrentFragment = fragment;
