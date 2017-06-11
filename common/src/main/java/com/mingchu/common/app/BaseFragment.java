@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mingchu.common.widget.convention.PlaceHolderView;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -21,6 +23,8 @@ public abstract class BaseFragment extends Fragment {
 
     private View mRoot;
     private Unbinder mUnbinder;
+
+    protected PlaceHolderView mPlaceHolderView;
 
     @Nullable
     @Override
@@ -107,4 +111,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    public void setPlaceHolderView(PlaceHolderView placeHolderView) {
+        mPlaceHolderView = placeHolderView;
+    }
 }

@@ -3,7 +3,7 @@
              android:layout_height="match_parent">
 
     <com.mingchu.common.widget.custom.PortraitView
-        android:id="@+id/im_portrait"
+        android:id="@+id/iv_portrait"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
         android:src="@color/colorAccent"

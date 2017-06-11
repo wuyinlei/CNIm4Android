@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class UpdateUserInfoFragment extends BaseFragment {
 
-    @BindView(R.id.im_portrait)
+    @BindView(R.id.iv_portrait)
     PortraitView mPortraitView;
 
     @Override
@@ -36,7 +36,7 @@ public class UpdateUserInfoFragment extends BaseFragment {
         return R.layout.fragment_update_user_info;
     }
 
-    @OnClick(R.id.im_portrait)
+    @OnClick(R.id.iv_portrait)
     void onPortraitClick() {
         new GalleryFragment().setListener(new GalleryFragment.OnSelectedListener() {
             @Override

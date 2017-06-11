@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="@dimen/len_2"
+    android:layout_marginTop="@dimen/len_2"
+    android:background="@color/white"
+    android:foreground="@drawable/ic_touch_fg"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/len_12"
+    android:paddingEnd="@dimen/len_16"
+    android:paddingStart="@dimen/len_16"
+    android:paddingTop="@dimen/len_12">
+
+    <com.mingchu.common.widget.custom.PortraitView
+        android:id="@+id/iv_portrait"
+        android:layout_width="@dimen/portraitSize"
+        android:layout_height="@dimen/portraitSize"
+        android:layout_gravity="start|center_vertical"
+        android:src="@drawable/default_portrait" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        tools:text="Mary Harmon"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/len_24"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="@dimen/len_12"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/textAccent"
+        android:textSize="@dimen/fontNameSize" />
+
+    <ImageView
+        android:id="@+id/iv_follow"
+        android:layout_width="@dimen/len_52"
+        android:layout_height="@dimen/len_28"
+        android:layout_gravity="end|center_vertical"
+        android:background="@drawable/sel_btn_bg_accent_4"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:padding="@dimen/len_2"
+        android:scaleType="centerInside"
+        android:src="@drawable/sel_opt_done_add"
+        android:tint="@color/white_alpha_208" />
+
+</LinearLayout>

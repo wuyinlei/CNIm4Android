@@ -133,7 +133,11 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.iv_search)
     void onSearchMenuClick() {
-        Toast.makeText(this, "搜索按钮点击了", Toast.LENGTH_SHORT).show();
+        int type = Objects.equals(
+                mNavFraHelper.getCurrentTab().extra,
+                R.string.title_group) ?
+                SearchActivity.TYPE_GROUP : SearchActivity.TYPE_USER;
+        SearchActivity.show(this, type);
     }
 
 
@@ -144,7 +148,14 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.bt_action)
     void onActionClick() {
-        AccountActivity.show(this);
+        //浮动按钮判断当前界面是群还是联系人界面
+        //如果是人  则打开群创建的界面  如果是其他都打开用户界面
+        if (Objects.equals(mNavFraHelper.getCurrentTab().extra, R.string.title_group)) {
+            SearchActivity.show(this, SearchActivity.TYPE_GROUP);
+        } else {  //打开人的界面
+            SearchActivity.show(this, SearchActivity.TYPE_USER);
+        }
+
     }
 
     @Override

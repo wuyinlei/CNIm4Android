@@ -12,12 +12,12 @@ import com.mingchu.common.factory.presenter.BaseContract;
 
 /**
  * Created by wuyinlei on 2017/6/10.
- *
- *
+ * <p>
+ * Presenter的fragment
  */
 
 public abstract class PresenterFragment<Presenter extends BaseContract.Presenter>
-        extends BaseFragment implements BaseContract.View<Presenter>{
+        extends BaseFragment implements BaseContract.View<Presenter> {
 
     protected Presenter mPresenter;
 
@@ -29,18 +29,24 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
 
     /**
      * 初始化presenter
+     *
      * @return 返回一个
      */
     protected abstract Presenter initPresenter();
 
     @Override
     public void showError(@StringRes int str) {
-        Application.showToast(str);
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerError(str);
+        } else {
+            Application.showToast(str);
+        }
     }
 
     @Override
     public void showLoading() {
-        // TODO: 2017/6/10 后面在来实现
+        if (mPlaceHolderView != null)
+            mPlaceHolderView.triggerLoading();
     }
 
     @Override
