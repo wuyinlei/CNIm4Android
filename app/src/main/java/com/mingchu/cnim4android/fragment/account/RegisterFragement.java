@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import android.widget.EditText;
 
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.activitys.MainActivity;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.factory.presenter.account.RegisterContract;
 import com.mingchu.factory.presenter.account.RegisterPresenter;
@@ -99,8 +100,8 @@ public class RegisterFragement extends PresenterFragment<RegisterContract.Presen
 
     @Override
     public void registerSuccess() {
-//        MainActivity.show(getContext());
-//        getActivity().finish();
-        mAccountTrigger.triggerView();
+        MainActivity.show(getContext());
+        getActivity().finish();
+//        mAccountTrigger.triggerView();
     }
 }

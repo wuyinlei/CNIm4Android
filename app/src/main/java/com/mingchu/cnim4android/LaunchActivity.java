@@ -84,7 +84,6 @@ public class LaunchActivity extends AppCompatActivity {
      * 真正的界面替换
      */
     private void reallySkip() {
-        if (PermissionsFragment.haveAllPerms(this, getSupportFragmentManager())) {
             if (Account.isLogin()) {
                 //进入到主界面  已经登录
                 MainActivity.show(LaunchActivity.this);
@@ -93,7 +92,6 @@ public class LaunchActivity extends AppCompatActivity {
                 AccountActivity.show(LaunchActivity.this);
             }
             finish();
-        }
     }
 
     private void skip() {

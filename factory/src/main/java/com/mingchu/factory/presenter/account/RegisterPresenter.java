@@ -10,6 +10,7 @@ import com.mingchu.factory.R;
 import com.mingchu.factory.data.helper.AccountHelper;
 import com.mingchu.factory.model.api.account.RegisterModel;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.persistence.Account;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
@@ -46,7 +47,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.View>
             view.showError(R.string.data_account_register_invalid_parameter_password);
         } else {
             //进行网络请求
-            RegisterModel model = new RegisterModel(phone, password, name);
+            RegisterModel model = new RegisterModel(phone, password, name, Account.getPushId());
             //并设置回调接口
             AccountHelper.register(model, this);
         }

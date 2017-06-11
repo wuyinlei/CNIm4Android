@@ -79,6 +79,13 @@ public class AccountActivity extends BaseSwipeBackActivity implements AccountTri
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mCurrentFragment != null)
+            mCurrentFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     @Override
     public void triggerView() {

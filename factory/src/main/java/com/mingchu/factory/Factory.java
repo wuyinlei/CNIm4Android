@@ -9,6 +9,9 @@ import com.mingchu.common.app.Application;
 import com.mingchu.common.factory.data.DataSource;
 import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.persistence.Account;
+import com.mingchu.factory.utils.DBFlowExclusionStrategy;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -37,8 +40,7 @@ public class Factory {
         defaultExecutor = Executors.newFixedThreadPool(4);//新建一个线程池
         mGson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS") //设置时间格式
-                // TODO: 2017/6/10   设置一个过滤器   数据库级别的model不进行Gson转换
-//                .setExclusionStrategies()
+                .setExclusionStrategies(new DBFlowExclusionStrategy())  //
                 .create();
     }
 
@@ -51,6 +53,11 @@ public class Factory {
      * Factory中的初始化
      */
     public static void setUp(){
+
+        FlowManager.init(new FlowConfig.Builder(app())
+                .openDatabasesOnInit(true)  //数据库初始化的时候打开数据库
+                .build());
+
         Account.load(app());   //持久化的数据 进行初始化
     }
 
