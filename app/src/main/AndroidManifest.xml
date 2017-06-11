@@ -17,7 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.TransStatusBar">
         <activity
             android:name=".activitys.MainActivity"
             android:label="@string/app_name"
@@ -32,15 +32,32 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".LaunchActivity">
+        <activity android:name=".LaunchActivity"
+                  android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.UserActivity">
+        <activity android:name=".activitys.UserActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.Account"
+            >
+
         </activity>
+
+        <receiver android:name=".MessageReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="1000">
+            <intent-filter >
+                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
+            </intent-filter>
+
+        </receiver>
+
     </application>
 
 </manifest>

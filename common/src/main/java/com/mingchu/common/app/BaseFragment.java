@@ -92,10 +92,19 @@ public abstract class BaseFragment extends Fragment {
         return false;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-//        if(mUnbinder.)
-//        mUnbinder.unbind();
+    protected boolean isSaveView() {
+        return false;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (!isSaveView() && mRoot != null) {
+            if (mUnbinder != null)
+                mUnbinder.unbind();
+            mRoot = null;
+        }
+    }
+
 }

@@ -10,7 +10,7 @@ import com.mingchu.common.factory.presenter.BaseContract;
  * @function 注册
  */
 
-public class RegisterContract {
+public interface RegisterContract {
 
    public interface View extends BaseContract.View<Presenter>{
         //注册成功

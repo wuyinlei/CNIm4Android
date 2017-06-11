@@ -1,6 +1,7 @@
 package com.mingchu.factory.data.helper;
 
 import com.mingchu.common.factory.data.DataSource;
+import com.mingchu.factory.Factory;
 import com.mingchu.factory.R;
 import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.model.api.account.AccountRspModel;
@@ -8,6 +9,7 @@ import com.mingchu.factory.model.api.account.RegisterModel;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.net.NetWork;
 import com.mingchu.factory.net.RemoteService;
+import com.mingchu.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,11 +54,13 @@ public class AccountHelper {
                             callback.onDataLoaded(user);
                     } else {
                         // TODO: 2017/6/10 绑定设备
-//                        bindPush(callback);
-                        callback.onDataLoaded(accountRspModel.getUser());
+                        bindPush(callback);
+//                        callback.onDataLoaded(accountRspModel.getUser());
                     }
                 } else {
 //                   todo 对返回的body中的失败的Code进行解析 解析到对应的String资源上面
+                    //错误解析
+                    Factory.decodeRspCode(body,callback);
                 }
             }
 
@@ -68,6 +72,9 @@ public class AccountHelper {
     }
 
     public static void bindPush(DataSource.Callback<User> callback){
+
+        Account.setBind(true);
+//        callback.onDataNotAvaiable(R.string.app_name);
 
     }
 

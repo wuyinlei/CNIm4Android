@@ -11,6 +11,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //参数说明
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "TFU1Iv5VRc82D5PUeY3RH9",
+                GETUI_APP_KEY   : "goXZnTq5X172YhJwcXWby3",
+                GETUI_APP_SECRET: "OBOkJGrZ3w6rYr1h5ZCDPA",
+                PACKAGE_NAME    : applicationId
+        ]
+
     }
     buildTypes {
         release {
@@ -25,12 +34,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    testCompile 'junit:junit:4.12'
 
     compile "com.android.support:support-v4:$rootProject.ext.supportVersion"
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.ext.supportVersion"
     compile "com.android.support:design:$rootProject.ext.supportVersion"
-    compile "com.android.support:support-v4:$rootProject.ext.supportVersion"
 
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
@@ -52,9 +62,9 @@ dependencies {
 
     compile "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
 
+    //个推推送
+    compile "com.getui:sdk:$rootProject.ext.getuiVersion"
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'pub.devrel:easypermissions:0.3.0'
-    compile 'com.android.support:support-v4:25.3.1'
-    testCompile 'junit:junit:4.12'
+
 }

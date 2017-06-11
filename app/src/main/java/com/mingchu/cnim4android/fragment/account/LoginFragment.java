@@ -10,6 +10,7 @@ import com.mingchu.cnim4android.activitys.MainActivity;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.factory.presenter.account.LoginContract;
+import com.mingchu.factory.presenter.account.LoginPresenter;
 
 import net.qiujuer.genius.ui.widget.Button;
 import net.qiujuer.genius.ui.widget.Loading;
@@ -22,6 +23,7 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
         implements LoginContract.View {
+
     @BindView(R.id.edit_password)
     EditText mPassword;
     @BindView(R.id.edit_phone)
@@ -33,9 +35,6 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
 
     private AccountTrigger mAccountTrigger;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -45,7 +44,7 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
 
     @Override
     protected LoginContract.Presenter initPresenter() {
-        return null;
+        return new LoginPresenter(this);
     }
 
     @Override
