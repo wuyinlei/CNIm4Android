@@ -4,6 +4,7 @@ package com.mingchu.cnim4android.fragment.search;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,9 +102,14 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
         @Override
         protected void onBind(UserCard data) {
-            Glide.with(getActivity())
-                    .load(data.getPortrait()).into(mIvPortrait);
-            mTvName.setText(data.getName());
+
+//            Glide.with(getActivity())
+//                    .load(data.getPortrait()).into(mIvPortrait);
+//
+            mIvPortrait.setup(Glide.with(SearchUserFragment.this), data);
+            if (!TextUtils.isEmpty(data.getName())) {
+                mTvName.setText(data.getName());
+            }
             mIvFollow.setEnabled(!data.isFollow());
         }
 
