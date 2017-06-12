@@ -1,6 +1,7 @@
 package com.mingchu.cnim4android.fragment.search;
 
 
+import android.support.annotation.StringRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.GenericRequest;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.SearchActivity;
 import com.mingchu.common.app.PresenterFragment;
@@ -15,12 +17,21 @@ import com.mingchu.common.widget.EmptyView;
 import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.model.card.UserCard;
+import com.mingchu.factory.net.UploadHelper;
+import com.mingchu.factory.presenter.contact.FollowContract;
+import com.mingchu.factory.presenter.contact.FollowPresenter;
 import com.mingchu.factory.presenter.search.SearchContract;
 import com.mingchu.factory.presenter.search.SearchUserPresenter;
+
+import net.qiujuer.genius.ui.Ui;
+import net.qiujuer.genius.ui.compat.UiCompat;
+import net.qiujuer.genius.ui.drawable.LoadingCircleDrawable;
+import net.qiujuer.genius.ui.drawable.LoadingDrawable;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 搜索用户的Fragment
@@ -70,7 +81,9 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
     }
 
 
-    class ViewHolder extends RecyclerAdapter.ViewHolder<UserCard> {
+    class ViewHolder extends RecyclerAdapter.ViewHolder<UserCard> implements FollowContract.View {
+
+        private FollowContract.Presenter mPresenter;
 
         @BindView(R.id.iv_portrait)
         PortraitView mIvPortrait;
@@ -83,6 +96,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mPresenter = new FollowPresenter(this);
         }
 
         @Override
@@ -91,6 +105,54 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
                     .load(data.getPortrait()).into(mIvPortrait);
             mTvName.setText(data.getName());
             mIvFollow.setEnabled(!data.isFollow());
+        }
+
+        @OnClick(R.id.iv_portrait)
+            //发起关注
+        void onFollowClick() {
+            mPresenter.follow(mData.getId());
+        }
+
+        @Override
+        public void showError(@StringRes int str) {
+            if (mIvFollow.getDrawable() instanceof LoadingDrawable) {
+                LoadingDrawable drawable = (LoadingDrawable) mIvFollow.getDrawable();
+//                drawable.stop();  //停止动画
+                drawable.setProgress(1);  //圆圈
+//                drawable.setForegroundColor();
+                drawable.stop();  //失败则停止动画   并且显示一个圆圈
+                mIvFollow.setImageResource(R.drawable.sel_opt_done_add);  //设置成默认的
+            }
+        }
+
+        @Override
+        public void showLoading() {
+            int minSize = (int) Ui.dipToPx(getResources(), 22);
+            int maxSize = (int) Ui.dipToPx(getResources(), 30);
+
+            //初始化一个圆形的动画
+            LoadingDrawable drawable = new LoadingCircleDrawable(minSize, maxSize);
+            drawable.setBackgroundColor(0);
+            drawable.setForegroundColor(new int[]{UiCompat.getColor(getResources(), R.color.white_alpha_208)});
+            mIvFollow.setImageDrawable(drawable);  //设置
+            drawable.start();//启动动画
+
+        }
+
+        @Override
+        public void setPresenter(FollowContract.Presenter presenter) {
+            mPresenter = presenter;
+        }
+
+        @Override
+        public void onFollowSuccess(UserCard userCard) {
+            if (mIvFollow.getDrawable() instanceof LoadingDrawable) {
+                ((LoadingDrawable) mIvFollow.getDrawable()).stop();  //停止动画
+                mIvFollow.setImageResource(R.drawable.sel_opt_done_add);  //设置成默认的
+            }
+
+            //发起更新
+            updateData(userCard);
         }
     }
 

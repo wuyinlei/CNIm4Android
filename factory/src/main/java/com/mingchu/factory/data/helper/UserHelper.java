@@ -101,4 +101,37 @@ public class UserHelper {
 
         return call;
     }
+
+
+    /**
+     * 关注人的方法
+     *
+     * @param userId   关注的人的id
+     * @param callback 回调接口
+     */
+    public static void follow(String userId, final DataSource.Callback<UserCard> callback) {
+        NetWork.remote().userFollow(userId)
+                .enqueue(new Callback<RspModel<UserCard>>() {
+                    @Override
+                    public void onResponse(Call<RspModel<UserCard>> call, Response<RspModel<UserCard>> response) {
+                        RspModel<UserCard> body = response.body();
+                        if (body.success()) {
+
+                            User user = body.getResult().build();
+                            user.save();  //保存到本地数据库
+                            //// TODO: 2017/6/12 通知联系人列表刷新
+
+                            callback.onDataLoaded(body.getResult());
+                        } else {
+                            Factory.decodeRspCode(body, callback);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RspModel<UserCard>> call, Throwable t) {
+                        callback.onDataNotAvaiable(R.string.data_network_error);
+                    }
+                });
+
+    }
 }
