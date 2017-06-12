@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mingchu.common.app.Application;
 import com.mingchu.common.factory.data.DataSource;
+import com.mingchu.factory.data.user.UserCenter;
+import com.mingchu.factory.data.user.UserDispatcher;
 import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.utils.DBFlowExclusionStrategy;
@@ -164,6 +166,11 @@ public class Factory {
     public static void dispathPushMessage(String message){
 
     }
+
+    public static UserCenter getUserCenter() {
+        return UserDispatcher.instance();
+    }
+
 
 
 }

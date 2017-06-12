@@ -33,6 +33,8 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
     @BindView(R.id.empty_view)
     EmptyView mEmptyView;
+
+
     private RecyclerAdapter<UserCard> mRecyclerAdapter;
 
     @Override
@@ -88,7 +90,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             Glide.with(getActivity())
                     .load(data.getPortrait()).into(mIvPortrait);
             mTvName.setText(data.getName());
-            mIvFollow.setEnabled(data.isFollow());
+            mIvFollow.setEnabled(!data.isFollow());
         }
     }
 
