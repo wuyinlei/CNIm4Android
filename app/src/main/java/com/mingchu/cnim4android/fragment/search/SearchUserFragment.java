@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.GenericRequest;
@@ -24,6 +25,8 @@ import com.mingchu.factory.presenter.contact.FollowPresenter;
 import com.mingchu.factory.presenter.search.SearchContract;
 import com.mingchu.factory.presenter.search.SearchUserPresenter;
 
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.drawable.LoadingCircleDrawable;
@@ -116,6 +119,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         @OnClick(R.id.iv_portrait)
             //发起关注
         void onFollowClick() {
+//            Run.onUiAsync(new Action() {
+//                @Override
+//                public void call() {
+//                    Toast.makeText(getContext(), "到这了", Toast.LENGTH_SHORT).show();
+//                }
+//            });
             mPresenter.follow(mData.getId());
         }
 

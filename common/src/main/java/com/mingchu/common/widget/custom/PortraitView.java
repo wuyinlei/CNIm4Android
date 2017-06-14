@@ -1,7 +1,6 @@
 package com.mingchu.common.widget.custom;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.RequestManager;
@@ -44,7 +43,7 @@ public class PortraitView extends CircleImageView {
     }
 
     public void setup(RequestManager manager, String url) {
-        this.setup(manager, R.drawable.default_portrait, url);
+        this.setup(manager, R.drawable.default_user_img, url);
     }
 
 

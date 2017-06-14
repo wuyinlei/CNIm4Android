@@ -114,7 +114,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         T data = mDataLists.get(position);  //得到需要绑定的数据
         //出发holder的绑定的方法
-        holder.onBind(data);
+        holder.bind(data);  //绑定方法 要不然没有数据进行触发
     }
 
     @Override
