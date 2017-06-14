@@ -27,6 +27,7 @@ import com.mingchu.cnim4android.fragment.main.GroupFragment;
 import com.mingchu.cnim4android.utils.NavFraHelper;
 import com.mingchu.common.app.BaseActivity;
 import com.mingchu.common.widget.custom.PortraitView;
+import com.mingchu.factory.persistence.Account;
 
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
@@ -129,6 +130,9 @@ public class MainActivity extends BaseActivity implements
         super.initData();
         Menu menu = mNavigationView.getMenu();//从底部导航中拿到我们的menu  触发第一次点击
         menu.performIdentifierAction(R.id.action_home, 0);
+
+        //初始化头像加载
+        mPortraitView.setup(Glide.with(this), Account.getUser());
     }
 
     @OnClick(R.id.iv_search)
@@ -143,7 +147,7 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.iv_portrait)
     void onPortraitClick() {
-        UserActivity.show(this);
+        PersonalActivity.show(this,Account.getUserId());
     }
 
     @OnClick(R.id.bt_action)

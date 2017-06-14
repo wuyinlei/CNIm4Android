@@ -67,6 +67,9 @@
             android:name=".activitys.MessageActivity"
             android:label="@string/title_activity_message">
         </activity>
+        <activity android:name=".activitys.PersonalActivity"
+            android:theme="@style/AppTheme.Personal">
+        </activity>
     </application>
 
 </manifest>

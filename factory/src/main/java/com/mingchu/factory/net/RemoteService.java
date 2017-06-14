@@ -1,5 +1,7 @@
 package com.mingchu.factory.net;
 
+import android.renderscript.Sampler;
+
 import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.model.api.account.AccountRspModel;
 import com.mingchu.factory.model.api.account.LoginModel;
@@ -89,5 +91,13 @@ public interface RemoteService {
      */
     @GET("user/contact")
     Call<RspModel<List<UserCard>>> contactUsers();
+
+    /**
+     * 获取用户联系人列表
+     *
+     * @return 用户联系人集合
+     */
+    @GET("user/{id}")
+    Call<RspModel<UserCard>> userInfo(@Path(value =  "id",encoded = true) String userId);
 
 }

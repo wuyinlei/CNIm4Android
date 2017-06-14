@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.GenericRequest;
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.cnim4android.activitys.SearchActivity;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.widget.EmptyView;
@@ -117,6 +118,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         }
 
         @OnClick(R.id.iv_portrait)
+            //发起关注
+        void onPortraitClick() {  //用户详情界面
+            PersonalActivity.show(getContext(), mData.getId());
+        }
+
+        @OnClick(R.id.iv_follow)
             //发起关注
         void onFollowClick() {
 //            Run.onUiAsync(new Action() {

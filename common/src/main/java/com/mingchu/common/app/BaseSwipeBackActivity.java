@@ -26,6 +26,7 @@ public abstract class BaseSwipeBackActivity extends BaseActivity implements Swip
         mHelper.onActivityCreate();
     }
 
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.MessageActivity;
+import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.cnim4android.fragment.search.SearchUserFragment;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
@@ -25,6 +26,7 @@ import com.mingchu.factory.presenter.contact.ContactPresenter;
 import javax.microedition.khronos.opengles.GL;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,6 +128,12 @@ implements ConactContract.View{
 
         @BindView(R.id.tv_desc)
         TextView mTvDesc;
+
+        @OnClick(R.id.iv_portrait)
+            //发起关注
+        void onPortraitClick() {  //用户详情界面
+            PersonalActivity.show(getContext(), mData.getId());
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);

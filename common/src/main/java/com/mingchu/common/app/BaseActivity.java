@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.mingchu.common.widget.convention.PlaceHolderView;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -22,6 +24,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    protected PlaceHolderView mPlaceHolderView;
 
     private Unbinder mUnbinder;
 
@@ -35,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             //设置界面layoutId
             setContentView(getContentLayoutId());
 
+            initBefore();
             initView();
 
             initData();
@@ -48,6 +52,10 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化窗口
      */
     protected  void initWindows(){
+
+    }
+
+    public void initBefore(){
 
     }
 
@@ -110,6 +118,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         super.onBackPressed();
         finish();
+    }
+
+    protected final void setPlaceHolderView(PlaceHolderView view) {
+        mPlaceHolderView = view;
     }
 
     @Override
