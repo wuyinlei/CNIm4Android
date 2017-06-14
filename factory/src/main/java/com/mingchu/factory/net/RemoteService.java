@@ -82,4 +82,12 @@ public interface RemoteService {
     Call<RspModel<UserCard>> userFollow(@Path(value = "followId", encoded = true) String userId);
 
 
+    /**
+     * 获取用户联系人列表
+     *
+     * @return 用户联系人集合
+     */
+    @GET("user/contact")
+    Call<RspModel<List<UserCard>>> contactUsers();
+
 }

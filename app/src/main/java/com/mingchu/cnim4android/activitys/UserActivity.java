@@ -7,10 +7,11 @@ import android.support.v7.widget.Toolbar;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.fragment.account.UpdateUserInfoFragment;
 import com.mingchu.common.app.BaseActivity;
+import com.mingchu.common.app.BaseSwipeBackActivity;
 
 import butterknife.BindView;
 
-public class UserActivity extends BaseActivity {
+public class UserActivity extends BaseSwipeBackActivity {
 
     private UpdateUserInfoFragment mCurrentFragment;
 
@@ -24,7 +25,7 @@ public class UserActivity extends BaseActivity {
      * @param context  上下文
      */
     public static void show(Context context){
-        context.startActivity(new Intent(context,AccountActivity.class));
+        context.startActivity(new Intent(context,UserActivity.class));
     }
 
     @Override

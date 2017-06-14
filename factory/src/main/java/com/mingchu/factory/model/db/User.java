@@ -1,19 +1,21 @@
 package com.mingchu.factory.model.db;
 
 import com.mingchu.common.factory.model.Author;
+import com.mingchu.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
  *
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author{
+public class User extends BaseModel implements Author, DiffUiDataCallback.UiDataDiffer<User> {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 
@@ -134,4 +136,35 @@ public class User extends BaseModel implements Author{
     }
 
 
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (portrait != null ? portrait.hashCode() : 0);
+        result = 31 * result + (desc != null ? desc.hashCode() : 0);
+        result = 31 * result + sex;
+        result = 31 * result + (isFollow ? 1 : 0);
+        result = 31 * result + (alias != null ? alias.hashCode() : 0);
+        result = 31 * result + follows;
+        result = 31 * result + following;
+        result = 31 * result + (modifyAt != null ? modifyAt.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean isSame(User old) {
+        return this == old || Objects.equals(id, old.getId());
+    }
+
+    @Override
+    public boolean isUiContentSame(User data) {
+        //内容是否相等  名字头像 并别  是否已经关注
+        return this == data || (Objects.equals(name, data.getName()) &&
+                Objects.equals(portrait, data.getPortrait())
+                && Objects.equals(sex, data.getSex())
+                && Objects.equals(isFollow, data.isFollow())
+        )
+                ;
+    }
 }

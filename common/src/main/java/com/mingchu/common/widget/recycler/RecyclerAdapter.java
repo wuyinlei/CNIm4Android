@@ -122,6 +122,14 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
         return mDataLists.size();
     }
 
+    /**
+     * 返回整个集合
+     * @return
+     */
+    public List<T> getItems(){
+        return mDataLists;
+    }
+
     @Override
     public boolean onLongClick(View v) {
         ViewHolder holder = (ViewHolder) v.getTag(R.id.tag_recycler_holder);

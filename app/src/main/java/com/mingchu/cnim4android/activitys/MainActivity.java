@@ -143,7 +143,7 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.iv_portrait)
     void onPortraitClick() {
-        Toast.makeText(this, "头像点了", Toast.LENGTH_SHORT).show();
+        UserActivity.show(this);
     }
 
     @OnClick(R.id.bt_action)

@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.app.Activity;
 
 import com.mingchu.cnim4android.R;
+import com.mingchu.common.app.BaseSwipeBackActivity;
 import com.mingchu.common.factory.model.Author;
 
-public class MessageActivity extends Activity {
-
+public class MessageActivity extends BaseSwipeBackActivity {
 
     /**
      * 跳转到聊天消息界面
@@ -23,9 +23,8 @@ public class MessageActivity extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+    protected int getContentLayoutId() {
+        return R.layout.activity_message;
     }
 
 }

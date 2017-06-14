@@ -13,11 +13,14 @@ import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.MessageActivity;
 import com.mingchu.cnim4android.fragment.search.SearchUserFragment;
 import com.mingchu.common.app.BaseFragment;
+import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.widget.EmptyView;
 import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.model.card.UserCard;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.presenter.contact.ConactContract;
+import com.mingchu.factory.presenter.contact.ContactPresenter;
 
 import javax.microedition.khronos.opengles.GL;
 
@@ -26,7 +29,8 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactFragment extends BaseFragment {
+public class ContactFragment extends PresenterFragment<ConactContract.Presenter>
+implements ConactContract.View{
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -88,6 +92,28 @@ public class ContactFragment extends BaseFragment {
         //初始化占位布局
         mEmptyView.bind(mRecyclerView);
         setPlaceHolderView(mEmptyView);
+    }
+
+    @Override
+    protected void onFirstInit() {
+        super.onFirstInit();
+        mPresenter.start();
+    }
+
+    @Override
+    protected ConactContract.Presenter initPresenter() {
+        return new ContactPresenter(this);
+    }
+
+    @Override
+    public RecyclerAdapter<User> getRecyclerViewAadpter() {
+        return mRecyclerAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        //进行界面操作
+        mPlaceHolderView.triggerOkOrEmpty(mRecyclerAdapter.getItemCount() > 0 );
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<User> {

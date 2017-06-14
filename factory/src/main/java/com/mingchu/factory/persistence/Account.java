@@ -150,6 +150,14 @@ public class Account {
     }
 
     /**
+     * 返回用户id
+     * @return UserId
+     */
+    public static String getUserId(){
+        return getUser().getId();
+    }
+
+    /**
      * 获取到token
      * @return  token
      */

@@ -134,4 +134,36 @@ public class UserHelper {
                 });
 
     }
+
+
+    /**
+     * 联系人列表  刷新联系人
+     *
+     * @param callback 回调接口
+     */
+    public static void refreshContact(final DataSource.Callback<List<UserCard>> callback) {
+
+        Call<RspModel<List<UserCard>>> call = NetWork.remote().contactUsers();
+
+        call.enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call,
+                                   Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> body = response.body();
+                if (body.success()) {
+                    List<UserCard> result = body.getResult();
+                    callback.onDataLoaded(result);
+                } else {
+                    Factory.decodeRspCode(body, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvaiable(R.string.data_network_error);
+            }
+        });
+
+    }
+
 }

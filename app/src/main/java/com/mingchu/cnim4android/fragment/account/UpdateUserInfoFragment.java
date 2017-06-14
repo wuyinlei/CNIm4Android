@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
@@ -15,6 +16,9 @@ import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.factory.Factory;
 import com.mingchu.factory.net.UploadHelper;
 import com.yalantis.ucrop.UCrop;
+
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.io.File;
 
@@ -94,7 +98,13 @@ public class UpdateUserInfoFragment extends BaseFragment {
             public void run() {
                 //异步上传
                 String url = UploadHelper.uploadPortrait(localPath);
-                Log.d("UpdateUserInfoFragment", "上传过后的url:" + url);
+                Run.onUiAsync(new Action() {
+                    @Override
+                    public void call() {
+                        Toast.makeText(getActivity(), "上传成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                Log.d("UpdateUserInfoFragment", "上传过后的url:" + url);
             }
         });
     }
