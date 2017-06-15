@@ -61,7 +61,7 @@ public class AccountActivity extends BaseSwipeBackActivity implements AccountTri
                 .commit();
 
         Glide.with(this)
-                .load(R.mipmap.bg_src_tianjin)
+                .load(R.mipmap.xiuxiu_im_bg)
                 .centerCrop()
                 .into(new ViewTarget<ImageView,GlideDrawable>(mIvBg) {
                     @Override

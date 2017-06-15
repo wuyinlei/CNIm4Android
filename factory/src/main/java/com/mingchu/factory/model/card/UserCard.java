@@ -4,14 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.mingchu.common.factory.model.Author;
 import com.mingchu.factory.model.db.User;
 
+
 import java.util.Date;
 
-/**
- * Created by wuyinlei on 2017/6/11.
- */
 
-public class UserCard implements Author{
-
+public class UserCard implements Author {
     @Expose
     private String id;
     @Expose

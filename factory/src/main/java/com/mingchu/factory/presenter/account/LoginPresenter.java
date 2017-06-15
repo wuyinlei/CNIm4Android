@@ -46,8 +46,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
 
     @Override
     public boolean checkMobile(String phone) {
-//        return !TextUtils.isEmpty(phone) && Pattern.matches(Common.Constance.REGEX_MOBILE, phone);
-   return true;
+        return !TextUtils.isEmpty(phone) && Pattern.matches(Common.Constance.REGEX_MOBILE, phone);
+//   return true;
     }
 
 

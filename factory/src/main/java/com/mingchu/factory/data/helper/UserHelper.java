@@ -228,4 +228,7 @@ public class UserHelper {
     }
 
 
+    public static User findFromLocal(String id) {
+        return null;
+    }
 }

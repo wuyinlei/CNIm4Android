@@ -27,6 +27,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
 
     private final List<T> mDataLists;
 
+
     private AdapterItemClickListener<T> mAdapterItemClickListener;
 
     public RecyclerAdapter() {
@@ -124,9 +125,10 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
 
     /**
      * 返回整个集合
-     * @return
+     *
+     * @return 数据集合
      */
-    public List<T> getItems(){
+    public List<T> getItems() {
         return mDataLists;
     }
 
