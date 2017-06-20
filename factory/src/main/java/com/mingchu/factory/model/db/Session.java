@@ -127,6 +127,9 @@ public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffe
         this.modifyAt = modifyAt;
     }
 
+    /**
+     * 刷新到最新状态
+     */
     public void refreshToNow() {
         Message message;
         if (receiverType == Message.RECEIVER_TYPE_GROUP) {
