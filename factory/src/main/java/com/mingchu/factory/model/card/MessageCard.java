@@ -1,10 +1,10 @@
 package com.mingchu.factory.model.card;
 
 import com.google.gson.annotations.Expose;
+import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.Message;
+import com.mingchu.factory.model.db.User;
 
-import net.qiujuer.italker.factory.model.db.Group;
-import net.qiujuer.italker.factory.model.db.Message;
-import net.qiujuer.italker.factory.model.db.User;
 
 import java.util.Date;
 

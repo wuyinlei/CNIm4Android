@@ -7,6 +7,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mingchu.common.app.Application;
 import com.mingchu.common.factory.data.DataSource;
+import com.mingchu.factory.data.group.GroupCenter;
+import com.mingchu.factory.data.group.GroupDispatcher;
+import com.mingchu.factory.data.message.MessageCenter;
+import com.mingchu.factory.data.message.MessageDispatcher;
 import com.mingchu.factory.data.user.UserCenter;
 import com.mingchu.factory.data.user.UserDispatcher;
 import com.mingchu.factory.model.api.RspModel;
@@ -54,7 +58,7 @@ public class Factory {
     /**
      * Factory中的初始化
      */
-    public static void setUp(){
+    public static void setUp() {
 
         FlowManager.init(new FlowConfig.Builder(app())
                 .openDatabasesOnInit(true)  //数据库初始化的时候打开数据库
@@ -161,16 +165,40 @@ public class Factory {
 
     /**
      * 处理推送来的消息
-     * @param message  消息
+     *
+     * @param message 消息
      */
-    public static void dispathPushMessage(String message){
+    public static void dispathPushMessage(String message) {
 
     }
 
+    /**
+     * 获取一个消息中心的实现类
+     *
+     * @return 消息中心的规范接口
+     */
+    public static MessageCenter getMessageCenter() {
+        return MessageDispatcher.instance();
+    }
+
+    /**
+     * 获取一个用户中心的实现类
+     *
+     * @return 规范的接口
+     */
     public static UserCenter getUserCenter() {
         return UserDispatcher.instance();
     }
 
+
+    /**
+     * 获取一个群处理中心的实现类
+     *
+     * @return 规范的接口
+     */
+    public static GroupCenter getGroupCenter() {
+        return GroupDispatcher.instance();
+    }
 
 
 }

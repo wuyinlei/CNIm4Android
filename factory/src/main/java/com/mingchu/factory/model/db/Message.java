@@ -121,6 +121,15 @@ public class Message extends BaseModel implements DiffUiDataCallback.UiDataDiffe
         this.receiver = receiver;
     }
 
+    /**
+     * 当消息类型为普通消息(发送给人的消息)
+     * 该方法用于返回 和我聊天的人是谁
+     *
+     * <p>
+     *     和我聊天  要么对方是发送者 要么对方是接收者
+     * </p>
+     * @return  和我聊天的人
+     */
     User getOther() {
         if (Account.getUserId().equals(sender.getId())) {
             return receiver;
@@ -129,6 +138,10 @@ public class Message extends BaseModel implements DiffUiDataCallback.UiDataDiffe
         }
     }
 
+    /**
+     * 构建一个简单的消息描述  用于简化消息显示
+     * @return 一个消息描述
+     */
     String getSampleContent() {
         if (type == TYPE_PIC)
             return "[图片]";

@@ -100,7 +100,8 @@ public class AccountHelper {
                 final User user = accountRspModel.getUser();
                 //进行数据库写入和绑定
                 if (user != null) {
-                    user.save();  //第一种 直接保存
+                    DbHelper.save(User.class,user);
+//                    user.save();  //第一种 直接保存
 
 //                            FlowManager.getModelAdapter(User.class)
 //                                    .save(user);    第二种保存方法

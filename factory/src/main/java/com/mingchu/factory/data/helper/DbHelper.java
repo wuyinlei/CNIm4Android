@@ -1,6 +1,8 @@
 package com.mingchu.factory.data.helper;
 
 import com.mingchu.factory.model.db.AppDatabase;
+import com.mingchu.factory.model.db.GroupMember;
+import com.mingchu.factory.model.db.Message;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -18,8 +20,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ * 数据库的辅助工具类
+ *
+ * @function 增删改
  */
 
 public class DbHelper {
@@ -55,11 +58,20 @@ public class DbHelper {
         instance.changedListeners.put(tClass, changedListeners);
     }
 
+    /**
+     * 新增或者修改的统一方法
+     *
+     * @param tClass  传递一个Class信息
+     * @param models  这个Class对应的实例的数组
+     * @param <Model> 这个实例的类型 限定上线BaseModel
+     */
     @SafeVarargs
     public static <Model extends BaseModel> void save(final Class<Model> tClass, final Model... models) {
         if (models == null || models.length == 0)
             return;
+        //当前数据库的管理者
         DatabaseDefinition database = FlowManager.getDatabase(AppDatabase.class);
+        //提交一个事务
         database.beginTransactionAsync(new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
@@ -70,6 +82,13 @@ public class DbHelper {
         }).build().execute();
     }
 
+    /**
+     * 删除操作
+     *
+     * @param tClass  传递一个Class信息
+     * @param models  这个Class对应的实例的数组
+     * @param <Model> 这个实例的类型 限定上线BaseModel
+     */
     @SafeVarargs
     public static <Model extends BaseModel> void delete(final Class<Model> tClass, final Model... models) {
         if (models == null || models.length == 0)
@@ -84,6 +103,14 @@ public class DbHelper {
             }
         }).build().execute();
     }
+
+    /**
+     * 通知更改保存
+     *
+     * @param tClass  传递一个Class信息
+     * @param models  这个Class对应的实例的数组
+     * @param <Model> 这个实例的类型 限定上线BaseModel
+     */
     @SafeVarargs
     private final <Model extends BaseModel> void notifySave(Class<Model> tClass, final Model... models) {
         final Set<ChangedListener> listeners = getListeners(tClass);
@@ -94,14 +121,28 @@ public class DbHelper {
         }
 
 
-
-//        if (GroupMember.class.equals(tClass)) {
-//            updateGroup((GroupMember[]) models);
-//        } else if (Message.class.equals(tClass)) {
-//            updateSession((Message[]) models);
-//        }
+        if (GroupMember.class.equals(tClass)) {
+            updateGroup((GroupMember[]) models);
+        } else if (Message.class.equals(tClass)) {
+            updateSession((Message[]) models);
+        }
     }
 
+    private void updateSession(Message[] models) {
+
+    }
+
+    private void updateGroup(GroupMember[] models) {
+
+    }
+
+    /**
+     * 通知删除
+     *
+     * @param tClass  传递一个Class信息
+     * @param models  这个Class对应的实例的数组
+     * @param <Model> 这个实例的类型 限定上线BaseModel
+     */
     @SafeVarargs
     private final <Model extends BaseModel> void notifyDelete(Class<Model> tClass, final Model... models) {
         final Set<ChangedListener> listeners = getListeners(tClass);
@@ -111,19 +152,17 @@ public class DbHelper {
             }
         }
 
-//        if (GroupMember.class.equals(tClass)) {
-//            updateGroup((GroupMember[]) models);
-//        } else if (Message.class.equals(tClass)) {
-//            updateSession((Message[]) models);
-//        }
+        if (GroupMember.class.equals(tClass)) {
+            updateGroup((GroupMember[]) models);
+        } else if (Message.class.equals(tClass)) {
+            updateSession((Message[]) models);
+        }
     }
-
-
-
 
 
     @SuppressWarnings("unchecked")
     public interface ChangedListener<Data> {
+
         void onDataDelete(Data... list);
 
         void onDataSave(Data... list);

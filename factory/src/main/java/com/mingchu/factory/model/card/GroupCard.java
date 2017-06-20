@@ -1,9 +1,10 @@
 package com.mingchu.factory.model.card;
 
 import com.google.gson.annotations.Expose;
+import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.User;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 
-import net.qiujuer.italker.factory.model.db.Group;
-import net.qiujuer.italker.factory.model.db.User;
 
 import java.util.Date;
 
@@ -95,6 +96,14 @@ public class GroupCard {
         this.modifyAt = modifyAt;
     }
 
+    /**
+     * 把一个群的信息  build为一个群model
+     * 由于卡片中有创建者的id 但是没有创建者的这个人的Model
+     * 所以model需要在外部准备好传进来
+     *
+     * @param owner 创建者
+     * @return 群信息
+     */
     public Group build(User owner) {
         Group group = new Group();
         group.setId(id);

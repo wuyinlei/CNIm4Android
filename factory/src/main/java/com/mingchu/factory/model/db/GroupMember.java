@@ -11,8 +11,8 @@ import java.util.Date;
 
 @Table(database = AppDatabase.class)
 public class GroupMember extends BaseModel {
-    public static final int NOTIFY_LEVEL_INVALID = -1;
-    public static final int NOTIFY_LEVEL_NONE = 0;
+    public static final int NOTIFY_LEVEL_INVALID = -1; //关闭消息
+    public static final int NOTIFY_LEVEL_NONE = 0; //正常
 
     @PrimaryKey
     private String id;

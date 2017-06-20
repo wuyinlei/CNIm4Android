@@ -1,17 +1,12 @@
 package com.mingchu.factory.model.card;
 
 import com.google.gson.annotations.Expose;
-
-import net.qiujuer.italker.factory.model.db.Group;
-import net.qiujuer.italker.factory.model.db.GroupMember;
-import net.qiujuer.italker.factory.model.db.User;
+import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.GroupMember;
+import com.mingchu.factory.model.db.User;
 
 import java.util.Date;
 
-/**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
- */
 
 public class GroupMemberCard {
     @Expose

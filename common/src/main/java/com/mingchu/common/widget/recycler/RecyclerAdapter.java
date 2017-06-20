@@ -263,7 +263,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAd
     }
 
     /**
-     * 替换为一个新的集合，其中包括了额情况
+     * 替换为一个新的集合，其中包括了情况
      *
      * @param datas 一个新的集合
      */

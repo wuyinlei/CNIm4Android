@@ -64,40 +64,32 @@ public class ContactPresenter extends BasePresenter<ConactContract.View>
                     }
                 }).execute();
 
-        UserHelper.refreshContact(new DataSource.Callback<List<UserCard>>() {
-            @Override
-            public void onDataNotAvaiable(@StringRes int res) {
+        UserHelper.refreshContact();
 
-            }
-
-            @Override
-            public void onDataLoaded(List<UserCard> datas) {
-
-                final List<User> users = new ArrayList<User>();
-                for (UserCard data : datas) {
-                    users.add(data.build());
-                }
-
-                //第三中存储  放到事务中
-                DatabaseDefinition definition = FlowManager.getDatabase(AppDatabase.class);
-                definition.beginTransactionAsync(new ITransaction() {
-                    @Override
-                    public void execute(DatabaseWrapper databaseWrapper) {
-                        FlowManager.getModelAdapter(User.class)
-                                .saveAll(users);
-                    }
-                }).build().execute();
-
-                //网络的数据   我们需要直接刷新到界面
-
-//                getView().getRecyclerViewAadpter().replace(users);
-//                getView().onAdapterDataChanged();
-                List<User> olds = getView().getRecyclerViewAadpter().getItems();
-
-
-                diff(olds, users);
-            }
-        });
+//
+//        final List<User> users = new ArrayList<User>();
+//        for (UserCard data : datas) {
+//            users.add(data.build());
+//        }
+//
+//        //第三中存储  放到事务中
+//        DatabaseDefinition definition = FlowManager.getDatabase(AppDatabase.class);
+//        definition.beginTransactionAsync(new ITransaction() {
+//            @Override
+//            public void execute(DatabaseWrapper databaseWrapper) {
+//                FlowManager.getModelAdapter(User.class)
+//                        .saveAll(users);
+//            }
+//        }).build().execute();
+//
+//        //网络的数据   我们需要直接刷新到界面
+//
+////                getView().getRecyclerViewAadpter().replace(users);
+////                getView().onAdapterDataChanged();
+//        List<User> olds = getView().getRecyclerViewAadpter().getItems();
+//
+//
+//        diff(olds, users);
 
         // TODO: 2017/6/14    1.关注后虽然存储到了数据库  但是没有刷新联系人
         //2  如果刷新数据库  是全局的刷新列表
@@ -106,6 +98,12 @@ public class ContactPresenter extends BasePresenter<ConactContract.View>
     }
 
 
+    /**
+     * diff比较
+     *
+     * @param oldLists 老的数据集合
+     * @param newLists 新的数据回合
+     */
     private void diff(List<User> oldLists, List<User> newLists) {
         DiffUtil.Callback callback = new DiffUiDataCallback<>(oldLists, newLists);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);

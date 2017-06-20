@@ -13,14 +13,16 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ *
  */
 
 public class UserDispatcher implements UserCenter {
+
     private static UserCenter instance;
+    //线程池
     private Executor executor = Executors.newSingleThreadExecutor();
 
+    //单利
     public static UserCenter instance() {
         if (instance == null) {
             synchronized (UserDispatcher.class) {
@@ -38,7 +40,11 @@ public class UserDispatcher implements UserCenter {
         executor.execute(new UserCardHandler(cards));
     }
 
+    /**
+     * 线程调度的时候会触发run方法
+     */
     private class UserCardHandler implements Runnable {
+
         private final UserCard[] cards;
 
         UserCardHandler(UserCard[] cards) {
@@ -53,6 +59,7 @@ public class UserDispatcher implements UserCenter {
                     continue;
                 users.add(card.build());
             }
+            //进行数据库存储并分发通知  异步
             DbHelper.save(User.class, users.toArray(new User[0]));
         }
     }

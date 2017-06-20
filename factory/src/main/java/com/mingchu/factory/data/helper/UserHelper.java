@@ -3,6 +3,8 @@ package com.mingchu.factory.data.helper;
 import android.net.Network;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.mingchu.common.tools.CollectionUtil;
 import com.mingchu.factory.model.db.User_Table;
 
 import com.mingchu.common.factory.data.DataSource;
@@ -18,6 +20,7 @@ import com.mingchu.factory.net.UploadHelper;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -120,9 +123,10 @@ public class UserHelper {
                         RspModel<UserCard> body = response.body();
                         if (body.success()) {
 
-                            User user = body.getResult().build();
-                            user.save();  //保存到本地数据库
-                            //// TODO: 2017/6/12 通知联系人列表刷新
+//                            User user = body.getResult().build();
+//                            user.save();  //保存到本地数据库
+//                            DbHelper.save(User.class, user);
+                            Factory.getUserCenter().dispatch(body.getResult());
 
                             callback.onDataLoaded(body.getResult());
                         } else {
@@ -141,10 +145,10 @@ public class UserHelper {
 
     /**
      * 联系人列表  刷新联系人
-     *
-     * @param callback 回调接口
+     * 不需要callback  直接存储到数据库  并通过数据库观察者通知界面更新
+     * 界面更新的时候进行对比  进行差异更新
      */
-    public static void refreshContact(final DataSource.Callback<List<UserCard>> callback) {
+    public static void refreshContact() {
 
         Call<RspModel<List<UserCard>>> call = NetWork.remote().contactUsers();
 
@@ -155,15 +159,16 @@ public class UserHelper {
                 RspModel<List<UserCard>> body = response.body();
                 if (body.success()) {
                     List<UserCard> result = body.getResult();
-                    callback.onDataLoaded(result);
+                    Factory.getUserCenter().dispatch(CollectionUtil.toArray(result,UserCard.class));
+//                    callback.onDataLoaded(result);
                 } else {
-                    Factory.decodeRspCode(body, callback);
+                    Factory.decodeRspCode(body, null);
                 }
             }
 
             @Override
             public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                callback.onDataNotAvaiable(R.string.data_network_error);
+//                callback.onDataNotAvaiable(R.string.data_network_error);
             }
         });
 
@@ -176,7 +181,7 @@ public class UserHelper {
      * @return User
      */
     public static User searchUser(String userId) {
-        User user = findFormLocal(userId);
+        User user = findFromLocal(userId);
         if (user == null)
             return findFormNet(userId);
         return user;
@@ -194,24 +199,41 @@ public class UserHelper {
         return findFormNet(userId);
     }
 
-    public static User findFormNet(String userId){
+    /**
+     * 从网络查询某用户的信息
+     *
+     * @param userId 用户id
+     * @return User
+     */
+    public static User findFormNet(String userId) {
         RemoteService service = NetWork.remote();
 
         try {
             Response<RspModel<UserCard>> response = service.userInfo(userId).execute();
             UserCard card = response.body().getResult();
-            if (card != null){
-                //数据库的刷新  // TODO: 2017/6/15   数据库通知 但是没有刷新
-                User user = card.build();
-                user.save();
+            if (card != null) {
 
-                return user;
+                Factory.getUserCenter().dispatch(card);
+
+//                //数据库的刷新  // TODO: 2017/6/15   数据库通知 但是没有刷新
+//                User user = card.build();
+////                user.save();
+//                DbHelper.save(User.class, user);
+
+                return card.build();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("UserHelper", e.getMessage());
         }
         return null;
+    }
+
+    public static User search(String id) {
+        User user = findFromLocal(id);
+        if (user == null)
+            user = findFormNet(id);
+        return user;
     }
 
     /**
@@ -220,7 +242,7 @@ public class UserHelper {
      * @param userId 用户id
      * @return User
      */
-    public static User findFormLocal(String userId) {
+    public static User findFromLocal(String userId) {
         return SQLite.select()
                 .from(User.class)
                 .where(User_Table.id.eq(userId))
@@ -228,7 +250,7 @@ public class UserHelper {
     }
 
 
-    public static User findFromLocal(String id) {
-        return null;
-    }
+//    public static User findFromLocal(String id) {
+//        return null;
+//    }
 }

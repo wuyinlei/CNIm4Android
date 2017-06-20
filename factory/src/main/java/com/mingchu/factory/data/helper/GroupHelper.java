@@ -8,12 +8,15 @@ import java.util.List;
 
 /**
  * Created by wuyinlei on 2017/6/15.
+ *
+ * @function GroupHelper
  */
 
 public class GroupHelper {
+
+
     public static Group findFromLocal(String id) {
-
-
+        return null;
     }
 
     public static List<GroupMember> getMembers(String id, int i) {
@@ -26,5 +29,9 @@ public class GroupHelper {
 
     public static long getMemberCount(String id) {
         return 0;
+    }
+
+    public static Group find(String groupId) {
+        return null;
     }
 }

@@ -20,21 +20,21 @@ import java.util.Objects;
 @Table(database = AppDatabase.class)
 public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffer<Session> {
     @PrimaryKey
-    private String id;
+    private String id;  //Id   Message中的接收者User的id或者群id
     @Column
-    private String picture;
+    private String picture;  //图片  接收者用户的头像或者群的图片
     @Column
-    private String title;
+    private String title; //标题  用户的名称  或者群的名称
     @Column
-    private String content;
+    private String content;  //显示在界面上的简单内容  是Message的一个描述
     @Column
-    private int receiverType = Message.RECEIVER_TYPE_NONE;
+    private int receiverType = Message.RECEIVER_TYPE_NONE;  //类型  对应人  或者群
     @Column
-    private int unReadCount;
+    private int unReadCount;  //未读消息数量  当灭有在当前界面的时候 应当增加未读数量
     @Column
-    private Date modifyAt;
+    private Date modifyAt;  //最后更改时间
     @ForeignKey(tableClass = Message.class)
-    private Message message;
+    private Message message;   //对应的消息 外键为Message的Id
 
     public Session() {
 
@@ -186,6 +186,12 @@ public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffe
         }
     }
 
+    /**
+     * 对于一个消息  我们提取主要部分  用于和Session进行对应
+     *
+     * @param message 消息Model
+     * @return 返回一个Session.Identify
+     */
     public static Identify createSessionIdentify(Message message) {
         Identify identify = new Identify();
         if (message.getGroup() == null) {
@@ -229,6 +235,14 @@ public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffe
                 && Objects.equals(this.modifyAt, oldT.modifyAt);
     }
 
+    /**
+     * 对于会话信息 最重要的部分进行提取
+     * 其中我们主要关注两个点:
+     * 一个会话最重要的是标示和人聊天还是在和群聊天
+     * 所以对于这点  Id存储的是人或者群的id
+     * 紧跟着Type  存储的是具体的类型(人、群)
+     * equals  和  hashCode也是对这两个字段进行判断
+     */
     public static class Identify {
         public String id;
         public int type;
