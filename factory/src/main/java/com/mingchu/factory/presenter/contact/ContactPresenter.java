@@ -7,7 +7,11 @@ import android.support.v7.util.DiffUtil;
 import com.mingchu.common.factory.data.DataSource;
 import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.common.factory.presenter.BasePresenter;
+import com.mingchu.common.factory.presenter.BaseRecyclerPresenter;
+import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.data.helper.UserHelper;
+import com.mingchu.factory.data.user.ContactDataSource;
+import com.mingchu.factory.data.user.ContactRespository;
 import com.mingchu.factory.model.card.UserCard;
 import com.mingchu.factory.model.db.AppDatabase;
 import com.mingchu.factory.model.db.User;
@@ -16,7 +20,6 @@ import com.mingchu.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.mingchu.factory.model.db.User_Table;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
 import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
@@ -31,12 +34,14 @@ import java.util.List;
  * 联系人的Presenter
  */
 
-public class ContactPresenter extends BasePresenter<ConactContract.View>
-        implements ConactContract.Presenter {
+public class ContactPresenter extends BaseRecyclerPresenter<User,ConactContract.View>
+        implements ConactContract.Presenter, DataSource.SuccessCallback<List<User>> {
+
+    private ContactDataSource mDataSource;
 
     public ContactPresenter(ConactContract.View view) {
         super(view);
-
+        mDataSource = new ContactRespository();
     }
 
 
@@ -45,24 +50,8 @@ public class ContactPresenter extends BasePresenter<ConactContract.View>
         super.start();
         // TODO: 2017/6/14 加载数据
 
-        //加载本地数据库
-        SQLite.select()
-                .from(User.class)
-                .where(User_Table.isFollow.eq(true))
-                .and(User_Table.id.notEq(Account.getUserId()))
-                .orderBy(User_Table.name, true)
-                .limit(100)
-                .async()
-                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<User>() {
-                    @Override
-                    public void onListQueryResult(QueryTransaction transaction,
-                                                  @NonNull List<User> tResult) {
-
-                        getView().getRecyclerViewAadpter().replace(tResult);
-                        getView().onAdapterDataChanged();
-
-                    }
-                }).execute();
+        //进行本地的数据加载  并且监听
+        mDataSource.load(this);
 
         UserHelper.refreshContact();
 
@@ -114,5 +103,33 @@ public class ContactPresenter extends BasePresenter<ConactContract.View>
         diffResult.dispatchUpdatesTo(getView().getRecyclerViewAadpter());
         getView().onAdapterDataChanged();
 
+
+    }
+
+
+    //运行在这里的时候要是子线程
+    @Override
+    public void onDataLoaded(List<User> data) {
+        //无论怎么操作  数据变更都会通知到这里来
+        ConactContract.View view = getView();
+        if (view == null)
+            return;
+        RecyclerAdapter<User> adapter = view.getRecyclerViewAadpter();
+        List<User> oldItems = adapter.getItems();
+
+        DiffUtil.Callback callback = new DiffUiDataCallback<>(oldItems, data);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+
+        //调用基类方法进行界面刷新
+        refreshData(diffResult,data);
+
+
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        //当界面销毁的时候  我们应该把数据监听进行销毁
+        mDataSource.dispose();
     }
 }
