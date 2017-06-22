@@ -16,7 +16,7 @@ import butterknife.Unbinder;
 /**
  * Created by wuyinlei on 2017/6/4.
  * <p>
- *     基类Fragment</>
+ * 基类Fragment</>
  */
 
 public abstract class BaseFragment extends Fragment {
@@ -31,9 +31,10 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = mRoot;
         if (mRoot == null) {
             int layoutId = getContentLayoutId();
-            View view = inflater.inflate(layoutId, container, false);
+            view = inflater.inflate(layoutId, container, false);
             mRoot = view;
             initView(view);
         } else {
@@ -42,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
                 ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
-        return mRoot;
+        return mRoot = view;
     }
 
     @Override
@@ -54,8 +55,9 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 初始化窗口
-     * @param bundle  数据
-     * @return  如果初始化成功  返回true
+     *
+     * @param bundle 数据
+     * @return 如果初始化成功  返回true
      */
     protected void initArgs(Bundle bundle) {
 
@@ -70,6 +72,12 @@ public abstract class BaseFragment extends Fragment {
             onFirstInit();
         }
         initData();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mIsFirstInitData = true;
     }
 
     /**
@@ -96,16 +104,17 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 当首次初始化的时候
      */
-    protected void onFirstInit(){
+    protected void onFirstInit() {
 
     }
 
     /**
      * 返回按键初始化时候调用
-     * @return  返回true表示我已经处理返回逻辑   Activity不需要finish
-     *          返回false表示我没有处理返回逻辑  Activity自己处理返回逻辑
+     *
+     * @return 返回true表示我已经处理返回逻辑   Activity不需要finish
+     * 返回false表示我没有处理返回逻辑  Activity自己处理返回逻辑
      */
-    public boolean onBackPressed(){
+    public boolean onBackPressed() {
         return false;
     }
 

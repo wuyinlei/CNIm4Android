@@ -4,12 +4,6 @@
              android:layout_height="match_parent"
              tools:context="com.mingchu.cnim4android.fragment.main.ActiveFragment">
 
-    <com.mingchu.common.widget.GalleryView
-        android:id="@+id/gallery_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="1dp">
 
-    </com.mingchu.common.widget.GalleryView>
 
 </FrameLayout>

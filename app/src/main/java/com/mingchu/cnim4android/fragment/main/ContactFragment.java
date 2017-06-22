@@ -103,6 +103,17 @@ implements ConactContract.View{
     }
 
     @Override
+    protected boolean isSaveView() {
+        return true;  //返回这个true  是保存view不被重新创建
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+
+    }
+
+    @Override
     protected ConactContract.Presenter initPresenter() {
         return new ContactPresenter(this);
     }
