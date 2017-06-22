@@ -97,7 +97,7 @@ public interface RemoteService {
      *
      * @return 用户联系人集合
      */
-    @GET("user/{id}")
-    Call<RspModel<UserCard>> userInfo(@Path(value =  "id",encoded = true) String userId);
+    @GET("user/{userId}")
+    Call<RspModel<UserCard>> userInfo(@Path(value =  "userId",encoded = true) String userId);
 
 }

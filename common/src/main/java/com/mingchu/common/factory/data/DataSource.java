@@ -8,7 +8,7 @@ import android.support.annotation.StringRes;
  * @function 数据源接口
  */
 
-public class DataSource {
+public interface DataSource {
 
     /**
      * 同时包括了成功和失败的接口
@@ -38,5 +38,7 @@ public class DataSource {
         //数据加载失败  网络请求失败
         void onDataNotAvaiable(@StringRes int res);
     }
+
+    void dispose();
 
 }

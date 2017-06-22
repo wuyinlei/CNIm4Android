@@ -22,6 +22,7 @@ import com.mingchu.common.app.ToolbarActivity;
 import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.swipeback.SwipeBackActivityBase;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.contact.PersonalContract;
 import com.mingchu.factory.presenter.contact.PersonalPresenter;
 
@@ -32,7 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.Presenter>
-implements PersonalContract.View{
+        implements PersonalContract.View {
 
 
     private static final String BOUND_KEY_ID = "BOUND_KEY_ID";
@@ -120,7 +121,9 @@ implements PersonalContract.View{
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.start();
+        if (Account.isLogin())
+            mPresenter.start();
+        AccountActivity.show(this);
 
     }
 
@@ -133,16 +136,15 @@ implements PersonalContract.View{
     public void onloadDone(User user) {
         if (user == null)
             return;
-        mPortrait.setup(Glide.with(this),user);
+        mPortrait.setup(Glide.with(this), user);
         mName.setText(user.getName());
         mDesc.setText(user.getDesc());
-        mFollows.setText(String.format(getString(R.string.label_follows),user.getFollows()));
-        mFollowing.setText(String.format(getString(R.string.label_following),user.getFollowing()));
+        mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
+        mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
 
         hideLoading();
 
     }
-
 
 
     @Override

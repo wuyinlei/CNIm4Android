@@ -77,7 +77,7 @@ public class LaunchActivity extends AppCompatActivity {
                     public void run() {
                         waitPushServiceId();
                     }
-                },500);
+                },3000);
     }
 
     /**

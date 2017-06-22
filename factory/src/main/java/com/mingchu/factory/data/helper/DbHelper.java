@@ -252,7 +252,7 @@ public class DbHelper {
 
 
     @SuppressWarnings("unchecked")
-    public interface ChangedListener<Data> {
+    public interface ChangedListener<Data extends BaseModel> {
 
         void onDataDelete(Data... list);
 

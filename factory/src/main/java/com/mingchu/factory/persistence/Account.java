@@ -55,9 +55,9 @@ public class Account {
         //存储
         sp.edit().putString(KEY_PUSH_ID, pushId)
                 .putBoolean(KEY_IS_BIND, isBind)
-                .putString(KEY_TOKEN,token)
-                .putString(KEY_USER_ACCOUNT,account)
-                .putString(KEY_USER_ID,userId)
+                .putString(KEY_TOKEN, token)
+                .putString(KEY_USER_ACCOUNT, account)
+                .putString(KEY_USER_ID, userId)
                 .apply();
     }
 
@@ -71,9 +71,9 @@ public class Account {
                 Context.MODE_PRIVATE);
         pushId = sp.getString(KEY_PUSH_ID, "");
         isBind = sp.getBoolean(KEY_IS_BIND, false);
-        token = sp.getString(KEY_TOKEN,"");
-        userId = sp.getString(KEY_USER_ID,"");
-        account = sp.getString(KEY_USER_ACCOUNT,"");
+        token = sp.getString(KEY_TOKEN, "");
+        userId = sp.getString(KEY_USER_ID, "");
+        account = sp.getString(KEY_USER_ACCOUNT, "");
     }
 
     /**
@@ -93,6 +93,16 @@ public class Account {
 
         return !TextUtils.isEmpty(userId) &&
                 !TextUtils.isEmpty(token);
+    }
+
+    /**
+     * 重置UserId和Token  用于当Token单点登录的时候重新登录使用  在请求的时候先判断一下是否登录
+     * 如果是未登录  让用户重新登录然后在请求数据
+     */
+    public static void setToLogin() {
+        userId = "";
+        token = "";
+        save(Factory.app());
     }
 
     /**
@@ -151,17 +161,19 @@ public class Account {
 
     /**
      * 返回用户id
+     *
      * @return UserId
      */
-    public static String getUserId(){
+    public static String getUserId() {
         return getUser().getId();
     }
 
     /**
      * 获取到token
-     * @return  token
+     *
+     * @return token
      */
-    public static String getToken(){
+    public static String getToken() {
         return token;
     }
 

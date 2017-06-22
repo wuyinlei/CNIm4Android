@@ -53,7 +53,7 @@ public class AccountActivity extends BaseSwipeBackActivity implements AccountTri
     @Override
     protected void initView() {
         super.initView();
-
+        overridePendingTransition(R.anim.login_activity_in, R.anim.login_activity_out);
         mLoginFragment = mCurrentFragment = new LoginFragment();
 
         getSupportFragmentManager().beginTransaction()

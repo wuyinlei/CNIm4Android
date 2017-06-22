@@ -1,5 +1,6 @@
 package com.mingchu.factory;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.annotation.StringRes;
 
@@ -160,8 +161,9 @@ public class Factory {
      * 收到账户退出的消息 要进行账户退出
      */
     private void logout() {
-
+        Account.setToLogin();  //暂时的退出登录逻辑
     }
+
 
     /**
      * 处理推送来的消息
