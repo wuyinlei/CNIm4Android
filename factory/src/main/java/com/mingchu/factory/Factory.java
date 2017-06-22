@@ -3,9 +3,11 @@ package com.mingchu.factory;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.annotation.StringRes;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.mingchu.common.app.Application;
 import com.mingchu.common.factory.data.DataSource;
 import com.mingchu.factory.data.group.GroupCenter;
@@ -14,12 +16,19 @@ import com.mingchu.factory.data.message.MessageCenter;
 import com.mingchu.factory.data.message.MessageDispatcher;
 import com.mingchu.factory.data.user.UserCenter;
 import com.mingchu.factory.data.user.UserDispatcher;
+import com.mingchu.factory.model.api.PushModel;
 import com.mingchu.factory.model.api.RspModel;
+import com.mingchu.factory.model.card.GroupCard;
+import com.mingchu.factory.model.card.GroupMemberCard;
+import com.mingchu.factory.model.card.MessageCard;
+import com.mingchu.factory.model.card.UserCard;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.utils.DBFlowExclusionStrategy;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -171,6 +180,60 @@ public class Factory {
      * @param message 消息
      */
     public static void dispathPushMessage(String message) {
+        if (!Account.isLogin())
+            return;
+        PushModel model = PushModel.decode(message);
+        if (model == null)
+            return;
+
+        Log.d("Factory", model.toString());
+
+        //对推送集合进行遍历
+        for (PushModel.Entity entity : model.getEntities()) {
+            switch (entity.type) {
+                case PushModel.ENTITY_TYPE_LOGOUT:
+                    instance.logout();
+                    //退出情况下直接方法  并且不可继续
+                    return;
+
+                //普通消息
+                case PushModel.ENTITY_TYPE_MESSAGE: {
+                    MessageCard card = getGson().fromJson(entity.content, MessageCard.class);
+                    getMessageCenter().dispatch(card);
+                    break;
+                }
+
+                //添加一个朋友
+                case PushModel.ENTITY_TYPE_ADD_FRIEND: {
+                    UserCard card = getGson().fromJson(entity.content, UserCard.class);
+                    getUserCenter().dispatch(card);
+                    break;
+                }
+
+                //添加群
+                case PushModel.ENTITY_TYPE_ADD_GROUP: {
+                    GroupCard card = getGson().fromJson(entity.content, GroupCard.class);
+                    getGroupCenter().dispatcher(card);
+                    break;
+                }
+
+                case PushModel.ENTITY_TYPE_ADD_GROUP_MEMBERS:
+                case PushModel.ENTITY_TYPE_MODIFY_GROUP_MEMBERS: {
+                    Type type = new TypeToken<List<GroupMemberCard>>(){}.getType();
+                    List<GroupMemberCard> cards = getGson().fromJson(entity.content, type);
+                    //把数据集合丢到数据中心处理
+                    getGroupCenter().dispatcher(cards.toArray(new GroupMemberCard[0]));
+                    break;
+                }
+
+                case PushModel.ENTITY_TYPE_EXIT_GROUP_MEMBERS:
+                    //成员退出的推送
+
+                    break;
+
+
+            }
+        }
 
     }
 

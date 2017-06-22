@@ -1,6 +1,7 @@
 package com.mingchu.factory.data.user;
 
 import com.mingchu.common.factory.data.DataSource;
+import com.mingchu.common.factory.data.DbDataSource;
 import com.mingchu.factory.model.db.User;
 
 import java.util.List;
@@ -11,12 +12,8 @@ import java.util.List;
  * @function 联系人数据源
  */
 
-public interface ContactDataSource {
+public interface ContactDataSource extends DbDataSource<User>{
 
-    //对数据加载的一个职责
-    void load(DataSource.SuccessCallback<List<User>> callback);
 
-    //取消监听
-    void dispose();
 
 }

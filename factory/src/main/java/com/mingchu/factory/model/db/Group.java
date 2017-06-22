@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 @Table(database = AppDatabase.class)
-public class Group extends BaseModel implements Serializable, DiffUiDataCallback.UiDataDiffer<Group> {
+public class Group extends BaseDbModel<Group> implements Serializable {
     @PrimaryKey
     private String id;
     @Column

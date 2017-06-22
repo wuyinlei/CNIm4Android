@@ -18,7 +18,7 @@ import java.util.Objects;
 
 
 @Table(database = AppDatabase.class)
-public class Session extends BaseModel implements DiffUiDataCallback.UiDataDiffer<Session> {
+public class Session extends BaseDbModel<Session>  {
     @PrimaryKey
     private String id;  //Id   Message中的接收者User的id或者群id
     @Column

@@ -16,6 +16,7 @@ import com.mingchu.factory.model.card.UserCard;
 import com.mingchu.factory.model.db.AppDatabase;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.persistence.Account;
+import com.mingchu.factory.presenter.BaseSourcePresenter;
 import com.mingchu.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -34,24 +35,17 @@ import java.util.List;
  * 联系人的Presenter
  */
 
-public class ContactPresenter extends BaseRecyclerPresenter<User,ConactContract.View>
+public class ContactPresenter extends BaseSourcePresenter<User,User,ContactDataSource,ConactContract.View>
         implements ConactContract.Presenter, DataSource.SuccessCallback<List<User>> {
 
-    private ContactDataSource mDataSource;
 
     public ContactPresenter(ConactContract.View view) {
-        super(view);
-        mDataSource = new ContactRespository();
+        super(view, new ContactRespository());
     }
-
 
     @Override
     public void start() {
         super.start();
-        // TODO: 2017/6/14 加载数据
-
-        //进行本地的数据加载  并且监听
-        mDataSource.load(this);
 
         UserHelper.refreshContact();
 
@@ -123,13 +117,6 @@ public class ContactPresenter extends BaseRecyclerPresenter<User,ConactContract.
         //调用基类方法进行界面刷新
         refreshData(diffResult,data);
 
-
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        //当界面销毁的时候  我们应该把数据监听进行销毁
-        mDataSource.dispose();
-    }
 }

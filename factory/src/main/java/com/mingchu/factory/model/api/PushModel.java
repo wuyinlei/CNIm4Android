@@ -19,6 +19,7 @@ public class PushModel {
     public static final int ENTITY_TYPE_ADD_GROUP = 1002;
     public static final int ENTITY_TYPE_ADD_GROUP_MEMBERS = 1003;
     public static final int ENTITY_TYPE_MODIFY_GROUP_MEMBERS = 2004;
+    public static final int ENTITY_TYPE_EXIT_GROUP_MEMBERS = 3001;
 
     private List<Entity> entities = new ArrayList<>();
 
