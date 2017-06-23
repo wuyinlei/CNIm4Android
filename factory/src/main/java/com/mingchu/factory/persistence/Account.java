@@ -86,6 +86,8 @@ public class Account {
 
     /**
      * 返回当前账号是否登录
+     * <p>当token变化的时候会全局退出(方案是在所有的请求接口的地方加上是否登录判断)
+     * </p>
      *
      * @return true  false
      */

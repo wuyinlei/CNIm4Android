@@ -121,9 +121,11 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     @Override
     protected void initData() {
         super.initData();
-        if (Account.isLogin())
+        if (Account.isLogin()) {  //登录了才能去请求网络
             mPresenter.start();
-        AccountActivity.show(this);
+        } else {
+            AccountActivity.show(this);
+        }
 
     }
 

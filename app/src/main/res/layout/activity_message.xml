@@ -2,8 +2,18 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.mingchu.cnim4android.activitys.MessageActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:contentDescription="@string/app_name"
+        android:foreground="@color/black_alpha_16"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/xiuxiu_im_bg"/>
 
 </FrameLayout>
