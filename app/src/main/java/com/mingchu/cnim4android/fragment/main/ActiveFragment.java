@@ -21,6 +21,7 @@ import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.model.db.Session;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.presenter.message.SessionContract;
+import com.mingchu.factory.presenter.message.SessionPresenter;
 import com.mingchu.factory.presenter.search.SearchContract;
 
 import butterknife.BindView;
@@ -51,12 +52,12 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         mRecyclerView.setAdapter(mAdapter = new RecyclerAdapter<Session>() {
             @Override
             protected int getItemViewType(int position, Session session) {
-                return 0;
+                return R.layout.cell_chat_list;
             }
 
             @Override
             protected ViewHolder<Session> onCreateViewHolder(View root, int viewType) {
-                return null;
+                return new ActiveFragment.ViewHolder(root);
             }
         });
 
@@ -96,7 +97,7 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
 
     @Override
     protected SessionContract.Presenter initPresenter() {
-        return null;
+        return new SessionPresenter(this);
     }
 
     @Override

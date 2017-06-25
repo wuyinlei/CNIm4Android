@@ -32,7 +32,7 @@ public abstract class BaseDbRespositroy<Data extends BaseDbModel<Data>> implemen
     //和presenter交互的回调
     private SuccessCallback<List<Data>> mCallback;
 
-    final private List<Data> mDatas = new LinkedList<>();  //当前缓存的数据
+    final protected LinkedList<Data> mDatas = new LinkedList<>();  //当前缓存的数据
 
     private Class<Data> mDataClass;  //当前泛型对应的真实的信息
 
@@ -124,7 +124,7 @@ public abstract class BaseDbRespositroy<Data extends BaseDbModel<Data>> implemen
     }
 
     //插入或者更新
-    private void insertOrUpdate(Data data) {
+    protected void insertOrUpdate(Data data) {
         int index = indexOf(data);
         if (index >= 0) {
             replace(index, data);
@@ -139,7 +139,7 @@ public abstract class BaseDbRespositroy<Data extends BaseDbModel<Data>> implemen
         mDatas.add(index, data);
     }
 
-    private void insert(Data data) {
+    protected void insert(Data data) {
         mDatas.add(data);
     }
 
