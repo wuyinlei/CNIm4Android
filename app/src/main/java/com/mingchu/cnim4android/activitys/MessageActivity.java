@@ -14,6 +14,8 @@ import com.mingchu.common.app.BaseSwipeBackActivity;
 import com.mingchu.common.factory.model.Author;
 import com.mingchu.factory.Factory;
 import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.Message;
+import com.mingchu.factory.model.db.Session;
 
 public class MessageActivity extends BaseSwipeBackActivity {
 
@@ -39,6 +41,21 @@ public class MessageActivity extends BaseSwipeBackActivity {
         Intent intent = new Intent(context, MessageActivity.class);
         intent.putExtra(KEY_RECEIVER_ID, author.getId());
         intent.putExtra(KEY_RECEIVER_IS_GROUP, false);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 通过Session跳转到消息界面
+     *
+     * @param context 上下文
+     * @param session session会话
+     */
+    public static void show(Context context, Session session) {
+        if (session == null || context == null || session.getId() == null)
+            return;
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtra(KEY_RECEIVER_ID, session.getId());
+        intent.putExtra(KEY_RECEIVER_IS_GROUP, session.getReceiverType() == Message.RECEIVER_TYPE_GROUP);
         context.startActivity(intent);
     }
 
@@ -81,10 +98,10 @@ public class MessageActivity extends BaseSwipeBackActivity {
 
         //从activity传递参数到fragment里面
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_RECEIVER_ID,mReceiverId);
+        bundle.putString(KEY_RECEIVER_ID, mReceiverId);
         mFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.lay_container,mFragment)
+                .add(R.id.lay_container, mFragment)
                 .commit();
 
 

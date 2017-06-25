@@ -6,6 +6,7 @@ import com.mingchu.factory.data.helper.MessageHelper;
 import com.mingchu.factory.data.message.MessageDataSource;
 import com.mingchu.factory.model.api.message.MsgCreateModel;
 import com.mingchu.factory.model.db.Message;
+import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.BaseSourcePresenter;
 import com.mingchu.factory.utils.DiffUiDataCallback;
 
@@ -69,6 +70,20 @@ public class ChatPresenter<View extends ChatContract.View>
 
     @Override
     public boolean rePush(Message message) {
+
+        //确定消息是可以重复发送的
+        if (Account.isLogin()&&message.getSender().getId().equalsIgnoreCase(Account.getUserId())
+               && message.getStatus() == Message.STATUS_FAILED) {
+
+            //更改状态
+            message.setStatus(Message.STATUS_CREATED);
+            //构建一个MsgCreateModel
+            MsgCreateModel createModel = MsgCreateModel.buildWithMessage(message);
+
+            MessageHelper.push(createModel);
+            return true;
+        }
+
         return false;
     }
 }

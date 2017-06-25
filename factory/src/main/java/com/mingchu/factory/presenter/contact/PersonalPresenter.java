@@ -49,6 +49,11 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
         });
     }
 
+    /**
+     * 数据加载
+     * @param view  当前view
+     * @param user 用户
+     */
     private void onLoaded(final PersonalContract.View view, final User user) {
         this.mUser = user;
         final boolean isSelf = user.getId().equalsIgnoreCase(Account.getUserId());
@@ -58,6 +63,8 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
         Run.onUiAsync(new Action() {
             @Override
             public void call() {
+                if (view == null)
+                    return;
                 view.allowSayHello(allowSayHello);
                 view.setFollowStatus(isFollow);
                 view.onloadDone(user);

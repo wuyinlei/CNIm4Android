@@ -3,6 +3,7 @@ package com.mingchu.cnim4android.fragment.message;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -66,6 +67,9 @@ public abstract class ChatFragment<InitModel> extends
 
     @BindView(R.id.bt_submit)
     ImageView mBtSumbmit;
+
+    @BindView(R.id.collapsingtoolbarlayout)
+    CollapsingToolbarLayout mCollapsingtoolbarlayout;
 
 
     @Override
@@ -269,9 +273,9 @@ public abstract class ChatFragment<InitModel> extends
         @OnClick(R.id.iv_portrait)
         void onRePushClick() {
             //重新发送
-            if (mLoading != null) {
+            if (mLoading != null && mPresenter.rePush(mData)) {
                 //必须是右边的 才有可能重新发送
-                // TODO: 2017/6/24   重新发送
+                updateData(mData);
             }
 
         }

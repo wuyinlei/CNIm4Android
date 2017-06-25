@@ -3,6 +3,7 @@ package com.mingchu.cnim4android.fragment.message;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.view.menu.MenuPresenter;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.common.app.ToolbarActivity;
@@ -96,6 +101,15 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     protected void initView(View view) {
         super.initView(view);
 
+        Glide.with(this)
+                .load(R.mipmap.default_bannar_chat)
+                .centerCrop()
+                .into(new ViewTarget<CollapsingToolbarLayout,GlideDrawable>(mCollapsingtoolbarlayout) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        this.view.setContentScrim(resource.getCurrent());
+                    }
+                });
 
     }
 
@@ -129,6 +143,9 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     @Override
     public void onInit(User user) {
         //对聊天信息需要用到的数据的初始化操作
+        mPortraitView.setup(Glide.with(getActivity()),user);
+        mCollapsingtoolbarlayout.setTitle(user.getName());
+
 
     }
 

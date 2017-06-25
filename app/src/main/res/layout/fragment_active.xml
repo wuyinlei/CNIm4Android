@@ -5,5 +5,21 @@
              tools:context="com.mingchu.cnim4android.fragment.main.ActiveFragment">
 
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:paddingTop="@dimen/len_12"
+        android:paddingBottom="@dimen/len_12"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        android:background="@drawable/bg_main_recycler"
+        android:layout_width="match_parent"
+        android:outlineProvider="bounds"
+        android:layout_height="match_parent"
+        tools:targetApi="lollipop"/>
+
+    <com.mingchu.common.widget.EmptyView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
