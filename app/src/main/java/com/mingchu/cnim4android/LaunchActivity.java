@@ -67,6 +67,7 @@ public class LaunchActivity extends AppCompatActivity {
             //如果拿到了PushId  没有登录的情况下 不能绑定PushID
             if (!TextUtils.isEmpty(Account.getPushId())) {
                 skip();  //进行跳转
+                return;
             }
         }
 

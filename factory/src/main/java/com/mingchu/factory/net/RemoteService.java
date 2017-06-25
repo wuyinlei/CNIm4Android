@@ -6,7 +6,9 @@ import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.model.api.account.AccountRspModel;
 import com.mingchu.factory.model.api.account.LoginModel;
 import com.mingchu.factory.model.api.account.RegisterModel;
+import com.mingchu.factory.model.api.message.MsgCreateModel;
 import com.mingchu.factory.model.api.user.UserUpdateModel;
+import com.mingchu.factory.model.card.MessageCard;
 import com.mingchu.factory.model.card.UserCard;
 
 import java.util.List;
@@ -99,5 +101,13 @@ public interface RemoteService {
      */
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userInfo(@Path(value =  "userId",encoded = true) String userId);
+
+
+    /**
+     * 发送消息的接口
+     *
+     */
+    @POST("msg")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
 
 }

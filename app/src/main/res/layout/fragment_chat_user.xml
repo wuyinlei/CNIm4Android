@@ -130,11 +130,14 @@
             android:layout_height="match_parent"/>
 
         <ImageView
+            android:id="@+id/bt_submit"
             android:foreground="@drawable/ic_touch_bg"
             android:contentDescription="@string/app_name"
             android:tint="@color/textPrimary"
             android:src="@drawable/ic_submit"
             android:padding="@dimen/len_8"
+            android:enabled="true"
+            android:clickable="true"
             android:layout_width="@dimen/len_44"
             android:layout_height="@dimen/font_44"/>
 

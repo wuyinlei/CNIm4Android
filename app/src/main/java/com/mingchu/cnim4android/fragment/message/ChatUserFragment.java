@@ -14,23 +14,28 @@ import android.view.ViewGroup;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.common.app.ToolbarActivity;
+import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.common.widget.custom.PortraitView;
+import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.presenter.message.ChatContract;
+import com.mingchu.factory.presenter.message.ChatUserPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * A simple {@link Fragment} subclass.
- *
+ * @author wuyinlei
  * @function 用户聊天界面
  */
-public class ChatUserFragment extends ChatFragment {
+public class ChatUserFragment extends ChatFragment<User> implements ChatContract.UserView {
 
     @BindView(R.id.iv_portrait)
     PortraitView mPortraitView;
 
-    private MenuItem mInfoMenuItem;
+//    @BindView(R.id.appbar)
+//    AppBarLayout mAppBarLayout;
 
+    private MenuItem mInfoMenuItem;
 
     @Override
     protected int getContentLayoutId() {
@@ -58,6 +63,7 @@ public class ChatUserFragment extends ChatFragment {
         } else {
             //拖动的时候
             verticalOffset = Math.abs(verticalOffset);
+
             final int totalScroll = appBarLayout.getTotalScrollRange();
             if (verticalOffset >= totalScroll) {
                 mPortraitView.setVisibility(View.INVISIBLE);
@@ -86,6 +92,12 @@ public class ChatUserFragment extends ChatFragment {
 
     }
 
+    @Override
+    protected void initView(View view) {
+        super.initView(view);
+
+
+    }
 
     @Override
     protected void initToolbar() {
@@ -111,5 +123,17 @@ public class ChatUserFragment extends ChatFragment {
     @OnClick(R.id.iv_portrait)
     void onPortraitClick() {
         PersonalActivity.show(getContext(), mReceiverId);
+    }
+
+
+    @Override
+    public void onInit(User user) {
+        //对聊天信息需要用到的数据的初始化操作
+
+    }
+
+    @Override
+    protected ChatContract.Presenter initPresenter() {
+        return new ChatUserPresenter(this,mReceiverId);
     }
 }
