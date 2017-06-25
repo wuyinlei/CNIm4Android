@@ -25,6 +25,11 @@
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fglko8gpe8j30u01hcteb.jpg)
 
+<br>
+![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fgxa9kgc37j30f00qo751.jpg)
+<br>
+![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fgxa9trpimj30f00qogms.jpg)
+<br>
 ###服务器端代码(重要的事情说三遍)
 * https://github.com/wuyinlei/CNIMStudy
 * https://github.com/wuyinlei/CNIMStudy
@@ -40,6 +45,10 @@
 * 2017-06-12 完客户端搜索联系人、完成客户端添加关注、完成客户端联系人界面(一半)
 * 2017-06-13 测试相关接口
 * 2017-06-14 客户端用户详情界面实现、客户端用户联系人界面实现、DiffUtils工具类的了解、使用、封装
+* 2017-06-22 聊天后端个推推送集成实现
+* 2017-06-23 聊天后端推送接口实现
+* 2017-06-24 聊天UI界面实现
+* 2017-06-25 聊天功能实现(当前仅支持文字聊天) 已经测试通过
 
 ###感谢开源(使用到的开源库)
 * [uCrop  图片裁剪开源库][1]   -->[中文介绍][2] -->[uCrop使用及源码浅析][3]  
