@@ -10,7 +10,8 @@ import java.util.Locale;
 
 public class DataTimeUtils {
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yy-MM-dd", Locale.ENGLISH);
+    //  06-28 12:30  显示的时间格式
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("MM-dd HH:mm", Locale.ENGLISH);
 
     /**
      * 获取一个简单的时间字符串

@@ -1,5 +1,8 @@
 package com.mingchu.common.app;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
@@ -8,6 +11,8 @@ import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @function
@@ -15,11 +20,49 @@ import java.io.File;
 public class Application extends android.app.Application {
     protected static Application instance;
     private static File cacheDir;
+    private  List<BaseActivity> mActivities = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        instance.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                mActivities.add((BaseActivity) activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                mActivities.remove(activity);
+            }
+        });
     }
 
     public static Application getInstance() {
@@ -86,5 +129,19 @@ public class Application extends android.app.Application {
         File path = new File(dir, SystemClock.currentThreadTimeMillis() + ".jpg");
         return path.getAbsoluteFile();  //返回一个当前时间戳的文件地址
     }
+
+
+    public   void finishAll(Context context){
+        for (BaseActivity activity : mActivities) {
+            activity.finish();
+        }
+
+        showAccount(context);
+    }
+
+    protected void showAccount(Context context) {
+
+    }
+
 
 }

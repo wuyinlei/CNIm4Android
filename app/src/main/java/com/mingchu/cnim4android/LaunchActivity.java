@@ -15,18 +15,20 @@ import android.view.View;
 import com.mingchu.cnim4android.activitys.AccountActivity;
 import com.mingchu.cnim4android.activitys.MainActivity;
 import com.mingchu.cnim4android.fragment.assist.PermissionsFragment;
+import com.mingchu.common.app.BaseActivity;
 import com.mingchu.factory.persistence.Account;
 
 import net.qiujuer.genius.res.Resource;
 
-public class LaunchActivity extends AppCompatActivity {
+public class LaunchActivity extends BaseActivity {
 
     private ColorDrawable mColorDrawable;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
+    protected void initView() {
+        super.initView();
+
         //拿到根布局
         View root = findViewById(R.id.activity_launch);
         //获取颜色
@@ -37,6 +39,11 @@ public class LaunchActivity extends AppCompatActivity {
         mColorDrawable = colorDrawable;
 
         init();
+    }
+
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.activity_launch;
     }
 
     private void init() {

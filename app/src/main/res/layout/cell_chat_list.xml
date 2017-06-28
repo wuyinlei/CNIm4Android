@@ -17,7 +17,7 @@
         android:layout_width="@dimen/portraitSize"
         android:layout_height="@dimen/portraitSize"
         android:layout_gravity="center"
-        android:src="@drawable/default_portrait" />
+        android:src="@mipmap/ic_launcher" />
 
     <FrameLayout
         android:layout_width="0dp"
@@ -59,7 +59,7 @@
             android:lines="1"
             android:textAlignment="gravity"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/textSecond"
             tools:text="Send your message to me, Thanks! Can I help you~~" />
 
     </FrameLayout>

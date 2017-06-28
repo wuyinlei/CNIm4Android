@@ -170,7 +170,9 @@ public class Factory {
      * 收到账户退出的消息 要进行账户退出
      */
     private void logout() {
-        Account.setToLogin();  //暂时的退出登录逻辑
+
+        Application.getInstance().finishAll(app());
+//        Account.setToLogin();  //暂时的退出登录逻辑
     }
 
 
@@ -219,7 +221,8 @@ public class Factory {
 
                 case PushModel.ENTITY_TYPE_ADD_GROUP_MEMBERS:
                 case PushModel.ENTITY_TYPE_MODIFY_GROUP_MEMBERS: {
-                    Type type = new TypeToken<List<GroupMemberCard>>(){}.getType();
+                    Type type = new TypeToken<List<GroupMemberCard>>() {
+                    }.getType();
                     List<GroupMemberCard> cards = getGson().fromJson(entity.content, type);
                     //把数据集合丢到数据中心处理
                     getGroupCenter().dispatcher(cards.toArray(new GroupMemberCard[0]));

@@ -159,7 +159,7 @@ public abstract class ChatFragment<InitModel> extends
     @Override
     public void onAdapterDataChanged() {
         //不需要做任何操作   界面没有占位布局RecyclerView是一直显示的  不需要做任何操作
-
+        mRecyclerView.scrollToPosition(mAdapter.getItemCount());
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
