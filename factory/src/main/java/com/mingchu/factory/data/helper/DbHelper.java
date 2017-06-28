@@ -176,7 +176,7 @@ public class DbHelper {
 
         // do in async
         DatabaseDefinition database = FlowManager.getDatabase(AppDatabase.class);
-        database.beginTransactionAsync(new ITransaction() {
+        database.beginTransactionAsync( new ITransaction() {
             @Override
             public void execute(DatabaseWrapper databaseWrapper) {
                 ModelAdapter<Session> adapter = FlowManager.getModelAdapter(Session.class);

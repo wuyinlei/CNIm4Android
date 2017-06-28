@@ -45,10 +45,12 @@ public class SessionRespository extends BaseDbRespositroy<Session> implements Se
 
     @Override
     protected void insert(Session session) {
-        super.insert(session);
+//        super.insert(session);
         if (session == null)
             return;
         //复写方法  让新的数据加到头部
+//        if (mDatas.contains(session))
+//            return;
         mDatas.addFirst(session);
     }
 

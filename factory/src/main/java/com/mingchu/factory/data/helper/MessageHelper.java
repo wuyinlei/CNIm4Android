@@ -25,12 +25,22 @@ import retrofit2.Response;
 public class MessageHelper {
 
 
-    public static Message findLastWithGroup(String id) {
-        return null;
+    public static Message findLastWithGroup(String groupId) {
+
+        return SQLite.select()
+                .from(Message.class)
+                .where(Message_Table.group_id.eq(groupId))
+                .orderBy(Message_Table.createAt, false)
+                .querySingle();
     }
 
-    public static Message findLastWithUser(String id) {
-        return null;
+    public static Message findLastWithUser(String userId) {
+        return SQLite.select()
+                .from(Message.class)
+                .where(Message_Table.sender_id.eq(userId))
+                .or(Message_Table.receiver_id.eq(userId))
+                .orderBy(Message_Table.createAt, false)
+                .querySingle();
     }
 
     /**

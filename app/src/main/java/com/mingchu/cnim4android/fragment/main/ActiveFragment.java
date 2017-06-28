@@ -24,6 +24,10 @@ import com.mingchu.factory.presenter.message.SessionContract;
 import com.mingchu.factory.presenter.message.SessionPresenter;
 import com.mingchu.factory.presenter.search.SearchContract;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 
 /**
@@ -88,6 +92,12 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
     protected void initData() {
         super.initData();
 
+
+    }
+
+    @Override
+    protected boolean isSaveView() {
+        return true;
     }
 
     @Override
