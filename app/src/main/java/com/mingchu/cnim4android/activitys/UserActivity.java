@@ -16,10 +16,6 @@ public class UserActivity extends BaseSwipeBackActivity {
     private UpdateUserInfoFragment mCurrentFragment;
 
 
-    @BindView(R.id.title_bar)
-    Toolbar mToolbar;
-
-
     /**
      * 账户Activity显示的入口
      * @param context  上下文
@@ -42,10 +38,6 @@ public class UserActivity extends BaseSwipeBackActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.lay_container, mCurrentFragment)
                 .commit();
-
-        setSupportActionBar(mToolbar);
-        //设置是否有返回箭头
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

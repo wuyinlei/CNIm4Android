@@ -3,6 +3,7 @@ package com.mingchu.cnim4android.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
@@ -20,12 +22,17 @@ import com.mingchu.common.app.BaseSwipeBackActivity;
 import com.mingchu.common.app.PresenterToolbarActivity;
 import com.mingchu.common.app.ToolbarActivity;
 import com.mingchu.common.widget.custom.PortraitView;
+import com.mingchu.common.widget.fglass.Fglass;
 import com.mingchu.common.widget.swipeback.SwipeBackActivityBase;
+import com.mingchu.factory.Factory;
+import com.mingchu.factory.data.helper.UserHelper;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.contact.PersonalContract;
 import com.mingchu.factory.presenter.contact.PersonalPresenter;
 
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Button;
 
@@ -41,18 +48,31 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
 
     @BindView(R.id.im_header)
     ImageView mHeader;
-    @BindView(R.id.im_portrait)
+
+    @BindView(R.id.tv_fglass)
+    TextView mTvFglass;
+
+
+    @BindView(R.id.iv_portrait)
     PortraitView mPortrait;
+
     @BindView(R.id.txt_name)
     TextView mName;
+
     @BindView(R.id.txt_desc)
     TextView mDesc;
+
     @BindView(R.id.txt_follows)
     TextView mFollows;
+
     @BindView(R.id.txt_following)
     TextView mFollowing;
+
     @BindView(R.id.btn_say_hello)
     Button mSayHello;
+
+    @BindView(R.id.btn_logout)
+    Button mBtLogout;
 
     private boolean mIsFollow;
     private MenuItem mFollow;
@@ -82,7 +102,15 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_follow) {
+            if (userId.equalsIgnoreCase(Account.getUserId())) {
+                //如果是自己  则点击的应该是编辑按钮  调转到编辑用户信息界面
+                UserActivity.show(this);
 
+            } else {
+                // 如果看的不是自己的信息  则点击 应该是关注和取消关注
+                // TODO: 2017/6/29
+
+            }
             //进行关注的操作
             return true;
         }
@@ -96,19 +124,34 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
         MessageActivity.show(this, mPresenter.getUserPersonal());
     }
 
+
+    @OnClick(R.id.btn_logout)
+    void onLogout() {
+        Factory.deleteUserInfo();
+        AccountActivity.show(this);
+    }
+
+
     //改变关注状态
     private void changeFollowStatus() {
         if (mFollow == null)
             //
             return;
 
-        mFollow.setEnabled(!mIsFollow);
+        if (!Account.getUserId().equalsIgnoreCase(userId)) {
 
-        Drawable menuIcon = mIsFollow ? getResources().getDrawable(R.drawable.ic_favorite) :
-                getResources().getDrawable(R.drawable.ic_favorite_border);
-        menuIcon = DrawableCompat.wrap(menuIcon).mutate();
-        DrawableCompat.setTint(menuIcon, UiCompat.getColor(getResources(), R.color.white));
-        mFollow.setIcon(menuIcon);
+            mFollow.setEnabled(!mIsFollow);
+
+            Drawable menuIcon = mIsFollow ? getResources().getDrawable(R.drawable.ic_favorite) :
+                    getResources().getDrawable(R.drawable.ic_favorite_border);
+            menuIcon = DrawableCompat.wrap(menuIcon).mutate();
+            DrawableCompat.setTint(menuIcon, UiCompat.getColor(getResources(), R.color.white));
+            mFollow.setIcon(menuIcon);
+        } else {
+            mFollow.setIcon(getResources().getDrawable(R.drawable.ic_edit));
+
+        }
+
 
     }
 
@@ -116,6 +159,37 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     protected void initView() {
         super.initView();
         setTitle("");
+
+        Factory.runOnAsync(new Runnable() {
+            @Override
+            public void run() {
+                final String portrait = UserHelper.search(userId).getPortrait();
+
+                Run.onUiAsync(new Action() {
+                    @Override
+                    public void call() {
+                        if (!TextUtils.isEmpty(portrait)){
+                            Glide.with(PersonalActivity.this)
+                                    .load(portrait)
+                                    .asBitmap()
+                                    .centerCrop()
+                                    .error(R.drawable.default_user_img)
+                                    .placeholder(R.drawable.default_user_img)
+                                    .into(mHeader);
+                        }
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Fglass.blur(mHeader,mTvFglass,2,8);
+                            }
+                        },100);
+                    }
+                });
+            }
+        });
+
+
     }
 
     @Override
@@ -152,6 +226,7 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     @Override
     public void allowSayHello(boolean isAllow) {
         mSayHello.setVisibility(isAllow ? View.VISIBLE : View.GONE);
+        mBtLogout.setVisibility(!isAllow ? View.VISIBLE : View.GONE);
     }
 
     @Override

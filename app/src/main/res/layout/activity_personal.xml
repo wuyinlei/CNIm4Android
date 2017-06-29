@@ -19,6 +19,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_fglass"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/len_48"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_user_img"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -43,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <com.mingchu.common.widget.custom.PortraitView
-        android:id="@+id/im_portrait"
+        android:id="@+id/iv_portrait"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="bottom"
@@ -52,7 +65,9 @@
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline1"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:src="@mipmap/ic_launcher" />
+        tools:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="4dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -109,6 +124,28 @@
         android:gravity="center"
         android:minWidth="@dimen/len_156"
         android:text="@string/btn_send_start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:gTouchColor="@color/white_alpha_48"
+        app:gTouchCornerRadius="22dp"
+        app:gTouchEffect="ripple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:visibility="visible" />
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/len_28"
+        android:layout_marginBottom="@dimen/len_16"
+        android:background="@drawable/sel_btn_bg_accent_44"
+        android:gravity="center"
+        android:minWidth="@dimen/len_156"
+        android:text="@string/btn_logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:textColor="@color/white"
         android:visibility="gone"

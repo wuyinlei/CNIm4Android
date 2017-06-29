@@ -7,6 +7,8 @@ import android.os.SystemClock;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
+import com.yalantis.ucrop.UCropActivity;
+
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
 
@@ -30,6 +32,9 @@ public class Application extends android.app.Application {
         instance.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                //防止使用UCop进行裁剪的时候报错
+                if (activity instanceof UCropActivity)
+                    return;
                 mActivities.add((BaseActivity) activity);
             }
 

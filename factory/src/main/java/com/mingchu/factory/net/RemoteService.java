@@ -62,7 +62,7 @@ public interface RemoteService {
      * @param userUpdateModel 更新model
      * @return UserCard
      */
-    @PUT("user")
+    @PUT("user/update")
     Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel userUpdateModel);
 
 
@@ -109,5 +109,6 @@ public interface RemoteService {
      */
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+
 
 }

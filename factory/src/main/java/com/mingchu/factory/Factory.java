@@ -180,16 +180,23 @@ public class Factory {
      */
     private void logout() {
 
-        //如果在退出登录的情况下  删除所有数据  防止再次登录其他账号的时候拉取本地的数据错乱
-        SQLite.delete(User.class).execute();
-        SQLite.delete(Message.class).execute();
-        SQLite.delete(Session.class).execute();
-        SQLite.delete(Group.class).execute();
+        deleteUserInfo();
 
         Application.getInstance().finishAll(app());
 
 
 //        Account.setToLogin();  //暂时的退出登录逻辑
+    }
+
+    /**
+     * 删除用户数据  防止再次登录其他用户(包含自己)数据拉取错误
+     */
+    public static void deleteUserInfo() {
+        //如果在退出登录的情况下  删除所有数据  防止再次登录其他账号的时候拉取本地的数据错乱
+        SQLite.delete(User.class).execute();
+        SQLite.delete(Message.class).execute();
+        SQLite.delete(Session.class).execute();
+        SQLite.delete(Group.class).execute();
     }
 
 

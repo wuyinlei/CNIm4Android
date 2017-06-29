@@ -48,13 +48,13 @@ public class UserHelper {
         Factory.runOnAsync(new Runnable() {
             @Override
             public void run() {
-                String urlPortrait = UploadHelper.uploadPortrait(portrait);
-                if (TextUtils.isEmpty(urlPortrait)) {
+//                String urlPortrait = UploadHelper.uploadPortrait(portrait);
+                if (TextUtils.isEmpty(portrait)) {
                     callback.onDataNotAvaiable(R.string.data_upload_error);
                     return;
                 }
 
-                UserUpdateModel infoModel = new UserUpdateModel(name, urlPortrait, desc, sex);
+                UserUpdateModel infoModel = new UserUpdateModel(name, portrait, desc, sex);
                 RemoteService remoteService = NetWork.remote();
                 Call<RspModel<UserCard>> rspModelCall = remoteService.userUpdate(infoModel);
                 try {
@@ -214,11 +214,6 @@ public class UserHelper {
             if (card != null) {
 
                 Factory.getUserCenter().dispatch(card);
-
-//                //数据库的刷新  // TODO: 2017/6/15   数据库通知 但是没有刷新
-//                User user = card.build();
-////                user.save();
-//                DbHelper.save(User.class, user);
 
                 return card.build();
             }

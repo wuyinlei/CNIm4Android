@@ -11,6 +11,7 @@
     <string name="label_portrait_tips">选择你的专属头像</string>
     <string name="label_name">名字</string>
     <string name="label_desc_tips">用一句话介绍自己</string>
+    <string name="label_name_tips">用户名</string>
     <string name="label_sex_man">男</string>
     <string name="label_sex_woman">女</string>
     <string name="label_go_register">没有账户？去注册</string>
