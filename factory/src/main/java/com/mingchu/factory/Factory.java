@@ -22,10 +22,19 @@ import com.mingchu.factory.model.card.GroupCard;
 import com.mingchu.factory.model.card.GroupMemberCard;
 import com.mingchu.factory.model.card.MessageCard;
 import com.mingchu.factory.model.card.UserCard;
+import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.Group_Table;
+import com.mingchu.factory.model.db.Message;
+import com.mingchu.factory.model.db.Message_Table;
+import com.mingchu.factory.model.db.Session;
+import com.mingchu.factory.model.db.Session_Table;
+import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.model.db.User_Table;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.utils.DBFlowExclusionStrategy;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -171,7 +180,15 @@ public class Factory {
      */
     private void logout() {
 
+        //如果在退出登录的情况下  删除所有数据  防止再次登录其他账号的时候拉取本地的数据错乱
+        SQLite.delete(User.class).execute();
+        SQLite.delete(Message.class).execute();
+        SQLite.delete(Session.class).execute();
+        SQLite.delete(Group.class).execute();
+
         Application.getInstance().finishAll(app());
+
+
 //        Account.setToLogin();  //暂时的退出登录逻辑
     }
 

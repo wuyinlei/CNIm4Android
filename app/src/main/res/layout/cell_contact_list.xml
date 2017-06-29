@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/len_2"
-    android:layout_marginTop="@dimen/len_2"
-    android:foreground="@drawable/ic_touch_fg"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/len_10"
-    android:paddingEnd="@dimen/len_16"
-    android:paddingStart="@dimen/len_16"
-    android:paddingTop="@dimen/len_10">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/len_2"
+             android:layout_marginTop="@dimen/len_2"
+             android:clickable="true"
+             android:id="@+id/fragment_container"
+             android:foreground="@drawable/ic_touch_fg"
+             android:orientation="horizontal"
+             android:paddingBottom="@dimen/len_10"
+             android:paddingEnd="@dimen/len_16"
+             android:paddingStart="@dimen/len_16"
+             android:paddingTop="@dimen/len_10">
 
     <com.mingchu.common.widget.custom.PortraitView
         android:id="@+id/iv_portrait"
         android:layout_width="@dimen/portraitSize"
         android:layout_height="@dimen/portraitSize"
         android:layout_gravity="start|center_vertical"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -32,7 +34,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/fontNameSize"
-        tools:text="Mary Harmon" />
+        tools:text="Mary Harmon"/>
 
     <TextView
         android:id="@+id/tv_desc"
@@ -49,7 +51,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/textSecond"
         android:textSize="@dimen/font_12"
-        tools:text="Mary Harmon" />
+        tools:text="Mary Harmon"/>
 
     <ImageView
         android:layout_width="@dimen/len_32"
@@ -61,6 +63,6 @@
         android:padding="@dimen/len_6"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_chat_bubble"
-        android:tint="@color/textAccent" />
+        android:tint="@color/textAccent"/>
 
 </FrameLayout>

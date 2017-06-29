@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -73,23 +74,6 @@ implements ConactContract.View{
         /**
          * Item事件监听方法
          */
-        mRecyclerAdapter.setAdapterItemClickListener(new RecyclerAdapter.AdapterItemClickListener<User>() {
-            @Override
-            public void onItemClick(RecyclerAdapter.ViewHolder holder, final User data) {
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转到聊天界面
-                        MessageActivity.show(getContext(),data);
-                    }
-                });
-            }
-
-            @Override
-            public void onLongItemClick(RecyclerAdapter.ViewHolder holder, User data) {
-
-            }
-        });
 
         //初始化占位布局
         mEmptyView.bind(mRecyclerView);
@@ -139,6 +123,11 @@ implements ConactContract.View{
 
         @BindView(R.id.tv_desc)
         TextView mTvDesc;
+
+        @OnClick(R.id.fragment_container)
+        void onItemClick(){
+            MessageActivity.show(getContext(),mData);
+        }
 
         @OnClick(R.id.iv_portrait)
             //发起关注
