@@ -45,7 +45,8 @@ public class SessionRespository extends BaseDbRespositroy<Session> implements Se
 
     @Override
     protected void insert(Session session) {
-//        super.insert(session);
+//        super.insert(session);   //这里不应该调用父类的方法  要不然会导致数据重复
+// 调用几次  重复几次 因为这里的mDatas是共用的
         if (session == null)
             return;
         //复写方法  让新的数据加到头部
