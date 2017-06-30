@@ -10,6 +10,7 @@
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzly1fgcfacu2bhj30u01hcgrx.jpg)
 <br>
+<br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fglkyzu79zj30u01hc17a.jpg)
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fglkzc9qr3j30u01hc7j0.jpg)
@@ -22,25 +23,38 @@
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fglklwcf7nj30u01hcdty.jpg)
 <br>
+####联系人界面
+<br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fglko8gpe8j30u01hcteb.jpg)
 <br>
-####聊天功能实现
+####搜索联系人界面
 <br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fgxa9kgc37j30f00qo751.jpg)
 <br>
+####聊天信息界面
+<br>
 ![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fgxa9trpimj30f00qogms.jpg)
 <br>
-
+####会话列表界面
+<br>
+![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fh2ybxwz19j30u01hck1a.jpg)
+<br>
+####个人信息界面
+<br>
+![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fh2ycq76fxj30u01hcaou.jpg)
+<br>
+####更新用户信息界面
+<br>
+![](http://ww1.sinaimg.cn/mw690/006jcGvzgy1fh2yd53rdtj30u01hcdl9.jpg)
+<br>
 
 ###服务器端代码(重要的事情说三遍)
-
 * https://github.com/wuyinlei/CNIMStudy
 * https://github.com/wuyinlei/CNIMStudy
 * https://github.com/wuyinlei/CNIMStudy
 
 
 ###更新内容
-
 * 2017-06-07 更新底部Tab栏和ToolBar
 * 2017-06-08 自定义相册选择和第三方图片裁剪
 * 2017-06-09 完成图片上传到OSS和6.0以上权限适配问题
@@ -53,9 +67,10 @@
 * 2017-06-23 聊天后端推送接口实现
 * 2017-06-24 聊天UI界面实现
 * 2017-06-25 聊天功能实现(当前仅支持文字聊天) 已经测试通过
+* 2017-06-27 会话列表重复bug修复
+* 2017-06-29 更新用户信息逻辑完事,修复bug和添加高斯模糊
 
 ###感谢开源(使用到的开源库)
-
 * [uCrop  图片裁剪开源库][1]   -->[中文介绍][2] -->[uCrop使用及源码浅析][3]  
 * [easypermissions][4]  -->[googlesamples之easypermissions使用][5]
 * [oss图片缓存存储][6]  --->[使用简介代码][7]
@@ -65,7 +80,6 @@
 * [Butterknife注解框架][11]
 
 ###交流群(项目持续开发中)
-
 * 136471108(群号)
 * 136471108(群号)
 * 136471108(群号)
@@ -82,3 +96,8 @@
   [9]: https://github.com/bumptech/glide
   [10]: https://github.com/Raizlabs/DBFlow
   [11]: https://github.com/JakeWharton/butterknife
+  
+  
+  
+  
+  
