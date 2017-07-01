@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/statusBarSize"
+            android:background="@color/colorPrimary"
+            android:foreground="@color/black_alpha_32" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/len_16">
+
+            <com.mingchu.common.widget.custom.PortraitView
+                android:id="@+id/iv_portrait"
+                android:layout_width="@dimen/len_80"
+                android:layout_height="@dimen/len_80"
+                android:layout_marginTop="@dimen/len_16"
+                android:src="@drawable/default_holder_add"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/len_4"
+                android:layout_marginStart="@dimen/len_16"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <net.qiujuer.genius.ui.widget.EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_group_name"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="10"
+                    android:paddingBottom="@dimen/len_2"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white_alpha_208"
+                    android:textCursorDrawable="@drawable/ic_cursor_white"
+                    android:textSize="@dimen/font_16"
+                    app:gHintTitle="slide"
+                    app:gHintTitlePaddingBottom="@dimen/len_2"
+                    app:gHintTitleTextSize="@dimen/font_12"
+                    app:gLineColor="@color/white_alpha_240"
+                    app:gLineSize="1dp" />
+
+                <net.qiujuer.genius.ui.widget.EditText
+                    android:id="@+id/edit_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_group_desc"
+                    android:inputType="textMultiLine"
+                    android:maxLength="64"
+                    android:maxLines="2"
+                    android:paddingBottom="@dimen/len_2"
+                    android:paddingTop="@dimen/len_14"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white_alpha_208"
+                    android:textCursorDrawable="@drawable/ic_cursor_white"
+                    android:textSize="@dimen/font_16"
+                    app:gHintTitle="slide"
+                    app:gHintTitlePaddingBottom="@dimen/len_2"
+                    app:gHintTitleTextSize="@dimen/font_12"
+                    app:gLineColor="@color/white_alpha_240"
+                    app:gLineSize="1dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/len_8"
+            android:layout_marginEnd="@dimen/len_16"
+            android:layout_marginStart="@dimen/len_16"
+            android:text="@string/label_group_member_select"
+            android:textSize="@dimen/font_18"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/white_alpha_208" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/len_16"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</android.support.design.widget.CoordinatorLayout>

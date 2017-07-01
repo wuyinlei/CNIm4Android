@@ -32,6 +32,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     private OnSelectedListener mListener;
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
             dismiss();
             if (mListener != null) {
                 String[] paths = mGalleryView.getSelectedPath();
-                mListener.onSelectedImage(paths[0]); //返回第一张
+                mListener.onSelectedImage(paths); //返回第一张
                 //取消引用  加快内存回收
                 mListener = null;
             }
@@ -85,7 +86,7 @@ public class GalleryFragment extends BottomSheetDialogFragment
     }
 
     public interface OnSelectedListener {
-        void onSelectedImage(String path);
+        void onSelectedImage(String[] path);
     }
 
 

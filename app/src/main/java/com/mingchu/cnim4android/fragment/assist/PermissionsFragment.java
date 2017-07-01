@@ -120,7 +120,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
      * @param context 上下文
      * @return false  没有  true  有
      */
-    private static boolean hasWriteWorkPerms(Context context) {
+    public static boolean hasWriteWorkPerms(Context context) {
         //准备需要检查的写入权限
         String[] perms = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE

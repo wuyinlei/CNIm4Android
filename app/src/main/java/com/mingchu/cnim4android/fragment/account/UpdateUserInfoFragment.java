@@ -82,7 +82,7 @@ public class UpdateUserInfoFragment extends PresenterFragment<UpdateInfoContract
     void onPortraitClick() {
         new GalleryFragment().setListener(new GalleryFragment.OnSelectedListener() {
             @Override
-            public void onSelectedImage(String path) {
+            public void onSelectedImage(String[] paths) {
                 UCrop.Options options = new UCrop.Options();
                 //设置图片处理的格式
                 options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
@@ -92,7 +92,7 @@ public class UpdateUserInfoFragment extends PresenterFragment<UpdateInfoContract
                 //得到头像的缓存地址
                 File dPath = Application.getPortraitFile();
 
-                UCrop.of(Uri.fromFile(new File(path)), Uri.fromFile(dPath))
+                UCrop.of(Uri.fromFile(new File(paths[0])), Uri.fromFile(dPath))
                         .withAspectRatio(1, 1)//一个正方形图片
                         .withMaxResultSize(520, 520) //最大尺寸
                         .withOptions(options)  //先关参数

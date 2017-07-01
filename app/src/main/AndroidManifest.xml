@@ -73,6 +73,8 @@
             android:name=".activitys.PersonalActivity"
             android:theme="@style/AppTheme.Main">
         </activity>
+        <activity android:name=".activitys.GroupCreateActivity">
+        </activity>
     </application>
 
 </manifest>

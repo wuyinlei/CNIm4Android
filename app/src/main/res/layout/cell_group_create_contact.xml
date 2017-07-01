@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/len_2"
+             android:layout_marginTop="@dimen/len_2"
+             android:background="@color/white"
+             android:foreground="@drawable/ic_touch_fg"
+             android:orientation="horizontal"
+             android:paddingBottom="@dimen/len_12"
+             android:paddingEnd="@dimen/len_8"
+             android:paddingStart="@dimen/len_16"
+             android:paddingTop="@dimen/len_12">
+
+    <com.mingchu.common.widget.custom.PortraitView
+        android:id="@+id/iv_portrait"
+        android:layout_width="@dimen/portraitSize"
+        android:layout_height="@dimen/portraitSize"
+        android:layout_gravity="start|center_vertical"
+        android:src="@drawable/default_portrait" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/len_24"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="@dimen/len_52"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/fontNameSize"
+        tools:text="Mary Harmon" />
+
+    <CheckBox
+        android:id="@+id/cb_select"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_margin="@dimen/len_8"
+        android:button="@drawable/sel_cb_circle"
+        android:drawablePadding="0dp"
+        android:padding="0dp"
+        app:buttonTint="@color/cb_group_contact"
+        tools:ignore="MissingPrefix" />
+
+</FrameLayout>
