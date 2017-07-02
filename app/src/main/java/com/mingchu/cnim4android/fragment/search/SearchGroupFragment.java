@@ -5,13 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SectionIndexer;
+import android.widget.TextView;
 
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.SearchActivity;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.common.widget.EmptyView;
+import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.model.card.GroupCard;
 import com.mingchu.factory.model.card.UserCard;
@@ -35,6 +38,8 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
     @BindView(R.id.empty_view)
     EmptyView mEmptyView;
 
+    private RecyclerAdapter<GroupCard> mRecyclerAdapter;
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_search_group;
@@ -55,7 +60,8 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
         super.initView(view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new RecyclerAdapter<GroupCard>() {
+
+        mRecyclerAdapter = new RecyclerAdapter<GroupCard>() {
 
             @Override
             protected int getItemViewType(int position, GroupCard data) {
@@ -66,7 +72,13 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
             protected ViewHolder<GroupCard> onCreateViewHolder(View root, int viewType) {
                 return new SearchGroupFragment.ViewHolder(root);
             }
-        });
+        };
+
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+
+        //初始化占位布局
+        mEmptyView.bind(mRecyclerView);
+        setPlaceHolderView(mEmptyView);
     }
 
     @Override
@@ -75,6 +87,15 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCard>{
+
+        @BindView(R.id.iv_portrait)
+        PortraitView mIvPortrait;
+
+        @BindView(R.id.txt_name)
+        TextView mTvName;
+
+        @BindView(R.id.iv_follow)
+        ImageView mIvFollow;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -7,9 +7,11 @@ import com.mingchu.factory.model.api.account.AccountRspModel;
 import com.mingchu.factory.model.api.account.LoginModel;
 import com.mingchu.factory.model.api.account.RegisterModel;
 import com.mingchu.factory.model.api.group.GroupCreateModel;
+import com.mingchu.factory.model.api.group.GroupMemberAddModel;
 import com.mingchu.factory.model.api.message.MsgCreateModel;
 import com.mingchu.factory.model.api.user.UserUpdateModel;
 import com.mingchu.factory.model.card.GroupCard;
+import com.mingchu.factory.model.card.GroupMemberCard;
 import com.mingchu.factory.model.card.MessageCard;
 import com.mingchu.factory.model.card.UserCard;
 
@@ -102,12 +104,11 @@ public interface RemoteService {
      * @return 用户联系人集合
      */
     @GET("user/{userId}")
-    Call<RspModel<UserCard>> userInfo(@Path(value =  "userId",encoded = true) String userId);
+    Call<RspModel<UserCard>> userInfo(@Path(value = "userId", encoded = true) String userId);
 
 
     /**
      * 发送消息的接口
-     *
      */
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
@@ -123,7 +124,35 @@ public interface RemoteService {
      * 群创建
      */
     @GET("group/info/{groupId}")
-    Call<RspModel<GroupCard>> groupInfo(@Path(value =  "groupId",encoded = true) String groupId);
+    Call<RspModel<GroupCard>> groupInfo(@Path(value = "groupId") String groupId);
+
+
+    /**
+     * 搜索群
+     */
+    @GET("group/search/{name}")
+    Call<RspModel<List<GroupCard>>> searchGroup(@Path(value = "name", encoded = true) String name);
+
+
+    /**
+     * 我的群列表信息(我加入的群)
+     */
+    @GET("group/list/{date}")
+    Call<RspModel<List<GroupCard>>> listGroup(@Path(value = "date", encoded = true) String date);
+
+
+    /**
+     * 我的群列表信息(我加入的群)
+     */
+    @GET("group/members/{groupId}")
+    Call<RspModel<List<GroupMemberCard>>> groupMembers(@Path(value = "groupId") String groupId);
+
+
+    /**
+     * 给我的群添加人
+     */
+    @POST("group/add/{groupId}")
+    Call<RspModel<List<GroupMemberCard>>> addMember(@Path(value = "groupId") String groupId, @Body GroupMemberAddModel model);
 
 
 }
