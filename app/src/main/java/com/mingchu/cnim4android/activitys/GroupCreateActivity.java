@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,11 +24,19 @@ import com.mingchu.cnim4android.fragment.assist.PermissionsFragment;
 import com.mingchu.cnim4android.fragment.media.GalleryFragment;
 import com.mingchu.common.app.Application;
 import com.mingchu.common.app.BaseActivity;
+import com.mingchu.common.app.PresenterToolbarActivity;
 import com.mingchu.common.widget.custom.PortraitView;
+import com.mingchu.common.widget.fglass.Fglass;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
+import com.mingchu.factory.Factory;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.net.UploadHelper;
+import com.mingchu.factory.presenter.group.GroupCreateContract;
+import com.mingchu.factory.presenter.group.GroupCreatePresenter;
 import com.yalantis.ucrop.UCrop;
 
+import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 import net.qiujuer.genius.ui.widget.EditText;
 
 import java.io.File;
@@ -36,7 +47,8 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class GroupCreateActivity extends BaseActivity {
+public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateContract.Presenter>
+        implements GroupCreateContract.View {
 
 
     @BindView(R.id.recycler)
@@ -51,13 +63,19 @@ public class GroupCreateActivity extends BaseActivity {
     @BindView(R.id.iv_portrait)
     PortraitView mPortrait;
 
-    private RecyclerAdapter<User> mAdapter;
+
+    private RecyclerAdapter<GroupCreateContract.ViewModel> mAdapter;
+
+    //头像地址
     private String mPortraitPath;
-    private Set<String> mMembers = new HashSet<>();
+
+    //用户选中的队列
+    public Set<String> mMembers = new HashSet<>();
 
     /**
      * 显示该activity
-     * @param context  上下文
+     *
+     * @param context 上下文
      */
     public static void show(Context context) {
         context.startActivity(new Intent(context, GroupCreateActivity.class));
@@ -70,17 +88,21 @@ public class GroupCreateActivity extends BaseActivity {
         setTitle("");
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RecyclerAdapter<User>() {
+        mAdapter = new RecyclerAdapter<GroupCreateContract.ViewModel>() {
             @Override
-            protected ViewHolder<User> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder<GroupCreateContract.ViewModel> onCreateViewHolder(View root, int viewType) {
                 return new GroupCreateActivity.ViewHolder(root);
             }
 
             @Override
-            protected int getItemViewType(int position, User user) {
+            protected int getItemViewType(int position, GroupCreateContract.ViewModel user) {
                 return R.layout.cell_group_create_contact;
             }
         };
+
+        mRecycler.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -100,8 +122,12 @@ public class GroupCreateActivity extends BaseActivity {
 
     @OnClick(R.id.iv_portrait)
     void onClickPortrait() {
-        if (!PermissionsFragment.hasWriteWorkPerms(this))
-            return;
+
+        hideSoftKeyboard();
+
+
+//        if (!PermissionsFragment.hasWriteWorkPerms(this))
+//            return;
 
 
         new GalleryFragment().setListener(new GalleryFragment.OnSelectedListener() {
@@ -121,24 +147,81 @@ public class GroupCreateActivity extends BaseActivity {
                         .withMaxResultSize(520, 520) //最大尺寸
                         .withOptions(options)  //先关参数
                         .start(GroupCreateActivity.this); //启动
-
             }
-            //show的时候使用getChildFragmentManager()
         }).show(getSupportFragmentManager(), GalleryFragment.class.getName());
 
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //收到从activity传递过来的回调  取出值进行加载  如果使我们可以处理的类型  我们就去进行处理
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            //通过UCrop得到对应的图片Uri
+            final Uri resultUri = UCrop.getOutput(data);
+            if (resultUri != null) {
+
+                //加载裁剪过后的图片
+                loadPortrait(resultUri);
+
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            final Throwable coprError = UCrop.getError(data);
+        }
+    }
+
+
+
+    /**
+     * 加载图片
+     * @param path
+     */
     private void loadPortrait(Uri path) {
-        this.mPortraitPath = path.getPath();
+
+        final String picturePath = path.getPath();
+
         Glide.with(this)
                 .load(path)
                 .asBitmap()
                 .centerCrop()
                 .into(mPortrait);
+
+
+        //异步上传图片到阿里的云OSS服务器
+        Factory.runOnAsync(new Runnable() {
+            @Override
+            public void run() {
+                //异步上传
+                final String url = UploadHelper.uploadPortrait(picturePath);
+                Run.onUiAsync(new Action() {
+                    @Override
+                    public void call() {
+                        mPortraitPath = url;
+                    }
+                });
+            }
+        });
+
+
     }
 
-    private void onClickCreate() {
+    @Override
+    protected void initData() {
+        super.initData();
 
+        mPresenter.start();
+
+
+    }
+
+    /**
+     * 群创建提交按钮
+     */
+    private void onClickCreate() {
+        hideSoftKeyboard();
+        String groupName = mName.getText().toString().trim();
+        String groupDesc = mDesc.getText().toString().trim();
+        mPresenter.create(groupName, groupDesc, mPortraitPath);
     }
 
 
@@ -147,7 +230,44 @@ public class GroupCreateActivity extends BaseActivity {
         return R.layout.activity_group_create;
     }
 
-    public class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
+    @Override
+    protected GroupCreateContract.Presenter initPresenter() {
+        return new GroupCreatePresenter(this);
+    }
+
+    @Override
+    public RecyclerAdapter<GroupCreateContract.ViewModel> getRecyclerViewAadpter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+
+        //数据加载成功之后要进行消失loading对话框
+        hideLoading();
+    }
+
+
+
+    /**
+     * 隐藏软键盘
+     */
+    private void hideSoftKeyboard(){
+        View view = getCurrentFocus();  //当前焦点的view
+        if (view == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
+
+    @Override
+    public void onCreateSuccessed() {
+        hideLoading();
+        Application.showToast(R.string.label_group_create_succeed);
+        finish();
+    }
+
+    public class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCreateContract.ViewModel> {
 
         @BindView(R.id.iv_portrait)
         PortraitView mPortrait;
@@ -163,17 +283,17 @@ public class GroupCreateActivity extends BaseActivity {
         @OnCheckedChanged(R.id.cb_select)
         void onCheckedChanged(boolean checked) {
             if (checked) {
-                mMembers.add(mData.getId());
+                mMembers.add(mData.mAuthor.getId());
             } else {
-                mMembers.remove(mData.getId());
+                mMembers.remove(mData.mAuthor.getId());
             }
         }
 
         @Override
-        protected void onBind(User user) {
-            mPortrait.setup(Glide.with(GroupCreateActivity.this), user);
-            mName.setText(user.getName());
-            mSelect.setChecked(mMembers.contains(user.getId()));
+        protected void onBind(GroupCreateContract.ViewModel user) {
+            mPortrait.setup(Glide.with(GroupCreateActivity.this),user.mAuthor);
+            mName.setText(user.mAuthor.getName());
+            mSelect.setSelected(user.isSelected);
         }
     }
 }

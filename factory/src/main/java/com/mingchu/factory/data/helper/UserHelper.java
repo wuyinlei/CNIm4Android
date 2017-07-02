@@ -14,9 +14,11 @@ import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.model.api.user.UserUpdateModel;
 import com.mingchu.factory.model.card.UserCard;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.model.db.view.UserSampleMode;
 import com.mingchu.factory.net.NetWork;
 import com.mingchu.factory.net.RemoteService;
 import com.mingchu.factory.net.UploadHelper;
+import com.mingchu.factory.persistence.Account;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
@@ -243,6 +245,42 @@ public class UserHelper {
                 .where(User_Table.id.eq(userId))
                 .querySingle();
     }
+
+
+    /**
+     * 获取联系人
+     */
+    public  static  List<User>  getContact(){
+
+        //加载本地数据库
+       return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryList();
+    }
+
+    /**
+     * 获取联系人  但是是一个简单数据
+     */
+    public  static  List<UserSampleMode>  getSampleContact(){
+
+        //加载本地数据库
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                //查询为一个自定义的列表
+                .queryCustomList(UserSampleMode.class);
+    }
+
+
 
 
 //    public static User findFromLocal(String id) {

@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity implements
 
     @OnClick(R.id.iv_portrait)
     void onPortraitClick() {
-        PersonalActivity.show(this,Account.getUserId());
+        PersonalActivity.show(this, Account.getUserId());
     }
 
     @OnClick(R.id.bt_action)
@@ -155,7 +155,7 @@ public class MainActivity extends BaseActivity implements
         //浮动按钮判断当前界面是群还是联系人界面
         //如果是人  则打开群创建的界面  如果是其他都打开用户界面
         if (Objects.equals(mNavFraHelper.getCurrentTab().extra, R.string.title_group)) {
-            SearchActivity.show(this, SearchActivity.TYPE_GROUP);
+            GroupCreateActivity.show(this);   //打开群组创建界面
         } else {  //打开人的界面
             SearchActivity.show(this, SearchActivity.TYPE_USER);
         }

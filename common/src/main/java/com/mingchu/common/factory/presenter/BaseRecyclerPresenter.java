@@ -34,6 +34,7 @@ public class BaseRecyclerPresenter<ViewModel, View extends BaseContract.Recycler
                 adapter.replace(dataLists);
                 view.onAdapterDataChanged();
 
+
             }
         });
     }

@@ -6,8 +6,10 @@ import com.mingchu.factory.model.api.RspModel;
 import com.mingchu.factory.model.api.account.AccountRspModel;
 import com.mingchu.factory.model.api.account.LoginModel;
 import com.mingchu.factory.model.api.account.RegisterModel;
+import com.mingchu.factory.model.api.group.GroupCreateModel;
 import com.mingchu.factory.model.api.message.MsgCreateModel;
 import com.mingchu.factory.model.api.user.UserUpdateModel;
+import com.mingchu.factory.model.card.GroupCard;
 import com.mingchu.factory.model.card.MessageCard;
 import com.mingchu.factory.model.card.UserCard;
 
@@ -109,6 +111,19 @@ public interface RemoteService {
      */
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+
+
+    /**
+     * 群创建
+     */
+    @POST("group/create")
+    Call<RspModel<GroupCard>> createGroup(@Body GroupCreateModel model);
+
+    /**
+     * 群创建
+     */
+    @GET("group/info/{groupId}")
+    Call<RspModel<GroupCard>> groupInfo(@Path(value =  "groupId",encoded = true) String groupId);
 
 
 }

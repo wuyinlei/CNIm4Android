@@ -47,5 +47,6 @@ public interface BaseContract<T> {
 
         //当适配器更改的时候触发
         void onAdapterDataChanged();
+
     }
 }
