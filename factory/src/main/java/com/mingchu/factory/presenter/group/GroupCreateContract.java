@@ -2,6 +2,10 @@ package com.mingchu.factory.presenter.group;
 
 import com.mingchu.common.factory.model.Author;
 import com.mingchu.common.factory.presenter.BaseContract;
+import com.mingchu.factory.model.db.User;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wuyinlei on 2017/7/2.
@@ -15,24 +19,17 @@ public interface GroupCreateContract {
 
         /**
          * 创建
-         *
-         * @param name    群组名字
+         *  @param name    群组名字
          * @param desc    群组描述
          * @param picture 群组头像
+         * @param members
          */
-        void create(String name, String desc, String picture);
+        void create(String name, String desc, String picture, List<String> members);
 
-        /**
-         * 更改一个model的选中状态
-         *
-         * @param model      更改的model
-         * @param isSelected 是否被选中
-         */
-        void changeSelect(ViewModel model, boolean isSelected);
 
     }
 
-    interface View extends BaseContract.RecyclerView<Presenter, ViewModel> {
+    interface View extends BaseContract.RecyclerView<Presenter, User> {
 
 
         //创建成功
@@ -42,11 +39,5 @@ public interface GroupCreateContract {
     }
 
 
-    class ViewModel {
 
-        public Author mAuthor;
-        //是否被选中
-        public boolean isSelected;
-
-    }
 }

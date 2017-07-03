@@ -40,7 +40,9 @@ import net.qiujuer.genius.kit.handler.runable.Action;
 import net.qiujuer.genius.ui.widget.EditText;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -64,13 +66,13 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
     PortraitView mPortrait;
 
 
-    private RecyclerAdapter<GroupCreateContract.ViewModel> mAdapter;
+    private RecyclerAdapter<User> mAdapter;
 
     //头像地址
     private String mPortraitPath;
 
     //用户选中的队列
-    public Set<String> mMembers = new HashSet<>();
+    public List<String> mMembers = new ArrayList<>();
 
     /**
      * 显示该activity
@@ -88,14 +90,16 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         setTitle("");
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new RecyclerAdapter<GroupCreateContract.ViewModel>() {
+
+
+        mAdapter = new RecyclerAdapter<User>() {
             @Override
-            protected ViewHolder<GroupCreateContract.ViewModel> onCreateViewHolder(View root, int viewType) {
+            protected ViewHolder<User> onCreateViewHolder(View root, int viewType) {
                 return new GroupCreateActivity.ViewHolder(root);
             }
 
             @Override
-            protected int getItemViewType(int position, GroupCreateContract.ViewModel user) {
+            protected int getItemViewType(int position,User user) {
                 return R.layout.cell_group_create_contact;
             }
         };
@@ -151,6 +155,8 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         }).show(getSupportFragmentManager(), GalleryFragment.class.getName());
 
     }
+
+
 
 
     @Override
@@ -221,7 +227,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         hideSoftKeyboard();
         String groupName = mName.getText().toString().trim();
         String groupDesc = mDesc.getText().toString().trim();
-        mPresenter.create(groupName, groupDesc, mPortraitPath);
+        mPresenter.create(groupName, groupDesc, mPortraitPath,mMembers);
     }
 
 
@@ -236,7 +242,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
     }
 
     @Override
-    public RecyclerAdapter<GroupCreateContract.ViewModel> getRecyclerViewAadpter() {
+    public RecyclerAdapter<User> getRecyclerViewAadpter() {
         return mAdapter;
     }
 
@@ -267,7 +273,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         finish();
     }
 
-    public class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCreateContract.ViewModel> {
+    public class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
 
         @BindView(R.id.iv_portrait)
         PortraitView mPortrait;
@@ -283,17 +289,19 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         @OnCheckedChanged(R.id.cb_select)
         void onCheckedChanged(boolean checked) {
             if (checked) {
-                mMembers.add(mData.mAuthor.getId());
+                String id = mData.getId();
+                mMembers.add(id);
             } else {
-                mMembers.remove(mData.mAuthor.getId());
+                mMembers.remove(mData.getId());
             }
         }
 
         @Override
-        protected void onBind(GroupCreateContract.ViewModel user) {
-            mPortrait.setup(Glide.with(GroupCreateActivity.this),user.mAuthor);
-            mName.setText(user.mAuthor.getName());
-            mSelect.setSelected(user.isSelected);
+        protected void onBind(User user) {
+            mPortrait.setup(Glide.with(GroupCreateActivity.this),user);
+            mName.setText(user.getName());
+            mSelect.setSelected(mMembers.contains(user.getId()));
+
         }
     }
 }

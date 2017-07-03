@@ -1,6 +1,8 @@
 package com.mingchu.factory.model.api.group;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,9 +16,9 @@ public class GroupCreateModel {
     private String name;  //群组名
     private String desc;  //群描述
     private String picture;  //群头像
-    private Set<String> users = new HashSet<>();
+    private List<String> users = new ArrayList<>();
 
-    public GroupCreateModel(String name, String desc, String picture, Set<String> users) {
+    public GroupCreateModel(String name, String desc, String picture, List<String> users) {
         this.name = name;
         this.desc = desc;
         this.picture = picture;
@@ -47,11 +49,11 @@ public class GroupCreateModel {
         this.picture = picture;
     }
 
-    public Set<String> getUsers() {
+    public List<String> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<String> users) {
+    public void setUsers(List<String> users) {
         this.users = users;
     }
 }

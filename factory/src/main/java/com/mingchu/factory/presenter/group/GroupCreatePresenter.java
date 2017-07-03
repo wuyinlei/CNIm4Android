@@ -2,7 +2,6 @@ package com.mingchu.factory.presenter.group;
 
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.mingchu.common.factory.data.DataSource;
 import com.mingchu.common.factory.presenter.BaseRecyclerPresenter;
@@ -14,7 +13,6 @@ import com.mingchu.factory.model.api.group.GroupCreateModel;
 import com.mingchu.factory.model.card.GroupCard;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.model.db.view.UserSampleMode;
-import com.mingchu.factory.net.UploadHelper;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
@@ -31,7 +29,7 @@ import java.util.Set;
  */
 
 public class GroupCreatePresenter extends
-        BaseRecyclerPresenter<GroupCreateContract.ViewModel, GroupCreateContract.View>
+        BaseRecyclerPresenter<User, GroupCreateContract.View>
         implements GroupCreateContract.Presenter, DataSource.Callback<GroupCard> {
 
     private Set<String> users = new HashSet<>();
@@ -50,8 +48,8 @@ public class GroupCreatePresenter extends
     }
 
     private String uploadPicture(String path){
-        String url = UploadHelper.uploadPortrait(path);
-        if (TextUtils.isEmpty(url)){
+//        String url = UploadHelper.uploadPortrait(path);
+        if (TextUtils.isEmpty(path)){
             //切换到主线程
             Run.onUiAsync(new Action() {
                 @Override
@@ -62,11 +60,11 @@ public class GroupCreatePresenter extends
                 }
             });
         }
-        return url;
+        return path;
     }
 
     @Override
-    public void create(final String name, final String desc, final String picture) {
+    public void create(final String name, final String desc, final String picture, final List<String> members) {
         GroupCreateContract.View view = getView();
         if (view == null)
             return;
@@ -85,7 +83,7 @@ public class GroupCreatePresenter extends
                 if (TextUtils.isEmpty(url))
                     return;
 
-                GroupCreateModel model = new GroupCreateModel(name,desc,url,users);
+                GroupCreateModel model = new GroupCreateModel(name,desc,url,members);
 
                 //请求接口
                 GroupHelper.create(model,GroupCreatePresenter.this);
@@ -97,13 +95,6 @@ public class GroupCreatePresenter extends
 
     }
 
-    @Override
-    public void changeSelect(GroupCreateContract.ViewModel model, boolean isSelected) {
-        if (isSelected)
-            users.add(model.mAuthor.getId());
-        else
-            users.remove(model.mAuthor.getId());
-    }
 
 
 
@@ -112,12 +103,14 @@ public class GroupCreatePresenter extends
         public void run() {
             List<UserSampleMode> userSampleModes = UserHelper.getSampleContact();
 
-          List<GroupCreateContract.ViewModel> models = new ArrayList<>();
+          List<User> models = new ArrayList<>();
 
             for (UserSampleMode sampleMode : userSampleModes) {
-                GroupCreateContract.ViewModel model = new GroupCreateContract.ViewModel();
-                model.mAuthor = sampleMode;
-                models.add(model);
+                User user = new User();
+                user.setId(sampleMode.getId());
+                user.setName(sampleMode.getName());
+                user.setPortrait(sampleMode.getPortrait());
+                models.add(user);
             }
 
             refreshData(models);

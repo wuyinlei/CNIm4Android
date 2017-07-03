@@ -23,7 +23,7 @@ public class UserSampleMode implements Author {
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 
     @Override
