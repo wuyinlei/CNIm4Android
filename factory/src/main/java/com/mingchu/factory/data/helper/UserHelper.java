@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.mingchu.common.tools.CollectionUtil;
+import com.mingchu.factory.model.card.GroupCard;
 import com.mingchu.factory.model.db.User_Table;
 
 import com.mingchu.common.factory.data.DataSource;
@@ -110,6 +111,38 @@ public class UserHelper {
         return call;
     }
 
+    /**
+     * 搜搜方法
+     *
+     * @param content  搜索关键字
+     * @param callback 回调接口
+     */
+    public static Call searchGroup(String content, final DataSource.Callback<List<GroupCard>> callback) {
+
+        Call<RspModel<List<GroupCard>>> call = NetWork.remote().searchGroup(content);
+
+        call.enqueue(new Callback<RspModel<List<GroupCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupCard>>> call,
+                                   Response<RspModel<List<GroupCard>>> response) {
+                RspModel<List<GroupCard>> body = response.body();
+                if (body.success()) {
+                    List<GroupCard> result = body.getResult();
+                    callback.onDataLoaded(result);
+                } else {
+                    Factory.decodeRspCode(body, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+                callback.onDataNotAvaiable(R.string.data_network_error);
+            }
+        });
+
+        return call;
+    }
+
 
     /**
      * 关注人的方法
@@ -161,7 +194,7 @@ public class UserHelper {
                 RspModel<List<UserCard>> body = response.body();
                 if (body.success()) {
                     List<UserCard> result = body.getResult();
-                    Factory.getUserCenter().dispatch(CollectionUtil.toArray(result,UserCard.class));
+                    Factory.getUserCenter().dispatch(CollectionUtil.toArray(result, UserCard.class));
 //                    callback.onDataLoaded(result);
                 } else {
                     Factory.decodeRspCode(body, null);
@@ -250,10 +283,10 @@ public class UserHelper {
     /**
      * 获取联系人
      */
-    public  static  List<User>  getContact(){
+    public static List<User> getContact() {
 
         //加载本地数据库
-       return SQLite.select()
+        return SQLite.select()
                 .from(User.class)
                 .where(User_Table.isFollow.eq(true))
                 .and(User_Table.id.notEq(Account.getUserId()))
@@ -265,7 +298,7 @@ public class UserHelper {
     /**
      * 获取联系人  但是是一个简单数据
      */
-    public  static  List<UserSampleMode>  getSampleContact(){
+    public static List<UserSampleMode> getSampleContact() {
 
         //加载本地数据库
         return SQLite.select(User_Table.id.withTable().as("id"),
@@ -279,8 +312,6 @@ public class UserHelper {
                 //查询为一个自定义的列表
                 .queryCustomList(UserSampleMode.class);
     }
-
-
 
 
 //    public static User findFromLocal(String id) {

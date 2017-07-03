@@ -4,12 +4,15 @@ package com.mingchu.cnim4android.fragment.search;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.cnim4android.activitys.SearchActivity;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.factory.presenter.BaseContract;
@@ -24,12 +27,13 @@ import com.mingchu.factory.presenter.search.SearchGroupPresenter;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchGroupFragment extends PresenterFragment<SearchContract.Presenter> implements
-        SearchActivity.SearchFragment ,SearchContract.GroupView{
+        SearchActivity.SearchFragment, SearchContract.GroupView {
 
 
     @BindView(R.id.recycler_view)
@@ -65,7 +69,7 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
 
             @Override
             protected int getItemViewType(int position, GroupCard data) {
-                return 0;
+                return R.layout.cell_search_list;
             }
 
             @Override
@@ -82,11 +86,19 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
     }
 
     @Override
-    public void onSearchDone(List<GroupCard> groupCards) {
-
+    protected void initData() {
+        super.initData();
+        search("");
     }
 
-    class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCard>{
+    @Override
+    public void onSearchDone(List<GroupCard> groupCards) {
+        mRecyclerAdapter.replace(groupCards);
+        //如果有数据则是ok  如果没有数据则显示空布局
+        mPlaceHolderView.triggerOkOrEmpty(mRecyclerAdapter.getItemCount() > 0);
+    }
+
+    class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCard> {
 
         @BindView(R.id.iv_portrait)
         PortraitView mIvPortrait;
@@ -97,6 +109,13 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
         @BindView(R.id.iv_follow)
         ImageView mIvFollow;
 
+        @OnClick(R.id.iv_follow)
+            //发起关注
+        void onFollowClick() {
+
+        }
+
+
         public ViewHolder(View itemView) {
             super(itemView);
         }
@@ -104,6 +123,12 @@ public class SearchGroupFragment extends PresenterFragment<SearchContract.Presen
         @Override
         protected void onBind(GroupCard data) {
 
+            mIvPortrait.setup(Glide.with(SearchGroupFragment.this), data.getPicture());
+            if (!TextUtils.isEmpty(data.getName())) {
+                mTvName.setText(data.getName());
+            }
+
+            mIvFollow.setEnabled(data.getJoinAt() != null);
         }
     }
 
