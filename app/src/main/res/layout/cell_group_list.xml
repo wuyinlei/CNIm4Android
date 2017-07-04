@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/len_4"
+    android:background="@drawable/cell_group_bg"
+    android:elevation="1dp"
+    android:foreground="@drawable/cell_group_fg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:outlineProvider="background"
+    tools:targetApi="lollipop">
+
+    <com.mingchu.common.widget.custom.PortraitView
+        android:id="@+id/iv_portrait"
+        android:layout_width="@dimen/portraitMaxSize"
+        android:layout_height="@dimen/portraitMaxSize"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/len_16"
+        android:src="@drawable/default_portrait" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/len_16"
+        android:layout_marginRight="@dimen/len_16"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/fontNameSize"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/len_16"
+        android:layout_marginLeft="@dimen/len_16"
+        android:layout_marginRight="@dimen/len_16"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/textSecond"
+        tools:text="1 minutes ago" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/len_8"
+        android:layout_marginRight="@dimen/len_8"
+        android:background="@color/windowsBackground" />
+
+    <TextView
+        android:id="@+id/tv_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/len_16"
+        android:layout_marginLeft="@dimen/len_16"
+        android:layout_marginRight="@dimen/len_16"
+        android:layout_marginTop="@dimen/len_16"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/textSecond"
+        tools:text="Mary Harmon" />
+
+</LinearLayout>

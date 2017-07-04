@@ -12,6 +12,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -115,9 +116,9 @@ public class Group extends BaseDbModel<Group> implements Serializable {
         this.groupMembers = groupMembers;
     }
 
-    private List<MemberUserModel> groupLatelyMembers;
+    private static List<MemberUserModel> groupLatelyMembers;
 
-    public List<MemberUserModel> getLatelyGroupMembers() {
+    public  List<MemberUserModel> getLatelyGroupMembers() {
         if (groupLatelyMembers == null || groupLatelyMembers.isEmpty()) {
             groupLatelyMembers = GroupHelper.getMemberUsers(id, 4);
         }
@@ -163,4 +164,6 @@ public class Group extends BaseDbModel<Group> implements Serializable {
                 && Objects.equals(this.picture, oldT.picture)
                 && Objects.equals(this.holder, oldT.holder);
     }
+
+
 }
