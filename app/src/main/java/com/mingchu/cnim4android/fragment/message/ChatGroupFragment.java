@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import com.mingchu.cnim4android.R;
 import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.factory.model.db.Group;
+import com.mingchu.factory.model.db.view.MemberUserModel;
 import com.mingchu.factory.presenter.message.ChatContract;
+import com.mingchu.factory.presenter.message.ChatGroupPresenter;
+
+import java.util.List;
 
 /**
  * @author wuyinlei
@@ -31,6 +35,16 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
 
     @Override
     protected ChatContract.Presenter initPresenter() {
-        return null;
+        return new ChatGroupPresenter(this,mReceiverId);
+    }
+
+    @Override
+    public void showAdminOptions(boolean isAdmin) {
+
+    }
+
+    @Override
+    public void onInitGroupMembers(List<MemberUserModel> memberUserModels, int moreCount) {
+
     }
 }

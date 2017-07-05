@@ -48,5 +48,8 @@ public interface BaseContract<T> {
         //当适配器更改的时候触发
         void onAdapterDataChanged();
 
+        //用于在发了聊天文字之后 定位到当前聊天文字的地方
+        void scrollRecyclerToPosition(int position);
+
     }
 }

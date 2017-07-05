@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_face_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_32"
+        android:background="@color/white_alpha_224"
+        android:elevation="1dp"
+        android:orientation="horizontal"
+        android:outlineProvider="background"
+        tools:targetApi="lollipop">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/len_32"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="1px"
+            android:layout_weight="2"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/black_alpha_16"
+            app:tabIndicatorHeight="@dimen/len_32"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/textPrimary"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:tabTextColor="@color/textSecond" />
+
+        <ImageView
+            android:id="@+id/im_backspace"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:foreground="@drawable/ic_touch_fg"
+            android:gravity="center"
+            android:padding="@dimen/len_6"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_backspace"
+            android:tint="@color/textSecond" />
+    </LinearLayout>
+
+
+</LinearLayout>

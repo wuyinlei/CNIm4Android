@@ -253,6 +253,10 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         hideLoading();
     }
 
+    @Override
+    public void scrollRecyclerToPosition(int position) {
+
+    }
 
 
     /**

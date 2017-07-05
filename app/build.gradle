@@ -48,6 +48,8 @@ dependencies {
 
     compile "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
     compile "net.qiujuer.genius:kit-reflect:$rootProject.ext.geniusVersion"
+    compile "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
+    compile "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
 
 
     compile "com.aliyun.dpa:oss-android-sdk:$rootProject.ext.ossVersion"

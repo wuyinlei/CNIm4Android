@@ -113,6 +113,11 @@ implements ConactContract.View{
         mPlaceHolderView.triggerOkOrEmpty(mRecyclerAdapter.getItemCount() > 0 );
     }
 
+    @Override
+    public void scrollRecyclerToPosition(int position) {
+
+    }
+
     class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
 
         @BindView(R.id.iv_portrait)

@@ -37,10 +37,11 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     @BindView(R.id.iv_portrait)
     PortraitView mPortraitView;
 
-//    @BindView(R.id.appbar)
-//    AppBarLayout mAppBarLayout;
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout mCollapsingtoolbarlayout;
 
     private MenuItem mInfoMenuItem;
+
 
     @Override
     protected int getContentLayoutId() {
@@ -111,6 +112,13 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
                     }
                 });
 
+    }
+
+    @Override
+    protected void onOptionStatusChange(boolean isActive) {
+        if (isActive && mAppBarLayout != null) {
+            mAppBarLayout.setExpanded(false, true);
+        }
     }
 
     @Override

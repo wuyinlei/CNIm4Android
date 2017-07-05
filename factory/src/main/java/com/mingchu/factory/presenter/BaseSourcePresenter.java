@@ -3,7 +3,6 @@ package com.mingchu.factory.presenter;
 import com.mingchu.common.factory.data.DataSource;
 import com.mingchu.common.factory.data.DbDataSource;
 import com.mingchu.common.factory.presenter.BaseContract;
-import com.mingchu.common.factory.presenter.BaseRecyclerPresenter;
 
 import java.util.List;
 

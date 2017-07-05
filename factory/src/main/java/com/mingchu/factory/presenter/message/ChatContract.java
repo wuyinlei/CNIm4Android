@@ -4,6 +4,9 @@ import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.factory.model.db.Group;
 import com.mingchu.factory.model.db.Message;
 import com.mingchu.factory.model.db.User;
+import com.mingchu.factory.model.db.view.MemberUserModel;
+
+import java.util.List;
 
 /**
  * Created by wuyinlei on 2017/6/24.
@@ -44,6 +47,11 @@ public interface ChatContract {
     //群聊天界面
     interface GroupView extends View<Group>{
 
+        //显示是否是管理员
+        void showAdminOptions(boolean isAdmin);
+
+        //初始化成员
+        void onInitGroupMembers(List<MemberUserModel> memberUserModels,int moreCount);
 
     }
 }

@@ -1,31 +1,16 @@
 package com.mingchu.factory.presenter.contact;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v7.util.DiffUtil;
 
 import com.mingchu.common.factory.data.DataSource;
-import com.mingchu.common.factory.presenter.BaseContract;
-import com.mingchu.common.factory.presenter.BasePresenter;
-import com.mingchu.common.factory.presenter.BaseRecyclerPresenter;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
 import com.mingchu.factory.data.helper.UserHelper;
 import com.mingchu.factory.data.user.ContactDataSource;
 import com.mingchu.factory.data.user.ContactRespository;
-import com.mingchu.factory.model.card.UserCard;
-import com.mingchu.factory.model.db.AppDatabase;
 import com.mingchu.factory.model.db.User;
-import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.BaseSourcePresenter;
 import com.mingchu.factory.utils.DiffUiDataCallback;
-import com.raizlabs.android.dbflow.config.DatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
-import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

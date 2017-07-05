@@ -1,8 +1,11 @@
-package com.mingchu.common.factory.presenter;
+package com.mingchu.factory.presenter;
 
 import android.support.v7.util.DiffUtil;
 
+import com.mingchu.common.factory.presenter.BaseContract;
+import com.mingchu.common.factory.presenter.BasePresenter;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
+import com.mingchu.factory.utils.ListUpdateCallback;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
@@ -32,6 +35,7 @@ public class BaseRecyclerPresenter<ViewModel, View extends BaseContract.Recycler
                 //基本的更新数据并刷新界面
                 RecyclerAdapter<ViewModel> adapter = view.getRecyclerViewAadpter();
                 adapter.replace(dataLists);
+                adapter.notifyDataSetChanged();
                 view.onAdapterDataChanged();
 
 
@@ -72,10 +76,17 @@ public class BaseRecyclerPresenter<ViewModel, View extends BaseContract.Recycler
         //改变数据集合并不通知
         adapter.getItems().clear();
         adapter.getItems().addAll(datalists);
+        ListUpdateCallback callback = new ListUpdateCallback(adapter);
+
+        //进行增量更新
+        diffResult.dispatchUpdatesTo(callback);
+
+        if (callback.getInsertPosition() != -1)
+            view.scrollRecyclerToPosition(callback.getInsertPosition());
+
+
         //通知界面刷新占位布局
         view.onAdapterDataChanged();
-        //进行增量更新
-        diffResult.dispatchUpdatesTo(adapter);
     }
 
 

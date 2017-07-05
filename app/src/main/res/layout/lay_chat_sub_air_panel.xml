@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.qiujuer.widget.airpanel.AirPanelLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/airPanelSubLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="1px"
+    android:visibility="gone">
+
+    <fragment
+        android:id="@+id/frag_panel"
+        class="com.mingchu.cnim4android.fragment.panel.PanelFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_panel" />
+</net.qiujuer.widget.airpanel.AirPanelLinearLayout>

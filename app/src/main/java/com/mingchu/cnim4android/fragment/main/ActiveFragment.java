@@ -120,6 +120,11 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
     }
 
+    @Override
+    public void scrollRecyclerToPosition(int position) {
+
+    }
+
     class ViewHolder extends RecyclerAdapter.ViewHolder<Session> {
 
         @BindView(R.id.iv_portrait)

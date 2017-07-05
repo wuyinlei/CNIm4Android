@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_gallery_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.mingchu.common.widget.GalleryView
+        android:id="@+id/view_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="1dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_32"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_preview"
+            android:layout_width="@dimen/len_64"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/len_2"
+            android:alpha="0.5"
+            android:background="@drawable/sel_btn_bg_accent_4_stroke"
+            android:enabled="false"
+            android:foreground="@drawable/ic_touch_fg"
+            android:padding="0dp"
+            android:text="@string/btn_preview"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/txt_gallery_select_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/textSecond"
+            tools:text="已选3张" />
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="@dimen/len_64"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/len_2"
+            android:background="@drawable/sel_btn_bg_accent_4"
+            android:foreground="@drawable/ic_touch_fg"
+            android:padding="0dp"
+            android:text="@string/btn_send"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/textLight"
+            android:textSize="@dimen/font_14" />
+    </FrameLayout>
+
+
+</LinearLayout>

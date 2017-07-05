@@ -1,13 +1,69 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.mingchu.cnim4android.fragment.message.ChatGroupFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<com.mingchu.common.widget.MessageLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:id="@+id/lay_container"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/len_128"
+        android:elevation="@dimen/len_2"
+        android:outlineProvider="bounds"
+        tools:targetApi="lollipop">
+
+        <ImageView
+            android:id="@+id/im_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            android:foreground="@color/maskChatHeader"
+            android:scaleType="centerCrop"
+            android:src="@color/textPrimary"
+            tools:src="@mipmap/default_bannar_group" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/statusBarSize" />
+
+        <LinearLayout
+            android:id="@+id/lay_members"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/actionBarWithStatusBarSize">
+
+            <TextView
+                android:id="@+id/txt_member_more"
+                android:layout_width="@dimen/len_32"
+                android:layout_height="@dimen/len_32"
+                android:layout_margin="2dp"
+                android:layout_marginBottom="@dimen/len_8"
+                android:background="@drawable/sel_bg_clr_32"
+                android:gravity="center"
+                android:padding="@dimen/len_2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                tools:text="+2" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <include layout="@layout/lay_chat_content" />
+
+    <include layout="@layout/lay_chat_option" />
+
+    <include layout="@layout/lay_chat_sub_air_panel" />
+</com.mingchu.common.widget.MessageLayout>

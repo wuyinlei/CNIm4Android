@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_option"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/white_alpha_224"
+    android:elevation="@dimen/len_2"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:outlineProvider="bounds"
+    tools:targetApi="lollipop">
+
+    <ImageView
+        android:id="@+id/btn_face"
+        android:layout_width="@dimen/len_44"
+        android:layout_height="@dimen/len_44"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:enabled="true"
+        android:foreground="@drawable/ic_touch_fg"
+        android:padding="@dimen/len_8"
+        android:src="@drawable/ic_emoji"
+        android:tint="@color/textPrimary" />
+
+    <ImageView
+        android:id="@+id/btn_record"
+        android:layout_width="@dimen/len_44"
+        android:layout_height="@dimen/len_44"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:enabled="true"
+        android:foreground="@drawable/ic_touch_fg"
+        android:padding="@dimen/len_8"
+        android:src="@drawable/ic_record"
+        android:tint="@color/textPrimary" />
+
+    <EditText
+        android:id="@+id/edit_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="@string/label_chat_edit_hint"
+        android:lineSpacingExtra="0dp"
+        android:lineSpacingMultiplier="1"
+        android:maxHeight="@dimen/len_68"
+        android:minHeight="@dimen/len_44"
+        android:padding="@dimen/len_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/textSecond"
+        android:textCursorDrawable="@drawable/ic_cursor" />
+
+    <ImageView
+        android:id="@+id/btn_submit"
+        android:layout_width="@dimen/len_44"
+        android:layout_height="@dimen/len_44"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:enabled="true"
+        android:foreground="@drawable/ic_touch_fg"
+        android:padding="@dimen/len_8"
+        android:src="@drawable/ic_submit"
+        android:tint="@color/textPrimary" />
+</LinearLayout>

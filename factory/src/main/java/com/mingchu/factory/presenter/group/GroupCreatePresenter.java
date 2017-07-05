@@ -4,7 +4,7 @@ import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
 import com.mingchu.common.factory.data.DataSource;
-import com.mingchu.common.factory.presenter.BaseRecyclerPresenter;
+import com.mingchu.factory.presenter.BaseRecyclerPresenter;
 import com.mingchu.factory.Factory;
 import com.mingchu.factory.R;
 import com.mingchu.factory.data.helper.GroupHelper;

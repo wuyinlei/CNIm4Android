@@ -103,6 +103,11 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter> i
     }
 
     @Override
+    public void scrollRecyclerToPosition(int position) {
+
+    }
+
+    @Override
     protected GroupsContract.Presenter initPresenter() {
         return new GroupsPresenter(this);
     }
@@ -122,16 +127,6 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter> i
         @BindView(R.id.tv_member)
         TextView mTvMember;
 
-        @OnClick(R.id.fragment_container)
-        void onItemClick(){
-            MessageActivity.show(getContext(),mData);
-        }
-
-        @OnClick(R.id.iv_portrait)
-            //发起关注
-        void onPortraitClick() {  //用户详情界面
-            PersonalActivity.show(getContext(), mData.getId());
-        }
 
         public ViewHolder(View itemView) {
             super(itemView);

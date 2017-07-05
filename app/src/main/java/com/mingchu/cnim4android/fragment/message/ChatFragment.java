@@ -1,6 +1,7 @@
 package com.mingchu.cnim4android.fragment.message;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.MessageActivity;
+import com.mingchu.cnim4android.fragment.panel.PanelFragment;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.widget.adapter.TextWatcherAdapter;
@@ -32,7 +34,10 @@ import com.mingchu.factory.presenter.message.ChatContract;
 
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
+import net.qiujuer.widget.airpanel.AirPanel;
+import net.qiujuer.widget.airpanel.Util;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,7 +52,7 @@ import butterknife.OnClick;
 
 public abstract class ChatFragment<InitModel> extends
         PresenterFragment<ChatContract.Presenter> implements
-        AppBarLayout.OnOffsetChangedListener,ChatContract.View<InitModel> {
+        AppBarLayout.OnOffsetChangedListener,ChatContract.View<InitModel>,PanelFragment.PanelCallback {
 
     protected String mReceiverId;
 
@@ -56,20 +61,19 @@ public abstract class ChatFragment<InitModel> extends
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.recycler_view)
+    @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.appbar)
-    AppBarLayout mBarLayout;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout mAppBarLayout;
 
-    @BindView(R.id.et_content)
+
+    @BindView(R.id.edit_content)
     EditText mEtContent;
 
-    @BindView(R.id.bt_submit)
+    @BindView(R.id.btn_submit)
     ImageView mBtSumbmit;
 
-    @BindView(R.id.collapsingtoolbarlayout)
-    CollapsingToolbarLayout mCollapsingtoolbarlayout;
 
 
     @Override
@@ -79,14 +83,24 @@ public abstract class ChatFragment<InitModel> extends
     }
 
 
+    private PanelFragment mPanelContent;
+    private AirPanel.Boss mPanelBoss;
+
 
     @Override
     protected void initView(View view) {
         super.initView(view);
 
         initToolbar();
-        initAppbar();
 
+
+        mPanelBoss = (AirPanel.Boss) view.findViewById(R.id.lay_container);
+        mPanelBoss.setPanelListener(new AirPanel.Listener() {
+            @Override
+            public void requestHideSoftKeyboard() {
+                Util.hideKeyboard(mEtContent);
+            }
+        });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new Adapter();
@@ -100,6 +114,18 @@ public abstract class ChatFragment<InitModel> extends
                 mBtSumbmit.setActivated(sendMsg);
             }
         });
+
+        PanelFragment fragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        fragment.setup(this);
+        mPanelContent = fragment;
+
+        // 添加一个激活监听
+        mEtContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onOptionStatusChange(hasFocus);
+            }
+        });
     }
 
     @Override
@@ -108,6 +134,21 @@ public abstract class ChatFragment<InitModel> extends
         mPresenter.start();
 
     }
+
+    @Override
+    public void scrollRecyclerToPosition(final int position) {
+
+        //貌似这个地方又是出现了之前遇到的一个疑点   就是直接刷新 没起作用  但是延迟一段时间是可以的
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.scrollToPosition(position);
+            }
+        },300);
+
+    }
+
+
 
     protected void initToolbar() {
         mToolbar.setNavigationIcon(R.drawable.ic_back);
@@ -119,7 +160,30 @@ public abstract class ChatFragment<InitModel> extends
         });
     }
 
-    @OnClick(R.id.bt_submit)
+    @Override
+    public boolean onBackPressed() {
+        if (mPanelBoss.isOpen()) {
+            mPanelBoss.closePanel();
+            return true;
+        }
+        return super.onBackPressed();
+    }
+
+    @OnClick(R.id.btn_record)
+    void onRecordClick() {
+        if (mPanelBoss.isOpen()) {
+            Util.showKeyboard(mEtContent);
+        } else {
+            mPanelContent.showRecord();
+            mPanelBoss.openPanel();
+        }
+    }
+
+    protected void onOptionStatusChange(boolean isActive) {
+
+    }
+
+    @OnClick(R.id.btn_submit)
     void onSubmitClick(){
         if (mBtSumbmit.isActivated()){
             //发送
@@ -133,16 +197,21 @@ public abstract class ChatFragment<InitModel> extends
     }
 
     private void onMoreClick() {
-
-
+        if (mPanelBoss.isOpen() && mPanelContent.isOpenMore()) {
+            Util.showKeyboard(mEtContent);
+        } else {
+            mPanelContent.showMore();
+            mPanelBoss.openPanel();
+        }
 
     }
+
 
     /**
      * 给界面的appbar设置一个监听  得到关闭和打开的时候的进度
      */
     private void initAppbar() {
-        mBarLayout.addOnOffsetChangedListener(this);
+        mAppBarLayout.addOnOffsetChangedListener(this);
     }
 
 
@@ -159,7 +228,34 @@ public abstract class ChatFragment<InitModel> extends
     @Override
     public void onAdapterDataChanged() {
         //不需要做任何操作   界面没有占位布局RecyclerView是一直显示的  不需要做任何操作
-        mRecyclerView.scrollToPosition(mAdapter.getItemCount());
+//        mRecyclerView.scrollToPosition(mAdapter.getItemCount());
+    }
+
+
+    @OnClick(R.id.btn_face)
+    void onFaceClick() {
+        if (mPanelBoss.isOpen() && mPanelContent.isOpenFace()) {
+            Util.showKeyboard(mEtContent);
+        } else {
+            mPanelContent.showFace();
+            mPanelBoss.openPanel();
+        }
+    }
+
+
+    @Override
+    public EditText getInputEditText() {
+        return null;
+    }
+
+    @Override
+    public void onSendGalleryClick(String[] paths) {
+
+    }
+
+    @Override
+    public void onRecordDone(File file, long time) {
+
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
