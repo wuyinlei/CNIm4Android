@@ -74,7 +74,7 @@ public class GroupHelper {
                 .from(GroupMember.class)
                 .join(User.class, Join.JoinType.INNER)
                 .on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable()))
-                .where(GroupMember.Table.group_id.withTable().eq(groupId))
+                .where(GroupMember_Table.group_id.withTable().eq(groupId))
                 .orderBy(GroupMember_Table.user_id,true)
                 .limit(count)
                 .queryCustomList(MemberUserModel.class);

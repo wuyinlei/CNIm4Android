@@ -18,7 +18,7 @@
         android:layout_height="@dimen/portraitMaxSize"
         android:layout_gravity="center"
         android:layout_margin="@dimen/len_16"
-        android:src="@drawable/default_portrait" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_name"
