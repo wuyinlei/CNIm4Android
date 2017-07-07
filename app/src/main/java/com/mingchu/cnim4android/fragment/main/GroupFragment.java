@@ -66,9 +66,7 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter> i
 
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
-        /**
-         * Item事件监听方法
-         */
+
         //初始化占位布局
         mEmptyView.bind(mRecyclerView);
         setPlaceHolderView(mEmptyView);
@@ -126,6 +124,11 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter> i
 
         @BindView(R.id.tv_member)
         TextView mTvMember;
+
+        @OnClick(R.id.ll_group)
+        public void groupChat(){
+            MessageActivity.show(getActivity(),mData);
+        }
 
 
         public ViewHolder(View itemView) {

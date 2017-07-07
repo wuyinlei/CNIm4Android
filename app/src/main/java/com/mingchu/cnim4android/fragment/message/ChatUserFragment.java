@@ -50,7 +50,6 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        super.onOffsetChanged(appBarLayout, verticalOffset);
 
         MenuItem menuItem = mInfoMenuItem;
         if (mInfoMenuItem == null)

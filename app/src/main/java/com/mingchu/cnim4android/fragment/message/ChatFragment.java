@@ -92,7 +92,7 @@ public abstract class ChatFragment<InitModel> extends
         super.initView(view);
 
         initToolbar();
-
+        initAppbar();
 
         mPanelBoss = (AirPanel.Boss) view.findViewById(R.id.lay_container);
         mPanelBoss.setPanelListener(new AirPanel.Listener() {
@@ -216,11 +216,6 @@ public abstract class ChatFragment<InitModel> extends
 
 
     @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-    }
-
-    @Override
     public RecyclerAdapter<Message> getRecyclerViewAadpter() {
         return mAdapter;
     }
@@ -245,7 +240,7 @@ public abstract class ChatFragment<InitModel> extends
 
     @Override
     public EditText getInputEditText() {
-        return null;
+        return mEtContent;
     }
 
     @Override

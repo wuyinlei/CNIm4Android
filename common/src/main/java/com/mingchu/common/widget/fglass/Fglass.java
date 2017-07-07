@@ -54,10 +54,10 @@ public class Fglass {
     /**
      * 高斯模糊操作
      *
-     * @param sentBitmap
-     * @param radius
-     * @param canReuseInBitmap
-     * @return
+     * @param sentBitmap       需要模糊的Bitmap
+     * @param radius           圆角
+     * @param canReuseInBitmap false / true
+     * @return Bitmap
      */
     public static Bitmap doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
 
