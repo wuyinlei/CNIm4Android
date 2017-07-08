@@ -36,6 +36,15 @@ public class MessageGroupRespository extends BaseDbRespositroy<Message> implemen
     public void load(SuccessCallback<List<Message>> callback) {
         super.load(callback);
 
+        //无论是自己发的还是别人发的  只要是发到这个群的   那么groupId就是这个receiverId
+        SQLite.select()
+                .from(Message.class)
+                .where(Message_Table.group_id.eq(receiverId))
+                .orderBy(Message_Table.createAt,false)
+                .limit(30)
+                .async()
+                .queryListResultCallback(this)
+                .execute();
 
 
     }
@@ -45,10 +54,12 @@ public class MessageGroupRespository extends BaseDbRespositroy<Message> implemen
 
         //receiverId  如果是发送者  group是为空  一定是发送给我的消息
 
+
         //如果消息的接收者不为空  那么一定是发送给某个人的  这个人只能是我或者是某个人
 
         //如果这个人就是receiverId  那么就是我需要关注的消息
-        return false;
+        return  message.getGroup() != null
+                && receiverId.equalsIgnoreCase(message.getGroup().getId());
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.common.factory.presenter.BaseContract;
@@ -64,51 +68,23 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
     protected void initView(View view) {
         super.initView(view);
 
+        Glide.with(this)
+                .load(R.mipmap.default_bannar_chat)
+                .centerCrop()
+                .into(new ViewTarget<CollapsingToolbarLayout,GlideDrawable>(mCollapsingtoolbarlayout) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        this.view.setContentScrim(resource.getCurrent());
+                    }
+                });
 
     }
 
     @Override
     public void onInit(Group group) {
 
-        mToolbar.setTitle(group.getName());
-
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        List<MemberUserModel> models = group.getLatelyGroupMembers();
-        for (final MemberUserModel model : models) {
-            ImageView p = (ImageView) inflater.inflate(R.layout.lay_chat_group_portrait, mLayMembers, false);
-            mLayMembers.addView(p, 0);
-            Glide.with(this)
-                    .load(model.portrait)
-                    .placeholder(R.mipmap.ic_launcher)
-                    .dontAnimate()
-                    .into(p);
-            p.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PersonalActivity.show(getContext(), model.userId);
-                }
-            });
-        }
-
-        final long memberCount = group.getGroupMemberCount();
-        mMemberMore.setText(String.format("+%s", memberCount - models.size()));
-        mMemberMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        if (memberCount > models.size()) {
-            mMemberMore.setText(String.format("+%s", memberCount - models.size()));
-            mMemberMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        } else {
-            mMemberMore.setVisibility(View.GONE);
-        }
+//        mToolbar.setTitle(group.getName());
+        mCollapsingtoolbarlayout.setTitle(group.getName());
 
         Glide.with(this)
                 .load(group.getPicture())
@@ -144,13 +120,66 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
     }
 
     @Override
-    public void onInitGroupMembers(List<MemberUserModel> memberUserModels, long moreCount) {
+    public void onInitGroupMembers(List<MemberUserModel> models, long moreCount) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        for (final MemberUserModel model : models) {
+            ImageView p = (ImageView) inflater.inflate(R.layout.lay_chat_group_portrait, mLayMembers, false);
+            mLayMembers.addView(p, 0);
+            Glide.with(this)
+                    .load(model.portrait)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .dontAnimate()
+                    .into(p);
+            p.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PersonalActivity.show(getActivity(), model.userId);
+                }
+            });
+        }
+        if (moreCount > 0) {
+            mMemberMore.setText(String.format("+%s", moreCount));
+            mMemberMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        } else {
+            mMemberMore.setVisibility(View.GONE);
+        }
 
     }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            //完全展开
+            mLayMembers.setVisibility(View.VISIBLE);
+            mLayMembers.setScaleX(1);
+            mLayMembers.setScaleY(1);
+            mLayMembers.setAlpha(1);
+        } else {
+            //拖动的时候
+            verticalOffset = Math.abs(verticalOffset);
 
+            final int totalScroll = appBarLayout.getTotalScrollRange();
+            if (verticalOffset >= totalScroll) {
+                mLayMembers.setVisibility(View.INVISIBLE);
+                mLayMembers.setScaleX(0);
+                mLayMembers.setScaleY(0);
+                mLayMembers.setAlpha(0);
+
+            } else {
+                //中间状态
+                float progress = 1 - verticalOffset / (float) totalScroll;
+                mLayMembers.setVisibility(View.VISIBLE);
+                mLayMembers.setScaleX(progress);
+                mLayMembers.setScaleY(progress);
+                mLayMembers.setAlpha(progress);
+
+            }
+        }
     }
 
 }

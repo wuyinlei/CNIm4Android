@@ -68,7 +68,7 @@ public class GroupHelper {
 
 
         return SQLite.select(GroupMember_Table.alias.withTable().as("alias"),
-                User_Table.id.withTable().as("id"),
+                User_Table.id.withTable().as("userId"),
                 User_Table.name.withTable().as("name"),
                 User_Table.portrait.withTable().as("portrait"))
                 .from(GroupMember.class)

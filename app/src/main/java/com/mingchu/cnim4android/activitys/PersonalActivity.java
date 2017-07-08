@@ -168,6 +168,7 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
                 Run.onUiAsync(new Action() {
                     @Override
                     public void call() {
+
                         if (!TextUtils.isEmpty(portrait)){
                             Glide.with(PersonalActivity.this)
                                     .load(portrait)
@@ -181,6 +182,8 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+
+
                                 Fglass.blur(mHeader,mTvFglass,2,8);
                             }
                         },100);

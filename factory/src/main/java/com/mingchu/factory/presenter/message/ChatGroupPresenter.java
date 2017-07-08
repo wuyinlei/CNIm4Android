@@ -54,7 +54,7 @@ public class ChatGroupPresenter extends ChatPresenter<ChatContract.GroupView>
             List<MemberUserModel> models = group.getLatelyGroupMembers();
 
             final long memberCount = group.getGroupMemberCount();
-            if (memberCount > models.size()) {
+            if (memberCount >= models.size()) {
                 long moreCount = memberCount - models.size();
                 view.onInitGroupMembers(models, moreCount);
             }
