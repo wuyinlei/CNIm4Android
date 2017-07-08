@@ -22,6 +22,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.activitys.GroupMemberActivity;
 import com.mingchu.cnim4android.activitys.PersonalActivity;
 import com.mingchu.common.factory.presenter.BaseContract;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
@@ -81,7 +82,7 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
     }
 
     @Override
-    public void onInit(Group group) {
+    public void onInit(final Group group) {
 
 //        mToolbar.setTitle(group.getName());
         mCollapsingtoolbarlayout.setTitle(group.getName());
@@ -94,19 +95,7 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
                 .into(mHeader);
 
 
-        if (Account.getUserId().equalsIgnoreCase(group.getOwner().getId())) {
-            mToolbar.inflateMenu(R.menu.chat_group);
-            mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.action_add) {
 
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
     }
 
     @Override
@@ -116,7 +105,17 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
 
     @Override
     public void showAdminOptions(boolean isAdmin) {
-
+            mToolbar.inflateMenu(R.menu.chat_group);
+            mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.action_add) {
+                        GroupMemberActivity.showAdmin(getContext(),mReceiverId);
+                        return true;
+                    }
+                    return false;
+                }
+            });
     }
 
     @Override

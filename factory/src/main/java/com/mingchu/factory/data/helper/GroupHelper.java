@@ -61,7 +61,7 @@ public class GroupHelper {
     /**
      * 关联查询一个用户和群成员的表  返回一个MemberUserModel表的集合
      * @param groupId  群id
-     * @param count  数量
+     * @param count  数量  -1代表查询所有
      * @return List<MemberUserModel>
      */
     public static List<MemberUserModel> getMemberUsers(String groupId, int count) {

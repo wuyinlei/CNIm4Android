@@ -73,7 +73,13 @@
             android:name=".activitys.PersonalActivity"
             android:theme="@style/AppTheme.Main">
         </activity>
-        <activity android:name=".activitys.GroupCreateActivity">
+        <activity android:name=".activitys.GroupCreateActivity"
+                  android:label="@string/title_member_list"
+            android:theme="@style/AppTheme.Group.Create">
+        </activity>
+        <activity android:name=".activitys.GroupMemberActivity"
+                  android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar">
         </activity>
     </application>
 
