@@ -166,7 +166,7 @@ public abstract class ChatFragment<InitModel> extends
             mPanelBoss.closePanel();
             return true;
         }
-        return super.onBackPressed();
+        return false;
     }
 
     @OnClick(R.id.btn_record)
@@ -180,7 +180,9 @@ public abstract class ChatFragment<InitModel> extends
     }
 
     protected void onOptionStatusChange(boolean isActive) {
-
+        if (isActive && mAppBarLayout != null) {
+            mAppBarLayout.setExpanded(false, true);
+        }
     }
 
     @OnClick(R.id.btn_submit)
@@ -222,8 +224,7 @@ public abstract class ChatFragment<InitModel> extends
 
     @Override
     public void onAdapterDataChanged() {
-        //不需要做任何操作   界面没有占位布局RecyclerView是一直显示的  不需要做任何操作
-//        mRecyclerView.scrollToPosition(mAdapter.getItemCount());
+
     }
 
 

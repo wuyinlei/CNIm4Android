@@ -104,7 +104,7 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
         Glide.with(this)
                 .load(R.mipmap.default_bannar_chat)
                 .centerCrop()
-                .into(new ViewTarget<CollapsingToolbarLayout,GlideDrawable>(mCollapsingtoolbarlayout) {
+                .into(new ViewTarget<CollapsingToolbarLayout, GlideDrawable>(mCollapsingtoolbarlayout) {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                         this.view.setContentScrim(resource.getCurrent());
@@ -113,12 +113,6 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
 
     }
 
-    @Override
-    protected void onOptionStatusChange(boolean isActive) {
-        if (isActive && mAppBarLayout != null) {
-            mAppBarLayout.setExpanded(false, true);
-        }
-    }
 
     @Override
     protected void initToolbar() {
@@ -150,7 +144,7 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     @Override
     public void onInit(User user) {
         //对聊天信息需要用到的数据的初始化操作
-        mPortraitView.setup(Glide.with(getActivity()),user);
+        mPortraitView.setup(Glide.with(getActivity()), user);
         mCollapsingtoolbarlayout.setTitle(user.getName());
 
 
@@ -158,6 +152,6 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
 
     @Override
     protected ChatContract.Presenter initPresenter() {
-        return new ChatUserPresenter(this,mReceiverId);
+        return new ChatUserPresenter(this, mReceiverId);
     }
 }

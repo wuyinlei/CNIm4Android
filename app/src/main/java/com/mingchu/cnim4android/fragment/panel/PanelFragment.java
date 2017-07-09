@@ -22,6 +22,7 @@ import com.mingchu.common.face.Face;
 import com.mingchu.common.face.FaceAdapter;
 import com.mingchu.common.face.FaceListener;
 import com.mingchu.common.tools.UiTool;
+import com.mingchu.common.widget.AudioRecordView;
 import com.mingchu.common.widget.GalleryView;
 
 import net.qiujuer.genius.ui.Ui;
@@ -35,7 +36,7 @@ public class PanelFragment extends BaseFragment implements FaceListener {
 
     private View mFacePanel;
     private View mGalleryPanel;
-//    private View mRecordPanel;
+    private View mRecordPanel;
     private PanelCallback mCallback;
 
     public PanelFragment() {
@@ -52,7 +53,7 @@ public class PanelFragment extends BaseFragment implements FaceListener {
     @Override
     protected void initView(View view) {
         super.initView(view);
-
+        initRecord(view);
         initFace(view);
         initGallery(view);
     }
@@ -109,6 +110,11 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         });
     }
 
+    private void initRecord(View root){
+        View recordPanel = mRecordPanel = root.findViewById(R.id.lay_record_panel);
+        final AudioRecordView audioRecordView = (AudioRecordView) recordPanel.findViewById(R.id.view_audio_record);
+        // TODO: 2017/7/9   录音发送
+    }
 
 
     private void initGallery(View root) {
@@ -174,16 +180,19 @@ public class PanelFragment extends BaseFragment implements FaceListener {
     public void showFace() {
         mFacePanel.setVisibility(View.VISIBLE);
         mGalleryPanel.setVisibility(View.GONE);
+        mRecordPanel.setVisibility(View.GONE);
     }
 
     public void showRecord() {
         mFacePanel.setVisibility(View.GONE);
         mGalleryPanel.setVisibility(View.GONE);
+        mRecordPanel.setVisibility(View.VISIBLE);
     }
 
     public void showGallery() {
         mFacePanel.setVisibility(View.GONE);
         mGalleryPanel.setVisibility(View.VISIBLE);
+        mRecordPanel.setVisibility(View.GONE);
         GalleryView view = (GalleryView) mGalleryPanel.findViewById(R.id.view_gallery);
         view.clear();
     }
