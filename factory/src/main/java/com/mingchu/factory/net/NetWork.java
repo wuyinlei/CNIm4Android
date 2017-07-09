@@ -27,6 +27,8 @@ public class NetWork {
 
     private static NetWork instance;
     private static Retrofit mRetrofit;
+    private OkHttpClient client;
+
 //    private Retrofit mRetrofit;
 
     static {
@@ -39,6 +41,36 @@ public class NetWork {
 
     public static NetWork getInstance() {
         return instance;
+    }
+
+
+
+    public static OkHttpClient getClient() {
+        if (instance.client == null) {
+            synchronized (instance) {
+                if (instance.client == null) {
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(new Interceptor() {
+                        @Override
+                        public Response intercept(Interceptor.Chain chain) throws IOException {
+                            Request original = chain.request();
+
+                            Request.Builder builder = original.newBuilder();
+                            if (!TextUtils.isEmpty(Account.getToken()))
+                                builder.addHeader("token", Account.getToken());
+
+                            builder.addHeader("Content-Type", "application/json");
+
+                            Request request = builder.build();
+
+                            return chain.proceed(request);
+                        }
+                    });
+                    instance.client = httpClient.build();
+                }
+            }
+        }
+        return instance.client;
     }
 
     //构建一个Retrofit

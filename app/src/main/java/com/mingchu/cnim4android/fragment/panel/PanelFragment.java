@@ -21,6 +21,7 @@ import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.face.Face;
 import com.mingchu.common.face.FaceAdapter;
 import com.mingchu.common.face.FaceListener;
+import com.mingchu.common.tools.AudioRecordHelper;
 import com.mingchu.common.tools.UiTool;
 import com.mingchu.common.widget.AudioRecordView;
 import com.mingchu.common.widget.GalleryView;
@@ -110,13 +111,89 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         });
     }
 
-    private void initRecord(View root){
+    /**
+     * 初始化录音布局
+     *
+     * @param root 根布局
+     */
+    private void initRecord(View root) {
         View recordPanel = mRecordPanel = root.findViewById(R.id.lay_record_panel);
         final AudioRecordView audioRecordView = (AudioRecordView) recordPanel.findViewById(R.id.view_audio_record);
-        // TODO: 2017/7/9   录音发送
+
+        final File tempFile = Application.getAudioFile(true);
+
+        final AudioRecordHelper audioRecordHelper = new AudioRecordHelper(tempFile, new AudioRecordHelper.RecordCallback() {
+            @Override
+            public void onRecordStart() {
+                //录音开始
+
+            }
+
+            @Override
+            public void onProgress(long time) {
+                //录音时长
+
+            }
+
+            @Override
+            public void onRecordDone(File file, long time) {
+                //录音开始  录音小于1s
+                if (time < 1000){
+                    return;
+                }
+
+                //更改为一个发送的录音文件
+                File audioFile = Application.getAudioFile(false);
+                if (file.renameTo(audioFile)){
+                    PanelCallback callback = mCallback;
+                    //通知到聊天界面
+                    if (callback != null){
+                        callback.onRecordDone(file,time);
+                    }
+                }
+
+            }
+        });
+
+        //初始化
+        audioRecordView.setup(new AudioRecordView.Callback() {
+            @Override
+            public void onRequestRecordStart() {
+                //请求开始录音
+
+                audioRecordHelper.recordAsync();
+            }
+
+            @Override
+            public void onRecordEnd(int type) {
+                //请求录音结束
+
+                switch (type) {
+                    case AudioRecordView.END_TYPE_NONE:
+                    case AudioRecordView.END_TYPE_PLAY:
+                        audioRecordHelper.stop(false);
+
+                        break;
+
+                    case AudioRecordView.END_TYPE_DELETE:
+                    case AudioRecordView.END_TYPE_CANCEL:
+                        audioRecordHelper.stop(true);
+                        break;
+
+
+                }
+            }
+        });
+
+
     }
 
 
+    /**
+     * 初始化图片画廊
+     *
+     * @param root 根布局
+     */
     private void initGallery(View root) {
         View galleryPanel = mGalleryPanel = root.findViewById(R.id.lay_gallery_panel);
         final GalleryView galleryView = (GalleryView) galleryPanel.findViewById(R.id.view_gallery);
@@ -162,6 +239,7 @@ public class PanelFragment extends BaseFragment implements FaceListener {
 
     /**
      * 发送
+     *
      * @param galleryView
      * @param paths
      */
@@ -187,18 +265,27 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         return mGalleryPanel.getVisibility() == View.VISIBLE;
     }
 
+    /**
+     * 显示表情界面
+     */
     public void showFace() {
         mFacePanel.setVisibility(View.VISIBLE);
         mGalleryPanel.setVisibility(View.GONE);
         mRecordPanel.setVisibility(View.GONE);
     }
 
+    /**
+     * 显示录音界面
+     */
     public void showRecord() {
         mFacePanel.setVisibility(View.GONE);
         mGalleryPanel.setVisibility(View.GONE);
         mRecordPanel.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 显示图片界面
+     */
     public void showGallery() {
         mFacePanel.setVisibility(View.GONE);
         mGalleryPanel.setVisibility(View.VISIBLE);

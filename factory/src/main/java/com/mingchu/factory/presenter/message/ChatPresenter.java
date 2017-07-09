@@ -1,6 +1,7 @@
 package com.mingchu.factory.presenter.message;
 
 import android.support.v7.util.DiffUtil;
+import android.text.TextUtils;
 
 import com.mingchu.factory.data.helper.MessageHelper;
 import com.mingchu.factory.data.message.MessageDataSource;
@@ -48,6 +49,8 @@ public class ChatPresenter<View extends ChatContract.View>
 
     @Override
     public void pushText(String content) {
+        if (TextUtils.isEmpty(content))
+            return;
         //构建model
         MsgCreateModel model = new MsgCreateModel.Builder()
                 .receiver(mReceiverId,mReceiverType)
@@ -59,8 +62,18 @@ public class ChatPresenter<View extends ChatContract.View>
     }
 
     @Override
-    public void pushAudio(String path) {
-        // TODO: 2017/6/25   发送语音
+    public void pushAudio(String path,long time) {
+        //发送语音
+        if (TextUtils.isEmpty(path))
+            return;
+        MsgCreateModel model = new MsgCreateModel.Builder()
+                .receiver(mReceiverId,mReceiverType)
+                .content(path,Message.TYPE_AUDIO)
+                .attach(String.valueOf(time)) //把时长转换为我们之前规定的一个额外字段
+                .build();
+        //发送消息
+        MessageHelper.push(model);
+
     }
 
     @Override

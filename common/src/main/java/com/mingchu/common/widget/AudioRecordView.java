@@ -21,16 +21,28 @@ import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.FloatActionButton;
 
 public class AudioRecordView extends FrameLayout implements View.OnTouchListener {
+
+    //相关的结束方式
+    //结束 是 因为取消
     public static final int END_TYPE_CANCEL = 0;
+    //正常结束
     public static final int END_TYPE_NONE = 1;
+    //接收后想要播放
     public static final int END_TYPE_PLAY = 2;
+    //结束后想要删除
     public static final int END_TYPE_DELETE = 3;
 
+    //相关删除 / 播放按钮的透明度
     private static final float MIN_ALPHA = 0.4f;
+    //触摸的点坐标
     private final float[] mTouchPoint = new float[2];
+    //播放位置
     private final Rect mPlayLocation = new Rect();
+    //删除位置
     private final Rect mDeleteLocation = new Rect();
+    //录制按钮的位置
     private final Rect mRectLocation = new Rect();
+    //浮动的录制按钮
     private FloatActionButton mRecordButton;
     private ImageView mPlayButton, mDeleteButton;
     private boolean mStart;

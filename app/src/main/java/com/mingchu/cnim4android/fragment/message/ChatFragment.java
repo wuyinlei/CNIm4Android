@@ -27,6 +27,7 @@ import com.mingchu.cnim4android.fragment.panel.PanelFragment;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.face.Face;
+import com.mingchu.common.tools.AudioPlayHelper;
 import com.mingchu.common.widget.adapter.TextWatcherAdapter;
 import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
@@ -34,6 +35,7 @@ import com.mingchu.factory.model.db.Message;
 import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.message.ChatContract;
+import com.mingchu.factory.utils.FileCache;
 
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
@@ -77,6 +79,9 @@ public abstract class ChatFragment<InitModel> extends
 
     @BindView(R.id.btn_submit)
     ImageView mBtSumbmit;
+
+    private AudioPlayHelper<AudioHolder> mAudioPlayHelper;
+    private FileCache<AudioHolder> mAudioFileCache;
 
 
     @Override
@@ -258,7 +263,8 @@ public abstract class ChatFragment<InitModel> extends
 
     @Override
     public void onRecordDone(File file, long time) {
-//        mPresenter.pushAudio(file); // TODO: 2017/7/9
+        //语音的发起
+        mPresenter.pushAudio(file.getAbsolutePath(),time);
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
@@ -398,18 +404,42 @@ public abstract class ChatFragment<InitModel> extends
             Spannable spannable = new SpannableString(message.getContent());
 
             mContent.setText(Face.decodeFace(mContent, spannable, (int) Ui.dipToPx(getResources(), 20)));
-
-            //把内容设置到布局上
-//            mContent.setText(spannable);
         }
     }
+
 
     //语音的holder
     class AudioHolder extends BaseHolder {
 
+        @BindView(R.id.txt_content)
+        TextView mTvContent;
+
+        @BindView(R.id.im_audio_track)
+        ImageView mIvAudio;
+
         public AudioHolder(View itemView) {
             super(itemView);
         }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+
+            //
+            String attach = TextUtils.isEmpty(message.getAttach()) ? "0" : message.getAttach();
+            mTvContent.setText(formatTime(attach));
+
+        }
+
+
+        void onPlayStart() {
+            mIvAudio.setVisibility(View.VISIBLE);
+        }
+
+        void onPlayStop() {
+            mIvAudio.setVisibility(View.INVISIBLE);
+        }
+
     }
 
 
@@ -436,6 +466,18 @@ public abstract class ChatFragment<InitModel> extends
                     .fitCenter()
                     .into(mIvPic);
         }
+    }
+
+    public static String formatTime(String attach) {
+        float time;
+        try {
+            time = Float.parseFloat(attach) / 1000f;
+        } catch (NumberFormatException e) {
+            time = 0;
+        }
+        String shortTime = String.valueOf(Math.round(time * 10f) / 10f);
+        shortTime = shortTime.replaceAll("[.]0+?$|0+?$", "");
+        return String.format("%s″", shortTime);
     }
 
 

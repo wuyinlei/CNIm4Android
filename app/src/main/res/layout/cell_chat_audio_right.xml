@@ -10,29 +10,50 @@
              android:paddingTop="@dimen/len_4"
     >
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/len_28"
+        android:layout_marginEnd="@dimen/len_20"
         android:background="@drawable/cell_main_bg"
+        android:foreground="@drawable/cell_main_fg"
         android:minHeight="@dimen/portraitSize"
         android:paddingBottom="@dimen/len_8"
-        android:paddingEnd="@dimen/len_20"
+        android:paddingEnd="@dimen/len_28"
         android:paddingStart="@dimen/len_8"
         android:paddingTop="@dimen/len_8">
 
+        <ImageView
+            android:id="@+id/im_audio_track"
+            android:layout_width="@dimen/len_16"
+            android:layout_height="@dimen/len_16"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/len_2"
+            android:src="@drawable/ic_audio_track"
+            android:tint="@color/colorPrimary"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/txt_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:minHeight="@dimen/len_24"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimary"
-            tools:text="@string/app_name"/>
+            android:textColor="@color/textPrimary"
+            tools:text="3″" />
 
-    </FrameLayout>
+        <ImageView
+            android:layout_width="@dimen/len_16"
+            android:layout_height="@dimen/len_16"
+            android:layout_gravity="center_vertical|end"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/len_2"
+            android:src="@drawable/ic_audio_wave"
+            android:tint="@color/textPrimary" />
+    </LinearLayout>
 
 
     <com.mingchu.common.widget.custom.PortraitView

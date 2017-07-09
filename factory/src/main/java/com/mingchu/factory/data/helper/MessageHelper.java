@@ -84,7 +84,7 @@ public class MessageHelper {
                 Message message = findFromLocal(model.getId());
 
                 //已经发送过的
-                if (message != null && message.getStatus() != Message.STATUS_FAILED){
+                if (message != null && message.getStatus() != Message.STATUS_FAILED) {
                     return;
                 }
 
@@ -98,14 +98,14 @@ public class MessageHelper {
 
                 Factory.getMessageCenter().dispatch(card);
 
-                if (card.getType() != Message.TYPE_STR){
+                if (card.getType() != Message.TYPE_STR) {
                     //上传文件类型
                     //发送文件消息分两步   上传到云服务器   消息push到我们自己的服务器
-                    if (!card.getContent().startsWith(UploadHelper.ENDPOINT)){
-                       //没有上传到云服务器  还是本地手机文件
+                    if (!card.getContent().startsWith(UploadHelper.ENDPOINT)) {
+                        //没有上传到云服务器  还是本地手机文件
                         String content = null;
 
-                        switch (card.getType()){
+                        switch (card.getType()) {
                             case Message.TYPE_PIC:
 
                                 content = uploadPicture(card.getContent());
@@ -122,7 +122,7 @@ public class MessageHelper {
 
                         }
 
-                        if (TextUtils.isEmpty(content)){
+                        if (TextUtils.isEmpty(content)) {
                             //失败
                             card.setStatus(Message.STATUS_FAILED);
                             Factory.getMessageCenter().dispatch(card);
@@ -181,12 +181,26 @@ public class MessageHelper {
 
     }
 
-    private static String uploadAudio(String content) {
-        // TODO: 2017/7/9   上传语音
+    /**
+     * 上传语言
+     *
+     * @param path 语音本地地址
+     * @return 外网语音地址
+     */
+    private static String uploadAudio(String path) {
+        File file = new File(path);
+        if (!file.exists() || file.length() <= 0)
+            return null;
 
-        return null;
+        return UploadHelper.uploadAudio(path);
     }
 
+    /**
+     * 上传图片
+     *
+     * @param path 图片本地地址
+     * @return 外网的图片地址
+     */
     private static String uploadPicture(String path) {
         //上传图片
         File file = null;
@@ -195,18 +209,18 @@ public class MessageHelper {
             //通过glide的缓存区间 解决了图片外部权限的问题
             file = Glide.with(Factory.app())
                     .load(path)
-                    .downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .get();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("MessageHelper", e.getMessage());
         }
 
-        if (file != null){
+        if (file != null) {
 
             //进行压缩
             String cacheDir = Application.getCacheDirFile().getAbsolutePath();
-            String tempFile = String.format("%s/image/Cache_%s.png",cacheDir, SystemClock.uptimeMillis());
+            String tempFile = String.format("%s/image/Cache_%s.png", cacheDir, SystemClock.uptimeMillis());
 
 //            if (Picture)
             if (PicturesCompressor.compressImage(path, tempFile, Common.Constance.MAX_UPLOAD_IMAGE_LENGTH)) {
