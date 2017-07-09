@@ -121,7 +121,7 @@ public interface RemoteService {
     Call<RspModel<GroupCard>> createGroup(@Body GroupCreateModel model);
 
     /**
-     * 群创建
+     * 群信息
      */
     @GET("group/info/{groupId}")
     Call<RspModel<GroupCard>> groupInfo(@Path(value = "groupId") String groupId);

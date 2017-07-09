@@ -72,7 +72,7 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         tabLayout.setupWithViewPager(pager);
 
         // Min 48dp
-        final int minFaceSize = (int) Ui.dipToPx(getResources(), 48);
+        final int minFaceSize = (int) Ui.dipToPx(getResources(), 56);
         final int totalWidth = UiTool.getScreenWidth(getActivity());
         final int spanCount = totalWidth / minFaceSize;
 
@@ -146,6 +146,9 @@ public class PanelFragment extends BaseFragment implements FaceListener {
                 (int) (editText.getTextSize() + Ui.dipToPx(getResources(), 2)));
     }
 
+    /**
+     * 删除已经选择的表情
+     */
     private void onBackspaceClick() {
         PanelCallback callback = mCallback;
         if (callback == null)
@@ -155,6 +158,11 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         callback.getInputEditText().dispatchKeyEvent(event);
     }
 
+    /**
+     * 发送
+     * @param galleryView
+     * @param paths
+     */
     private void onSendGalleryClick(GalleryView galleryView, String[] paths) {
         galleryView.clear();
         PanelCallback callback = mCallback;

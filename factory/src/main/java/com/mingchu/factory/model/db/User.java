@@ -3,11 +3,16 @@ package com.mingchu.factory.model.db;
 import com.mingchu.common.factory.model.Author;
 import com.mingchu.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.mingchu.factory.model.db.GroupMember_Table;
+
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -46,6 +51,7 @@ public class User extends BaseDbModel<User> implements Author {
     @Column
     private Date modifyAt;
 
+    List<GroupMember> groupMembers;
 
     public String getId() {
         return id;
@@ -135,6 +141,20 @@ public class User extends BaseDbModel<User> implements Author {
         this.modifyAt = modifyAt;
     }
 
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "groupMembers")
+    public List<GroupMember> getGroupMembers() {
+        if (groupMembers == null || groupMembers.isEmpty()) {
+            groupMembers = SQLite.select()
+                    .from(GroupMember.class)
+                    .where(GroupMember_Table.user_id.eq(id))
+                    .queryList();
+        }
+        return groupMembers;
+    }
+
+    public void setGroupMembers(List<GroupMember> groupMembers) {
+        this.groupMembers = groupMembers;
+    }
 
     @Override
     public boolean equals(Object o) {

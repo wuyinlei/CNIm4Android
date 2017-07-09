@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/len_32"
+        android:layout_height="@dimen/len_48"
         android:background="@color/white_alpha_224"
         android:elevation="1dp"
         android:orientation="horizontal"
@@ -27,13 +27,13 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tab"
             android:layout_width="0dp"
-            android:layout_height="@dimen/len_32"
+            android:layout_height="@dimen/len_48"
             android:layout_gravity="bottom"
             android:layout_marginTop="1px"
             android:layout_weight="2"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/black_alpha_16"
-            app:tabIndicatorHeight="@dimen/len_32"
+            app:tabIndicatorHeight="@dimen/len_48"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/textPrimary"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"

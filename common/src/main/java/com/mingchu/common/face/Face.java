@@ -39,10 +39,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ * 表情工具类
  */
-
 public final class Face {
     private static List<FaceTab> FACE_TABS = null;
     private static final ArrayMap<String, Bean> FACE_MAP = new ArrayMap<>();
@@ -52,6 +50,7 @@ public final class Face {
             synchronized (Face.class) {
                 if (FACE_TABS == null) {
                     ArrayList<FaceTab> faceTabs = new ArrayList<>();
+                    faceTabs.add(initAssetsFace(context));
                     faceTabs.add(initResourceFace(context));
                     initMap(faceTabs);
                     FACE_TABS = Collections.unmodifiableList(faceTabs);
@@ -60,6 +59,12 @@ public final class Face {
         }
     }
 
+    /**
+     * 初始化表情资源
+     *
+     * @param context 上下文
+     * @return FaceTab
+     */
     private static FaceTab initResourceFace(Context context) {
         ArrayList<Bean> faces = new ArrayList<>();
         Resources resources = context.getResources();
@@ -74,6 +79,59 @@ public final class Face {
     }
 
 
+    /**
+     * 初始化Assets资源
+     *
+     * @param context 上下文
+     * @return FaceTab
+     */
+    private static FaceTab initAssetsFace(Context context) {
+        final String faceAssets = "face-t.zip";
+
+        // data/data/包名、files/face/tf/*
+        String faceCacheDir = String.format("%s/face/%s", context.getFilesDir(), "ft");
+        File faceFolder = new File(faceCacheDir);
+        if (!faceFolder.exists()) {
+            if (faceFolder.mkdirs()) {
+                try {
+                    InputStream inputStream = context.getAssets().open(faceAssets);
+                    File faceSource = new File(faceCacheDir, "source.zip");
+                    StreamUtil.copy(inputStream, faceSource);
+                    upZipFile(faceSource, faceFolder);
+                    //noinspection ResultOfMethodCallIgnored
+                    faceSource.delete();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        File faceCacheFile = new File(faceCacheDir);
+        String[] faceFiles = faceCacheFile.list();
+        if (faceFiles == null || faceFiles.length == 0)
+            return null;
+
+        ArrayList<Bean> faces = new ArrayList<>();
+        Pattern pattern = Pattern.compile("[^0-9]");
+        for (String faceFile : faceFiles) {
+            if (faceFile.contains("fix"))
+                continue;
+            String num = pattern.matcher(faceFile).replaceAll("");
+            String key = String.format(Locale.ENGLISH, "ft%03d", Integer.valueOf(num));
+            String resStr = String.format(Locale.ENGLISH, "%s/f-%s.gif", faceCacheDir, num);
+            String preStr = String.format(Locale.ENGLISH, "%s/f-%sfix.png", faceCacheDir, num);
+            faces.add(new Bean(key, resStr, preStr));
+        }
+
+        return new FaceTab("NICE", faces.get(0).previewId, faces);
+    }
+
+
+    /**
+     * 初始化map
+     *
+     * @param faceTabs ArrayList<FaceTab>
+     */
     private static void initMap(ArrayList<FaceTab> faceTabs) {
         for (FaceTab faceTab : faceTabs) {
             if (faceTab != null)
@@ -82,6 +140,13 @@ public final class Face {
     }
 
 
+    /**
+     * 解压zip资源
+     *
+     * @param zipFile zip资源文件路劲
+     * @param desDir  目标文件
+     * @throws IOException
+     */
     private static void upZipFile(File zipFile, File desDir) throws IOException {
         final String folderPath = desDir.getAbsolutePath();
         ZipFile zf = new ZipFile(zipFile);
@@ -113,6 +178,9 @@ public final class Face {
         return null;
     }
 
+    /**
+     * 每一个表情盘
+     */
     @SuppressWarnings("WeakerAccess")
     public static class FaceTab {
         FaceTab(String name, Object preview, List<Bean> faces) {
@@ -134,6 +202,9 @@ public final class Face {
     }
 
 
+    /**
+     * 每一个表情
+     */
     @SuppressWarnings("WeakerAccess")
     public static class Bean {
         public String key;
@@ -152,7 +223,18 @@ public final class Face {
         }
     }
 
-    public static void inputFace(final Context context, final Editable editable, final Face.Bean bean, final int size) {
+    /**
+     * 输入表情到editable
+     *
+     * @param context  上下文
+     * @param editable Editable
+     * @param bean     表情bean
+     * @param size     表情大小
+     */
+    public static void inputFace(final Context context,
+                                 final Editable editable,
+                                 final Face.Bean bean,
+                                 final int size) {
         Glide.with(context)
                 .load(bean.previewId)
                 .asBitmap()
@@ -169,7 +251,17 @@ public final class Face {
     }
 
 
-    public static Spannable decodeFace(final View target, final Spannable spannable, final int size) {
+    /**
+     * 解析表情
+     *
+     * @param target    目标view
+     * @param spannable Spannable
+     * @param size      表情大小
+     * @return Spannable
+     */
+    public static Spannable decodeFace(final View target,
+                                       final Spannable spannable,
+                                       final int size) {
         if (spannable == null)
             return null;
 
