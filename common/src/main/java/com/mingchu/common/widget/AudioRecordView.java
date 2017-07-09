@@ -195,6 +195,7 @@ public class AudioRecordView extends FrameLayout implements View.OnTouchListener
     }
 
     public interface Callback {
+
         void onRequestRecordStart();
 
         void onRecordEnd(int type);

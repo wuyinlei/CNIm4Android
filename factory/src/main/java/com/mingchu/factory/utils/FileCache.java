@@ -24,17 +24,36 @@ public class FileCache<Holder> {
     private CacheCallback<Holder> callback;
     private SoftReference<Holder> holderSoftReference;
 
+    /**
+     * 构造函数
+     *
+     * @param baseDir       基础的文件地址
+     * @param ext           后缀
+     * @param cacheCallback 回调接口
+     */
     public FileCache(String baseDir, String ext, CacheCallback<Holder> cacheCallback) {
         this.baseDir = new File(Application.getCacheDirFile(), baseDir);
         this.ext = ext;
         this.callback = cacheCallback;
     }
 
+    /**
+     * 创建缓存文件
+     *
+     * @param path 文件地址
+     * @return File
+     */
     private File buildFile(String path) {
         String key = HashUtil.getMD5String(path);
         return new File(baseDir, key + "." + ext);
     }
 
+    /**
+     * 下载音频
+     *
+     * @param holder holder
+     * @param path   音频网络地址
+     */
     public void download(Holder holder, String path) {
         if (path.startsWith(Application.getCacheDirFile().getAbsolutePath())) {
             callback.onDownloadSucceed(holder, new File(path));
@@ -69,6 +88,10 @@ public class FileCache<Holder> {
         }
     }
 
+
+    /**
+     * 网络请求回来的回调
+     */
     private class NetCallback implements Callback {
         private final SoftReference<Holder> holderSoftReference;
         private final File file;
@@ -102,8 +125,20 @@ public class FileCache<Holder> {
     }
 
     public interface CacheCallback<Holder> {
+
+        /**
+         * 成功的回调
+         *
+         * @param holder holder
+         * @param cache  文件缓存
+         */
         void onDownloadSucceed(Holder holder, File cache);
 
+        /**
+         * 失败的回调
+         *
+         * @param holder holder
+         */
         void onDownloadFailed(Holder holder);
     }
 }

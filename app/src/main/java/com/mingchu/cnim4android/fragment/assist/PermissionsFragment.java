@@ -134,7 +134,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment
      * @param context 上下文
      * @return false  没有  true  有
      */
-    private static boolean hasAudioWorkPerms(Context context) {
+    public static boolean hasAudioWorkPerms(Context context) {
         //准备需要检查的录音权限
         String[] perms = new String[]{
                 Manifest.permission.RECORD_AUDIO

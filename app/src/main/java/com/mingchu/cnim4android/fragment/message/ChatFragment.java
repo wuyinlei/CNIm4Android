@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.MessageActivity;
 import com.mingchu.cnim4android.fragment.panel.PanelFragment;
+import com.mingchu.common.app.Application;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
 import com.mingchu.common.face.Face;
@@ -114,6 +115,21 @@ public abstract class ChatFragment<InitModel> extends
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setAdapterItemClickListener(new RecyclerAdapter.AdapterItemClickListener<Message>() {
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder holder, Message data) {
+                if (data.getType() == Message.TYPE_AUDIO && holder instanceof ChatFragment.AudioHolder) {
+                    //权限的判断
+                    mAudioFileCache.download((AudioHolder) holder, data.getContent());
+                }
+            }
+
+            @Override
+            public void onLongItemClick(RecyclerAdapter.ViewHolder holder, Message data) {
+
+            }
+        });
+
         mEtContent.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void afterTextChanged(Editable editable) {
@@ -142,9 +158,47 @@ public abstract class ChatFragment<InitModel> extends
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAudioPlayHelper.destroy();
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         mPresenter.start();
+
+        mAudioPlayHelper = new AudioPlayHelper<>(new AudioPlayHelper.RecordPlayListener<AudioHolder>() {
+            @Override
+            public void onPlayStart(AudioHolder audioHolder) {
+                //开始播放
+                audioHolder.onPlayStart();
+            }
+
+            @Override
+            public void onPlayStop(AudioHolder audioHolder) {
+                //停止播放
+                audioHolder.onPlayStart();
+            }
+
+            @Override
+            public void onPlayError(AudioHolder audioHolder) {
+                //提示播放失败
+                Application.showToast(R.string.toast_audio_play_error);
+            }
+        });
+
+        mAudioFileCache = new FileCache("audio/cache", "mp3", new FileCache.CacheCallback<AudioHolder>() {
+            @Override
+            public void onDownloadSucceed(AudioHolder audioHolder, File cache) {
+                mAudioPlayHelper.trigger(audioHolder,cache.getAbsolutePath());
+            }
+
+            @Override
+            public void onDownloadFailed(AudioHolder audioHolder) {
+
+            }
+        });
 
     }
 
@@ -264,7 +318,7 @@ public abstract class ChatFragment<InitModel> extends
     @Override
     public void onRecordDone(File file, long time) {
         //语音的发起
-        mPresenter.pushAudio(file.getAbsolutePath(),time);
+        mPresenter.pushAudio(file.getAbsolutePath(), time);
     }
 
     private class Adapter extends RecyclerAdapter<Message> {

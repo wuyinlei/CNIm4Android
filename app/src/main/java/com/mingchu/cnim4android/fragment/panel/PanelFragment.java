@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mingchu.cnim4android.R;
+import com.mingchu.cnim4android.fragment.assist.PermissionsFragment;
 import com.mingchu.common.app.Application;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.face.Face;
@@ -125,8 +126,8 @@ public class PanelFragment extends BaseFragment implements FaceListener {
         final AudioRecordHelper audioRecordHelper = new AudioRecordHelper(tempFile, new AudioRecordHelper.RecordCallback() {
             @Override
             public void onRecordStart() {
-                //录音开始
-
+                //录音开始  设置状态为true
+                audioRecordView.setStatus(true);
             }
 
             @Override
@@ -160,7 +161,11 @@ public class PanelFragment extends BaseFragment implements FaceListener {
             @Override
             public void onRequestRecordStart() {
                 //请求开始录音
-
+                boolean havPermission = PermissionsFragment.hasAudioWorkPerms(getContext());
+                if (!havPermission) {
+                    audioRecordView.setStatus(false);
+                    return;
+                }
                 audioRecordHelper.recordAsync();
             }
 

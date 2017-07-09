@@ -5,6 +5,11 @@ import android.media.MediaPlayer;
 
 import java.io.IOException;
 
+/**
+ * 语音播放辅助类
+ *
+ * @param <Holder>
+ */
 public class AudioPlayHelper<Holder> implements MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private MediaPlayer mediaPlayer;
     private RecordPlayListener<Holder> listener;
@@ -16,6 +21,11 @@ public class AudioPlayHelper<Holder> implements MediaPlayer.OnErrorListener, Med
         this.mediaPlayer = createNewMediaPlayer();
     }
 
+    /**
+     * 创建MediaPlayer
+     *
+     * @return MediaPlayer
+     */
     private MediaPlayer createNewMediaPlayer() {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
