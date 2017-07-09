@@ -294,6 +294,9 @@ public final class Face {
     }
 
 
+    /**
+     * ImageSpan  重写ImageSpan为我们服务
+     */
     public static class FaceSpan extends ImageSpan implements Drawable.Callback {
         private Bean bean;
         private Drawable mDrawable;

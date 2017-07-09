@@ -132,6 +132,8 @@ public class PanelFragment extends BaseFragment implements FaceListener {
             @Override
             public void onClick(View v) {
                 onSendGalleryClick(galleryView, galleryView.getSelectedPath());
+                selectedSize.setText(String.format(getText(R.string.label_gallery_selected_size).toString(),
+                        0));
             }
         });
     }

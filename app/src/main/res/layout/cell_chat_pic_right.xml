@@ -22,15 +22,15 @@
         android:paddingStart="@dimen/len_8"
         android:paddingTop="@dimen/len_8">
 
-        <TextView
-            android:id="@+id/tv_content"
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:maxWidth="@dimen/len_128"
+            android:scaleType="fitCenter"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/len_76"
             android:gravity="center_vertical"
-            android:minHeight="@dimen/len_24"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimary"
-            tools:text="@string/app_name"/>
+            android:minHeight="@dimen/len_48"
+            />
 
     </FrameLayout>
 

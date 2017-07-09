@@ -56,7 +56,7 @@ import butterknife.OnClick;
 
 public abstract class ChatFragment<InitModel> extends
         PresenterFragment<ChatContract.Presenter> implements
-        AppBarLayout.OnOffsetChangedListener,ChatContract.View<InitModel>,PanelFragment.PanelCallback {
+        AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>, PanelFragment.PanelCallback {
 
     protected String mReceiverId;
 
@@ -77,7 +77,6 @@ public abstract class ChatFragment<InitModel> extends
 
     @BindView(R.id.btn_submit)
     ImageView mBtSumbmit;
-
 
 
     @Override
@@ -130,6 +129,11 @@ public abstract class ChatFragment<InitModel> extends
                 onOptionStatusChange(hasFocus);
             }
         });
+
+        if (mAppBarLayout != null)
+            mAppBarLayout.setExpanded(false);
+
+
     }
 
     @Override
@@ -148,10 +152,9 @@ public abstract class ChatFragment<InitModel> extends
             public void run() {
                 mRecyclerView.scrollToPosition(position);
             }
-        },300);
+        }, 300);
 
     }
-
 
 
     protected void initToolbar() {
@@ -190,8 +193,8 @@ public abstract class ChatFragment<InitModel> extends
     }
 
     @OnClick(R.id.btn_submit)
-    void onSubmitClick(){
-        if (mBtSumbmit.isActivated()){
+    void onSubmitClick() {
+        if (mBtSumbmit.isActivated()) {
             //发送
             String content = mEtContent.getText().toString();
             mEtContent.setText("");
@@ -250,12 +253,12 @@ public abstract class ChatFragment<InitModel> extends
 
     @Override
     public void onSendGalleryClick(String[] paths) {
-
+        mPresenter.pushImages(paths);
     }
 
     @Override
     public void onRecordDone(File file, long time) {
-
+//        mPresenter.pushAudio(file); // TODO: 2017/7/9
     }
 
     private class Adapter extends RecyclerAdapter<Message> {
@@ -273,18 +276,18 @@ public abstract class ChatFragment<InitModel> extends
                     return isRight ? R.layout.cell_chat_txt_right :
                             R.layout.cell_chat_txt_left;
 
+                case Message.TYPE_PIC:
+                    //图片内容
+                    return isRight ? R.layout.cell_chat_pic_right :
+                            R.layout.cell_chat_pic_left;
 
                 case Message.TYPE_AUDIO:
                     //语音内容
                     return isRight ? R.layout.cell_chat_audio_right :
                             R.layout.cell_chat_audio_left;
 
-                case Message.TYPE_PIC:
-                    //图片内容
-                    return isRight ? R.layout.cell_chat_pic_right :
-                            R.layout.cell_chat_pic_left;
 
-               default:
+                default:
                     //其他内容
                     return isRight ? R.layout.cell_chat_txt_right :
                             R.layout.cell_chat_txt_left;
@@ -394,7 +397,7 @@ public abstract class ChatFragment<InitModel> extends
 
             Spannable spannable = new SpannableString(message.getContent());
 
-           mContent.setText(Face.decodeFace(mContent,spannable, (int) Ui.dipToPx(getResources(),20)));
+            mContent.setText(Face.decodeFace(mContent, spannable, (int) Ui.dipToPx(getResources(), 20)));
 
             //把内容设置到布局上
 //            mContent.setText(spannable);
@@ -402,7 +405,7 @@ public abstract class ChatFragment<InitModel> extends
     }
 
     //语音的holder
-    class AudioHolder extends BaseHolder{
+    class AudioHolder extends BaseHolder {
 
         public AudioHolder(View itemView) {
             super(itemView);
@@ -411,14 +414,29 @@ public abstract class ChatFragment<InitModel> extends
 
 
     //图片的holder
-    class PicHolder extends BaseHolder{
+    class PicHolder extends BaseHolder {
+
+        @BindView(R.id.iv_pic)
+        ImageView mIvPic;
 
         public PicHolder(View itemView) {
             super(itemView);
+
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+
+            //当是图片类型的时候  content中就是具体的地址
+            String content = message.getContent();
+
+            Glide.with(ChatFragment.this)
+                    .load(content)
+                    .fitCenter()
+                    .into(mIvPic);
         }
     }
-
-
 
 
 }

@@ -65,7 +65,22 @@ public class ChatPresenter<View extends ChatContract.View>
 
     @Override
     public void pushImages(String[] paths) {
-        // TODO: 2017/6/25 发送图片
+        if (paths == null || paths.length == 0 )
+            return;
+
+        for (String path : paths) {
+
+            //这个地方要把图片上传到云服务器  然后返回一个真实的外网的图片地址  赋值给path  然后在发送消息
+
+
+            MsgCreateModel model = new MsgCreateModel.Builder()
+                    .receiver(mReceiverId,mReceiverType)
+                    .content(path,Message.TYPE_PIC)
+                    .build();
+            //发送消息
+            MessageHelper.push(model);
+        }
+
     }
 
     @Override

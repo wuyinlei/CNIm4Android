@@ -33,7 +33,7 @@ public class UploadHelper {
     private static final String ACCESS_KEY_SECRET = "3LzVjvZVbad14UziBKux1gsEnxugMn";
 
     //终结点  与我们自己的申请的存储区域有关系
-    private static final String ENDPOINT = "http://oss-cn-shanghai.aliyuncs.com";
+    public static final String ENDPOINT = "http://oss-cn-shanghai.aliyuncs.com";
 
     //上传的仓库名
     private static final String BUCKET_NAME = "ruolan";
