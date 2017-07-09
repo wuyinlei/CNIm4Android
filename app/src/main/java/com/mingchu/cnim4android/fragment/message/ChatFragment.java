@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.mingchu.cnim4android.activitys.MessageActivity;
 import com.mingchu.cnim4android.fragment.panel.PanelFragment;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
+import com.mingchu.common.face.Face;
 import com.mingchu.common.widget.adapter.TextWatcherAdapter;
 import com.mingchu.common.widget.custom.PortraitView;
 import com.mingchu.common.widget.recycler.RecyclerAdapter;
@@ -32,6 +35,7 @@ import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.persistence.Account;
 import com.mingchu.factory.presenter.message.ChatContract;
 
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.widget.airpanel.AirPanel;
@@ -388,8 +392,12 @@ public abstract class ChatFragment<InitModel> extends
         protected void onBind(Message message) {
             super.onBind(message);
 
+            Spannable spannable = new SpannableString(message.getContent());
+
+           mContent.setText(Face.decodeFace(mContent,spannable, (int) Ui.dipToPx(getResources(),20)));
+
             //把内容设置到布局上
-            mContent.setText(message.getContent());
+//            mContent.setText(spannable);
         }
     }
 

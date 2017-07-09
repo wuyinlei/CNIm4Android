@@ -4,6 +4,8 @@ package com.mingchu.cnim4android.fragment.main;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.mingchu.cnim4android.R;
 import com.mingchu.cnim4android.activitys.MessageActivity;
 import com.mingchu.common.app.BaseFragment;
 import com.mingchu.common.app.PresenterFragment;
+import com.mingchu.common.face.Face;
 import com.mingchu.common.tools.DataTimeUtils;
 import com.mingchu.common.widget.EmptyView;
 import com.mingchu.common.widget.GalleryView;
@@ -23,6 +26,8 @@ import com.mingchu.factory.model.db.User;
 import com.mingchu.factory.presenter.message.SessionContract;
 import com.mingchu.factory.presenter.message.SessionPresenter;
 import com.mingchu.factory.presenter.search.SearchContract;
+
+import net.qiujuer.genius.ui.Ui;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -146,7 +151,11 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         @Override
         protected void onBind(Session session) {
             mPortraitView.setup(Glide.with(getActivity()), session.getPicture());
-            mTvContent.setText(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+            String content = TextUtils.isEmpty(session.getContent()) ? "" : session.getContent();
+            Spannable spannable = new SpannableString(content);
+            mTvContent.setText(Face.decodeFace(mTvContent,spannable, (int) mTvContent.getTextSize()));
+
+//            mTvContent.setText(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
             mTvTime.setText(DataTimeUtils.getSampleDate(session.getModifyAt()));
             mTvName.setText(session.getTitle());
         }

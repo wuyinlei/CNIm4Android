@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/len_24"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/len_24"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:gravity="center_vertical|end"
             android:textAlignment="gravity"
@@ -55,9 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/len_24"
             android:ellipsize="end"
-            android:gravity="center_vertical"
             android:lines="1"
-            android:textAlignment="gravity"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/textSecond"
             tools:text="Send your message to me, Thanks! Can I help you~~" />
