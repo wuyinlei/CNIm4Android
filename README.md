@@ -86,11 +86,7 @@
 * [数据库框架DBFlow][10]
 * [Butterknife注解框架][11]
 
-###交流群(项目持续开发中)
-* 136471108(群号)
-* 136471108(群号)
-* 136471108(群号)
-
+###这个是慕课网的IM实战，链接大家可以直接百度搜索。要不断的学习才能积累知识
 
   [1]: https://github.com/Yalantis/uCrop
   [2]: http://www.jianshu.com/p/523e77a10321
@@ -103,6 +99,8 @@
   [9]: https://github.com/bumptech/glide
   [10]: https://github.com/Raizlabs/DBFlow
   [11]: https://github.com/JakeWharton/butterknife
+
+
   
   
   
